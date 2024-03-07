@@ -2,7 +2,6 @@ import * as React from 'react';
 import styles from './macmockup.module.css';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Image from 'next/image';
 import macMockup from '@/public/macbookMock.svg';
 
