@@ -1,0 +1,25 @@
+.featuresWrap {
+    display: flex;
+    /* margin-left: 100px; */
+    flex-direction: column;
+    justify-content: flex-start;
+    /* height: 500px; */
+}
+
+.featureWrap {
+    display: flex;
+    width: 100%;
+    background-color: #010D50;
+    padding: 58px 32px;
+    gap: 24px;
+    border-radius: 40px;
+}
+
+.featureInfo {
+    display: flex;
+    /* flex-direction: row; */
+}
+
+.featureIcon {
+    margin-right: 20px;
+}

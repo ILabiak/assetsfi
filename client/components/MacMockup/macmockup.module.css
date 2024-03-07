@@ -1,0 +1,102 @@
+.main {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.mockupInfoWrap {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 5rem;
+    color: white;
+    /* border: 1px white solid; */
+    /* width: 50%; */
+    height: 600px;
+}
+
+.mockupInfo {
+    padding-left: 100px;
+}
+
+.laptopWrap {
+    justify-content: end;
+    width: 50%;
+    /* border: 1px white solid; */
+    height: 600px;
+}
+
+.laptop {
+    height: 100%;
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateX(+100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+.animate {
+    animation: fadeIn 2s ease-out forwards;
+  }
+
+.mainText {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: bold;
+    font-size: 68px;
+}
+
+.additionalText {
+    font-size: 18px;
+    /* font-weight: 100; */
+}
+
+.buttonsWrap {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.loginButton {
+    background-color: #0328EE;
+    color: white;
+    font-family: 'DM Sans';
+    font-size: 20px;
+    width: 160px;
+    height: 56px;
+    border-radius: 80px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.loginButton:hover {
+    background-color: #031FB4;
+}
+
+.signupButton {
+    background-color: #323232;
+    color: white;
+    font-family: 'DM Sans';
+    font-size: 20px;
+    width: 180px;
+    height: 56px;
+    border-radius: 80px;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupButton:hover {
+    background-color: #0328EE;
+}
