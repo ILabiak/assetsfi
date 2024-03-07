@@ -30,3 +30,17 @@
 .signupButton:hover {
     background-color: #0328EE;
 }
+
+.mobileLogoContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mobileHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}

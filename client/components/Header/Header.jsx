@@ -46,6 +46,8 @@ function Header() {
         }}>
             <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'></link>
             <Container maxWidth="xl" >
+
+                {/* Laptop */}
                 <Toolbar disableGutters>
                     <Box
                         component="a"
@@ -84,8 +86,52 @@ function Header() {
                         AssetsFi
                     </Typography>
 
+
+
                     {/* Phone */}
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+                    
+                    <Box className={styles.mobileLogoContainer}>
+                        <Box
+                            component="a"
+                            href='/'
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'flex', md: 'none' },
+                                alignItems: 'center',
+                                height: '68px'
+                            }}>
+                            <Image
+                                priority
+                                src={logo}
+                                alt="logo"
+                                height={50}
+                                width={50}
+                            />
+                        </Box >
+                        <Typography
+                            variant="h5"
+                            noWrap
+                            component="a"
+                            href="#app-bar-with-responsive-menu"
+                            sx={{
+                                mr: 2,
+                                fontFamily: 'DM Sans',
+                                fontWeight: 1000,
+                                fontSize: '20px',
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                                marginLeft: '10px',
+                                display: { xs: 'flex', md: 'none' },
+                            }}
+                        >
+                            AssetsFi
+                        </Typography>
+                    </Box>
+
+
+                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } ,
+                    justifyContent: 'end'}}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -101,17 +147,22 @@ function Header() {
                             anchorEl={anchorElNav}
                             anchorOrigin={{
                                 vertical: 'bottom',
-                                horizontal: 'left',
+                                horizontal: 'right',
                             }}
                             keepMounted
                             transformOrigin={{
                                 vertical: 'top',
-                                horizontal: 'left',
+                                horizontal: 'right',
                             }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                             sx={{
                                 display: { xs: 'block', md: 'none' },
+                                '& .MuiPaper-root': {
+                                    backgroundColor: '#010725',
+                                    border: '1px solid white',
+                                    color: 'white'
+                                },
                             }}
                         >
                             {pages.map((page) => (
@@ -121,25 +172,7 @@ function Header() {
                             ))}
                         </Menu>
                     </Box>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-                    <Typography
-                        variant="h5"
-                        noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'flex', md: 'none' },
-                            flexGrow: 1,
-                            fontFamily: 'DM Sans',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        LOGO
-                    </Typography>
+
 
 
 
