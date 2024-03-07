@@ -20,7 +20,7 @@ function MainFeatures() {
                     marginRight: { xs: '20px', md: '100px' }
                 }}>
                     <Typography sx={{
-                        fontSize: { xs: '40px', md: '68px' },
+                        fontSize: { xs: '40px', md: '60px' },
                         fontFamily: 'DM Sans',
                         fontWeight: 'bold',
                         color: 'white'

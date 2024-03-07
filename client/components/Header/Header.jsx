@@ -75,7 +75,7 @@ function Header() {
                             mr: 2,
                             fontFamily: 'DM Sans',
                             fontWeight: 1000,
-                            fontSize: '20px',
+                            fontSize: '16px',
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
@@ -117,7 +117,7 @@ function Header() {
                                 mr: 2,
                                 fontFamily: 'DM Sans',
                                 fontWeight: 1000,
-                                fontSize: '20px',
+                                fontSize: '16px',
                                 letterSpacing: '.3rem',
                                 color: 'inherit',
                                 textDecoration: 'none',
@@ -184,7 +184,7 @@ function Header() {
                                 key={page}
                                 onClick={handleCloseNavMenu}
                                 sx={{
-                                    my: 2, color: 'white', display: 'block', fontSize: '20px', fontFamily: 'DM Sans',
+                                    my: 2, color: 'white', display: 'block', fontSize: '16px', fontFamily: 'DM Sans',
                                     letterSpacing: '.3rem', marginRight: '5px',
                                     '&:hover': {
                                         textDecoration: 'underline',
@@ -204,7 +204,7 @@ function Header() {
                             backgroundColor: '#0328EE',
                             color: 'white',
                             fontFamily: 'DM Sans',
-                            fontSize: '20px',
+                            fontSize: '16px',
                             borderRadius: '80px',
                             marginRight: '20px',
                             display: { xs: 'none', md: 'flex' }
@@ -215,7 +215,7 @@ function Header() {
                             backgroundColor: '#323232',
                             color: 'white',
                             fontFamily: 'DM Sans',
-                            fontSize: '20px',
+                            fontSize: '16px',
                             borderRadius: '80px',
                             display: { xs: 'none', md: 'flex' }
                         }}>

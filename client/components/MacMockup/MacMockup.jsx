@@ -16,7 +16,7 @@ function MacMockup() {
         marginTop: { xs: '100px', md: '100px' } }}>
             <Box className={styles.mockupInfoWrap} sx={{
                 width: { xs: '90%', md: '50%' },
-                height: { xs: '200px', md: '600px' },
+                height: { xs: '200px', md: '500px' },
             }}>
                 <Box className={styles.mockupInfo} sx={{
                     paddingLeft: { xs: '0px', md: '100px' }
@@ -24,7 +24,7 @@ function MacMockup() {
                     <Typography className={styles.mainText} sx={{
                         fontFamily: 'DM Sans',
                         fontWeight: 'bold',
-                        fontSize: { xs: '28px', md: '68px' },
+                        fontSize: { xs: '28px', md: '60px' },
                         marginBottom: {xs: '15px', md: '0px'}
                     }}>
                         Controlling your finances is finally effortless
@@ -48,7 +48,7 @@ function MacMockup() {
                             backgroundColor: '#0328EE',
                             color: 'white',
                             fontFamily: 'DM Sans',
-                            fontSize: '20px',
+                            fontSize: '16px',
                             borderRadius: '80px',
                             marginRight: {xs: '0px', md: '20px'},
                             marginBottom: {xs: '15px', md: '0px'},
@@ -60,7 +60,7 @@ function MacMockup() {
                             backgroundColor: '#323232',
                             color: 'white',
                             fontFamily: 'DM Sans',
-                            fontSize: '20px',
+                            fontSize: '16px',
                             borderRadius: '80px',
                             width: {xs: '100%', md: '180px'},
                             // display: { xs: 'none', md: 'flex' }
