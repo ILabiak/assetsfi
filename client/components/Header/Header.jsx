@@ -13,9 +13,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useUser } from '@auth0/nextjs-auth0/client';
-// import registerHandler from '@/helpers/RegisterHandler'
-
+import { useRouter } from 'next/navigation'
 
 import Image from 'next/image';
 import logo from '@/public/logo.svg';
@@ -23,11 +21,8 @@ import logo from '@/public/logo.svg';
 const pages = ['HOME', 'ABOUT', 'CONTACT US'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function Header() {
-    const { user, error, isLoading } = useUser();
-
-    // if (isLoading) return <div>Loading...</div>;
-    // if (error) return <div>{error.message}</div>;
+function Header({ user, error, isLoading }) {
+    const router = useRouter()
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -205,62 +200,96 @@ function Header() {
                         ))}
                     </Box>
 
+                    <div>
+                        {!isLoading ? (
+                            <div>
+                                {
+                                    !user?.email ? (
+                                        <Box sx={{ display: 'flex', flexGrow: 0, flexDirection: 'row', }}>
+                                            <Button className={styles.loginButton} href='/api/auth/login'
+                                                sx={{
+                                                    backgroundColor: '#0328EE',
+                                                    color: 'white',
+                                                    fontFamily: 'DM Sans',
+                                                    fontSize: '16px',
+                                                    borderRadius: '80px',
+                                                    marginRight: '20px',
+                                                    display: { xs: 'none', md: 'flex' }
+                                                }}>
+                                                LOGIN
+                                            </Button>
+                                            <Button className={styles.signupButton}
+                                                href='/api/auth/signup'
+                                                sx={{
+                                                    backgroundColor: '#323232',
+                                                    color: 'white',
+                                                    fontFamily: 'DM Sans',
+                                                    fontSize: '16px',
+                                                    borderRadius: '80px',
+                                                    display: { xs: 'none', md: 'flex' }
+                                                }}>
+                                                SIGN UP
+                                            </Button>
+                                        </Box>
+                                    ) : (
+                                        <Box sx={{ flexGrow: 0 }}>
+                                            {/* <Tooltip title="Open settings"> */}
+                                            <IconButton onClick={handleOpenUserMenu} sx={{
+                                                p: 0,
+                                                border: '2px solid white'
+                                            }}>
+                                                <Avatar alt={user?.email} src={user?.picture} />
+                                            </IconButton>
+                                            {/* </Tooltip> */}
+                                            <Menu
+                                                sx={{
+                                                    // mt: '55px',
+                                                    mt: { xs: '55px', md: '0' },
+                                                    ml: { xs: '0', md: '-50px' },
+                                                    '& .MuiPaper-root': {
+                                                        backgroundColor: '#010725',
+                                                        border: '1px solid white',
+                                                        borderRadius: '10px',
+                                                        color: 'white'
+                                                    },
+                                                    // borderRadius: '80px'
+                                                }}
+                                                id="menu-appbar"
+                                                anchorEl={anchorElUser}
+                                                anchorOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                keepMounted
+                                                transformOrigin={{
+                                                    vertical: 'top',
+                                                    horizontal: 'right',
+                                                }}
+                                                open={Boolean(anchorElUser)}
+                                                onClose={handleCloseUserMenu}
+                                            >
+                                                <MenuItem key='usermail'>
+                                                    <Typography textAlign="center">{user?.email}</Typography>
+                                                </MenuItem>
+                                                <MenuItem key='portfolios' >
+                                                    <Typography textAlign="center">My Portfolios</Typography>
+                                                </MenuItem>
+                                                <MenuItem key='logout' onClick={() => router.push('/api/auth/logout')}>
+                                                    <Typography textAlign="center">Log out</Typography>
+                                                </MenuItem>
+                                            </Menu>
+                                        </Box>
+                                    )
+                                }
+                            </div>
+                        ) : (
+                            <div></div>
+                        )
+                        }
+                    </div>
 
-                    <Box sx={{ display: 'flex', flexGrow: 0, flexDirection: 'row', }}>
-                        <Button className={styles.loginButton} href='/api/auth/login'
-                            sx={{
-                                backgroundColor: '#0328EE',
-                                color: 'white',
-                                fontFamily: 'DM Sans',
-                                fontSize: '16px',
-                                borderRadius: '80px',
-                                marginRight: '20px',
-                                display: { xs: 'none', md: 'flex' }
-                            }}>
-                            LOGIN
-                        </Button>
-                        <Button className={styles.signupButton}
-                            href='/api/auth/signup'
-                            sx={{
-                                backgroundColor: '#323232',
-                                color: 'white',
-                                fontFamily: 'DM Sans',
-                                fontSize: '16px',
-                                borderRadius: '80px',
-                                display: { xs: 'none', md: 'flex' }
-                            }}>
-                            SIGN UP
-                        </Button>
-                    </Box>
-                    {/* <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box> */}
+
+
 
                 </Toolbar>
             </Container>
