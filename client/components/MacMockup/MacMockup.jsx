@@ -44,7 +44,8 @@ function MacMockup() {
                     <Box className={styles.buttonsWrap} sx={{
                         flexDirection: { xs: 'column', md: 'row' },
                     }}>
-                        <Button className={styles.loginButton} sx={{
+                        <Button className={styles.loginButton}
+                        href='/api/auth/login' sx={{
                             backgroundColor: '#0328EE',
                             color: 'white',
                             fontFamily: 'DM Sans',
@@ -56,7 +57,8 @@ function MacMockup() {
                         }}>
                             Login
                         </Button>
-                        <Button className={styles.signupButton} sx={{
+                        <Button className={styles.signupButton}
+                        href='/api/auth/signup' sx={{
                             backgroundColor: '#323232',
                             color: 'white',
                             fontFamily: 'DM Sans',

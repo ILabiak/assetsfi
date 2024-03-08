@@ -13,6 +13,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useUser } from '@auth0/nextjs-auth0/client';
+// import registerHandler from '@/helpers/RegisterHandler'
+
 
 import Image from 'next/image';
 import logo from '@/public/logo.svg';
@@ -21,6 +24,11 @@ const pages = ['HOME', 'ABOUT', 'CONTACT US'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
+    const { user, error, isLoading } = useUser();
+
+    // if (isLoading) return <div>Loading...</div>;
+    if (error) return <div>{error.message}</div>;
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -51,7 +59,6 @@ function Header() {
                 <Toolbar disableGutters>
                     <Box
                         component="a"
-                        onClick={() => navigate('/')}
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -87,9 +94,8 @@ function Header() {
                     </Typography>
 
 
-
                     {/* Phone */}
-                    
+
                     <Box className={styles.mobileLogoContainer}>
                         <Box
                             component="a"
@@ -112,7 +118,6 @@ function Header() {
                             variant="h5"
                             noWrap
                             component="a"
-                            href="#app-bar-with-responsive-menu"
                             sx={{
                                 mr: 2,
                                 fontFamily: 'DM Sans',
@@ -130,8 +135,10 @@ function Header() {
                     </Box>
 
 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } ,
-                    justifyContent: 'end'}}>
+                    <Box sx={{
+                        flexGrow: 1, display: { xs: 'flex', md: 'none' },
+                        justifyContent: 'end'
+                    }}>
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -200,25 +207,28 @@ function Header() {
 
 
                     <Box sx={{ display: 'flex', flexGrow: 0, flexDirection: 'row', }}>
-                        <Button className={styles.loginButton} sx={{
-                            backgroundColor: '#0328EE',
-                            color: 'white',
-                            fontFamily: 'DM Sans',
-                            fontSize: '16px',
-                            borderRadius: '80px',
-                            marginRight: '20px',
-                            display: { xs: 'none', md: 'flex' }
-                        }}>
+                        <Button className={styles.loginButton} href='/api/auth/login'
+                            sx={{
+                                backgroundColor: '#0328EE',
+                                color: 'white',
+                                fontFamily: 'DM Sans',
+                                fontSize: '16px',
+                                borderRadius: '80px',
+                                marginRight: '20px',
+                                display: { xs: 'none', md: 'flex' }
+                            }}>
                             LOGIN
                         </Button>
-                        <Button className={styles.signupButton} sx={{
-                            backgroundColor: '#323232',
-                            color: 'white',
-                            fontFamily: 'DM Sans',
-                            fontSize: '16px',
-                            borderRadius: '80px',
-                            display: { xs: 'none', md: 'flex' }
-                        }}>
+                        <Button className={styles.signupButton}
+                            href='/api/auth/signup'
+                            sx={{
+                                backgroundColor: '#323232',
+                                color: 'white',
+                                fontFamily: 'DM Sans',
+                                fontSize: '16px',
+                                borderRadius: '80px',
+                                display: { xs: 'none', md: 'flex' }
+                            }}>
                             SIGN UP
                         </Button>
                     </Box>
