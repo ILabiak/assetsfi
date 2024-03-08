@@ -13,7 +13,9 @@ import Image from 'next/image';
 function MainFeatures() {
 
     return (
-        <Box className={styles.main}>
+        <Box className={styles.main} sx={{
+            marginTop: { xs: '0px', md: '100px' },
+        }}>
             <Box sx={{ width: '100vw' }} className={styles.featuresContainer}>
                 <Box className={styles.featuresWrap} sx={{
                     marginLeft: { xs: '20px', md: '100px' },

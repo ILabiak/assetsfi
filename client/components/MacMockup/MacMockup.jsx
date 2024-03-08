@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Image from 'next/image';
 import macMockup from '@/public/macbookMock.svg';
+import macMockupMini from '@/public/macbookMockMini.svg';
 import Typography from '@mui/material/Typography';
 
 function MacMockup({ user, error, isLoading }) {
@@ -12,7 +13,8 @@ function MacMockup({ user, error, isLoading }) {
     return (
         <Box className={styles.main} sx={{
             display: { xs: 'flex', md: 'flex' },
-            marginTop: { xs: '100px', md: '100px' }
+            marginTop: { xs: '100px', md: '100px' },
+            flexDirection: { xs: 'column', md: 'row' }
         }}>
             <Box className={styles.mockupInfoWrap} sx={{
                 width: { xs: '90%', md: '50%' },
@@ -75,6 +77,14 @@ function MacMockup({ user, error, isLoading }) {
                 display: { xs: 'none', md: 'flex' },
             }}>
                 <Image className={`${styles.laptop} ${styles.animate}`} src={macMockup}
+                />
+            </Box>
+
+
+            <Box className={styles.laptopMiniWrap} sx={{
+                display: { xs: 'flex', md: 'none' },
+            }}>
+                <Image className={`${styles.laptopMini}`} src={macMockupMini}
                 />
             </Box>
 
