@@ -1,0 +1,46 @@
+.loginButton {
+    background-color: #0328EE;
+    color: white;
+    font-family: 'DM Sans';
+    font-size: 16px;
+    width: 160px;
+    height: 56px;
+    border-radius: 80px;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.loginButton:hover {
+    background-color: #031FB4;
+}
+
+.signupButton {
+    background-color: #323232;
+    color: white;
+    font-family: 'DM Sans';
+    font-size: 16px;
+    width: 180px;
+    height: 56px;
+    border-radius: 80px;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupButton:hover {
+    background-color: #0328EE;
+}
+
+.mobileLogoContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mobileHeader {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}

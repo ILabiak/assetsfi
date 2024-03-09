@@ -41,7 +41,7 @@ function MacMockup({ user, error, isLoading }) {
                         flexDirection: { xs: 'column', md: 'row' },
                     }}>
                         <Button className={styles.loginButton}
-                            href={user ? '/portfolios' :'/api/auth/login'} sx={{
+                            href={user ? '/dashboard' : '/api/auth/login'} sx={{
                                 backgroundColor: '#0328EE',
                                 color: 'white',
                                 fontFamily: 'DM Sans',

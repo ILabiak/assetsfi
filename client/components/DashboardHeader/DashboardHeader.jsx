@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styles from './header.module.css';
+import styles from './dashboardheader.module.css';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -17,10 +17,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 import logo from '@/public/logo.svg';
 
-const pages = ['HOME', 'ABOUT', 'CONTACT US'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
-function Header({ user, error, isLoading }) {
+function DashboardHeader({ user, error, isLoading }) {
     const router = useRouter()
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -42,8 +39,9 @@ function Header({ user, error, isLoading }) {
     };
 
     return (
-        <AppBar position="static" sx={{
-            backgroundColor: '#010725'
+        <AppBar position="fixed" sx={{
+            width: `calc(100% - 260px)`, ml: `260px`,
+            backgroundColor: '#1A1A1A'
             , boxShadow: 'none'
         }}>
             <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'></link>
@@ -57,15 +55,15 @@ function Header({ user, error, isLoading }) {
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
                             alignItems: 'center',
-                            height: '132px'
+                            height: '100px'
                         }}>
-                        <Image
+                        {/* <Image
                             priority
                             src={logo}
                             alt="logo"
                             height={70}
                             width={70}
-                        />
+                        /> */}
                     </Box >
                     <Typography
                         variant="h6"
@@ -76,15 +74,15 @@ function Header({ user, error, isLoading }) {
                             mr: 2,
                             fontFamily: 'DM Sans',
                             fontWeight: 1000,
-                            fontSize: '16px',
-                            letterSpacing: '.3rem',
+                            fontSize: '30px',
+                            // letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
-                            marginLeft: '10px',
+                            // marginLeft: '10px',
                             display: { xs: 'none', md: 'flex' }
                         }}
                     >
-                        AssetsFi
+                        Dashboard
                     </Typography>
 
 
@@ -100,13 +98,13 @@ function Header({ user, error, isLoading }) {
                                 alignItems: 'center',
                                 height: '68px'
                             }}>
-                            <Image
+                            {/* <Image
                                 priority
                                 src={logo}
                                 alt="logo"
                                 height={50}
                                 width={50}
-                            />
+                            /> */}
                         </Box >
                         <Typography
                             variant="h5"
@@ -166,16 +164,16 @@ function Header({ user, error, isLoading }) {
                                 },
                             }}
                         >
-                            {pages.map((page) => (
+                            {/* {pages.map((page) => (
                                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
-                            ))}
+                            ))} */}
                         </Menu>
                     </Box>
 
                     {/* Laptop */}
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, paddingLeft: '10px' }}>
+                    {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, paddingLeft: '10px' }}>
                         {pages.map((page) => (
                             <Button
                                 key={page}
@@ -193,98 +191,11 @@ function Header({ user, error, isLoading }) {
                                 {page}
                             </Button>
                         ))}
-                    </Box>
-
-                    <div>
-                        {!isLoading ? (
-                            <div>
-                                {
-                                    !user?.email ? (
-                                        <Box sx={{ display: 'flex', flexGrow: 0, flexDirection: 'row', }}>
-                                            <Button className={styles.loginButton} href='/api/auth/login'
-                                                sx={{
-                                                    backgroundColor: '#0328EE',
-                                                    color: 'white',
-                                                    fontFamily: 'DM Sans',
-                                                    fontSize: '16px',
-                                                    borderRadius: '80px',
-                                                    marginRight: '20px',
-                                                    display: { xs: 'none', md: 'flex' }
-                                                }}>
-                                                LOGIN
-                                            </Button>
-                                            <Button className={styles.signupButton}
-                                                href='/api/auth/signup'
-                                                sx={{
-                                                    backgroundColor: '#323232',
-                                                    color: 'white',
-                                                    fontFamily: 'DM Sans',
-                                                    fontSize: '16px',
-                                                    borderRadius: '80px',
-                                                    display: { xs: 'none', md: 'flex' }
-                                                }}>
-                                                SIGN UP
-                                            </Button>
-                                        </Box>
-                                    ) : (
-                                        <Box sx={{ flexGrow: 0 }}>
-                                            {/* <Tooltip title="Open settings"> */}
-                                            <IconButton onClick={handleOpenUserMenu} sx={{
-                                                p: 0,
-                                                border: '2px solid white'
-                                            }}>
-                                                <Avatar alt={user?.email} src={user?.picture} />
-                                            </IconButton>
-                                            {/* </Tooltip> */}
-                                            <Menu
-                                                sx={{
-                                                    mt: { xs: '55px', md: '0' },
-                                                    ml: { xs: '0', md: '-50px' },
-                                                    '& .MuiPaper-root': {
-                                                        backgroundColor: '#010725',
-                                                        border: '1px solid white',
-                                                        borderRadius: '10px',
-                                                        color: 'white'
-                                                    },
-                                                    // borderRadius: '80px'
-                                                }}
-                                                id="menu-appbar"
-                                                anchorEl={anchorElUser}
-                                                anchorOrigin={{
-                                                    vertical: 'top',
-                                                    horizontal: 'right',
-                                                }}
-                                                keepMounted
-                                                transformOrigin={{
-                                                    vertical: 'top',
-                                                    horizontal: 'right',
-                                                }}
-                                                open={Boolean(anchorElUser)}
-                                                onClose={handleCloseUserMenu}
-                                            >
-                                                <MenuItem key='usermail'>
-                                                    <Typography textAlign="center">{user?.email}</Typography>
-                                                </MenuItem>
-                                                <MenuItem key='dashboard' onClick={() => router.push('/dashboard')} >
-                                                    <Typography textAlign="center">Dashboard</Typography>
-                                                </MenuItem>
-                                                <MenuItem key='logout' onClick={() => router.push('/api/auth/logout')}>
-                                                    <Typography textAlign="center">Log out</Typography>
-                                                </MenuItem>
-                                            </Menu>
-                                        </Box>
-                                    )
-                                }
-                            </div>
-                        ) : (
-                            <div></div>
-                        )
-                        }
-                    </div>
+                    </Box> */}
 
                 </Toolbar>
             </Container>
         </AppBar>
     );
 }
-export default Header;
+export default DashboardHeader;

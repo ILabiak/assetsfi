@@ -22,7 +22,7 @@ export default function Home() {
       </Head>
       <BackDrop isloading={isLoading} open={open} setOpen={setOpen} />
       {!open && (
-        <div>
+        <div className={styles.wrap}>
           <Header user={user} isLoading={isLoading} error={error} />
           <MacMockup user={user} isLoading={isLoading} error={error} />
           <MainFeatures />
