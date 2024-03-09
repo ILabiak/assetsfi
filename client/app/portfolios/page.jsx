@@ -17,6 +17,7 @@ export default function Portfolio() {
         <main className={styles.main}>
             <Head>
                 <link rel="icon" href='/favicon.ico' />
+                <meta name="theme-color" content="#1A1A1A"></meta>
             </Head>
             {/* <BackDrop isloading={isLoading} open={open} setOpen={setOpen} delay={500} /> */}
             {!isLoading && (
