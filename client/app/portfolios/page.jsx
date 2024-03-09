@@ -3,13 +3,12 @@ import React, { useState, } from 'react';
 import styles from "./page.module.css";
 import Head from 'next/head';
 import DashboardHeader from '@/components/DashboardHeader/DashboardHeader';
-import DashboardInfo from '@/components/DashboardInfo/DashboardInfo';
 import Footer from '@/components/Footer/Footer';
 import BackDrop from '@/components/BackDrop/BackDrop';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
-export default function Dashboard() {
+export default function Portfolio() {
     const { user, error, isLoading } = useUser();
     const [open, setOpen] = useState(true);
 
@@ -20,13 +19,12 @@ export default function Dashboard() {
                 <link rel="icon" href='/favicon.ico' />
             </Head>
             {/* <BackDrop isloading={isLoading} open={open} setOpen={setOpen} delay={500} /> */}
-            {!isLoading && ( 
+            {!isLoading && (
                 <div className={styles.wrap}>
-                    <DashboardHeader title={'Dashboard'}/>
-                    <Sidebar/>
-                    <DashboardInfo/>
+                    <DashboardHeader title={'Portfolios'} />
+                    <Sidebar />
                 </div>
-             )}
+            )}
         </main>
     );
 }

@@ -14,8 +14,10 @@ function DashboardInfo({ user, error, isLoading }) {
 
     return (
         <Box component='main' className={styles.main} sx={{
-            width: `calc(100% - 260px)`, ml: '260px', // sidebar width
-            height: `calc(100vh - 100px)`, mt: '100px'
+            width: { xs: '100%', md: `calc(100% - 260px)` }, 
+            ml: { xs: '0', md: '260px' }, // sidebar width
+            height: { xs: `100vh`, md: `calc(100vh - 100px)` }, 
+            mt: { xs: '0px', md: '100px' } // header hight
         }}>
             <Box className={styles.cryptoStatsContainer}>
                 <Grid container columnSpacing={2} spacing={2}>

@@ -5,14 +5,14 @@ import styles from "./backdrop.module.css";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-export default function BackDrop({ isLoading, open, setOpen }) {
+export default function BackDrop({ isLoading, open, setOpen, delay }) {
     
     useEffect(() => {
         let timeoutId;
         if (!isLoading) {
             timeoutId = setTimeout(() => {
                 setOpen(false);
-            }, 500);
+            }, delay);
         }
         return () => {
             clearTimeout(timeoutId);

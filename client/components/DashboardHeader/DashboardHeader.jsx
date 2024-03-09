@@ -17,7 +17,7 @@ import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 import logo from '@/public/logo.svg';
 
-function DashboardHeader({ user, error, isLoading }) {
+function DashboardHeader({ user, error, isLoading, title }) {
     const router = useRouter()
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -40,7 +40,8 @@ function DashboardHeader({ user, error, isLoading }) {
 
     return (
         <AppBar position="fixed" sx={{
-            width: `calc(100% - 260px)`, ml: `260px`,
+            width: { xs: '100%', md: `calc(100% - 260px)` }, 
+            ml: { xs: '0', md: '260px' },
             backgroundColor: '#1A1A1A'
             , boxShadow: 'none'
         }}>
@@ -82,7 +83,7 @@ function DashboardHeader({ user, error, isLoading }) {
                             display: { xs: 'none', md: 'flex' }
                         }}
                     >
-                        Dashboard
+                        {title}
                     </Typography>
 
 
@@ -114,20 +115,19 @@ function DashboardHeader({ user, error, isLoading }) {
                                 mr: 2,
                                 fontFamily: 'DM Sans',
                                 fontWeight: 1000,
-                                fontSize: '16px',
-                                letterSpacing: '.3rem',
+                                fontSize: '25px',
+                                // letterSpacing: '.3rem',
                                 color: 'inherit',
                                 textDecoration: 'none',
                                 marginLeft: '10px',
                                 display: { xs: 'flex', md: 'none' },
                             }}
                         >
-                            AssetsFi
+                            {title}
                         </Typography>
                     </Box>
 
-
-                    <Box sx={{
+                    {/* <Box sx={{
                         flexGrow: 1, display: { xs: 'flex', md: 'none' },
                         justifyContent: 'end'
                     }}>
@@ -164,13 +164,8 @@ function DashboardHeader({ user, error, isLoading }) {
                                 },
                             }}
                         >
-                            {/* {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
-                                </MenuItem>
-                            ))} */}
                         </Menu>
-                    </Box>
+                    </Box> */}
 
                     {/* Laptop */}
                     {/* <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, paddingLeft: '10px' }}>

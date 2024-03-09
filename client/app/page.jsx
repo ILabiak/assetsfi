@@ -20,7 +20,7 @@ export default function Home() {
       <Head>
         <link rel="icon" href='/favicon.ico' />
       </Head>
-      <BackDrop isloading={isLoading} open={open} setOpen={setOpen} />
+      <BackDrop isloading={isLoading} open={open} setOpen={setOpen} delay={500} />
       {!open && (
         <div className={styles.wrap}>
           <Header user={user} isLoading={isLoading} error={error} />
