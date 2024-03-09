@@ -4,6 +4,7 @@ import React, { useState, } from 'react';
 import styles from "./page.module.css";
 import Head from 'next/head';
 import DashboardHeader from '@/components/DashboardHeader/DashboardHeader';
+import DashboardInfo from '@/components/DashboardInfo/DashboardInfo';
 import Footer from '@/components/Footer/Footer';
 import BackDrop from '@/components/BackDrop/BackDrop';
 import Sidebar from '@/components/Sidebar/Sidebar';
@@ -26,6 +27,7 @@ export default function Dashboard() {
                     <Footer /> */}
                     <DashboardHeader/>
                     <Sidebar/>
+                    <DashboardInfo/>
                 </div>
             )}
         </main>
