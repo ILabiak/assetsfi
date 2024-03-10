@@ -12,6 +12,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      {/* <meta name="theme-color" content="#1A1A1A"></meta> */}
       <UserProvider>
         <body className={inter.className}>{children}</body>
       </UserProvider>
