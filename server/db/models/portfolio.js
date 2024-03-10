@@ -3,7 +3,10 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Portfolio extends Model {
     static associate(models) {
-
+      Portfolio.hasMany(models.Currency, {
+        foreignKey: 'currencyId',
+        as: 'portfolio'
+      })
     }
   }
   Portfolio.init(
@@ -16,22 +19,31 @@ module.exports = (sequelize, DataTypes) => {
       },
       uuid: {
         type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         unique: true,
       },
       userId: {
         type: DataTypes.TEXT,
         allowNull: false,
-        
       },
-      expirationDate: {
+      title: {
+        type: DataTypes.TEXT,
         allowNull: false,
-        type: DataTypes.DATE,
+      },
+      currencyId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      visibility: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
       },
     },
     {
       sequelize,
-      modelName: 'Session',
+      modelName: 'Portfolio',
+      tableName: 'portfolios'
     },
   );
   return Portfolio;

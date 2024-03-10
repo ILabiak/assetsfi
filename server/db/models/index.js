@@ -6,11 +6,8 @@ const Sequelize = require('sequelize');
 const pg = require('pg');
 const process = require('process');
 const basename = path.basename(__filename);
-// const env = process.env.NODE_ENV || 'development';
 const db = {};
 require('dotenv').config();
-
-// console.log(process.env)
 
 const sequelize = new Sequelize(process.env.POSTGRES);
 

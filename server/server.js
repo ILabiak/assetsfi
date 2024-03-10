@@ -1,4 +1,4 @@
-const fastify = require('fastify')({ logger: false });
+const fastify = require('fastify')({ logger: true });
 const jwt = require('jsonwebtoken');
 
 fastify.register(require('@fastify/cors'), {
@@ -7,9 +7,11 @@ fastify.register(require('@fastify/cors'), {
 });
 
 fastify.register(require('@fastify/cookie'), {
-    secret: "my-secret",
-    parseOptions: {} 
-  })
+  secret: 'my-secret',
+  parseOptions: {},
+});
+
+fastify.register(require('./routes'));
 
 // Declare a route
 fastify.get('/', function handler(request, reply) {
@@ -17,10 +19,9 @@ fastify.get('/', function handler(request, reply) {
 });
 
 fastify.get('/server/test', async (request, reply) => {
-  console.log(request.cookies)
+//   console.log(request.cookies);
 
   try {
-
     reply.send({ message: 'API call successful' });
   } catch (error) {
     console.error('Error verifying token:', error);
