@@ -3,10 +3,6 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Currency extends Model {
     static associate(models) {
-      Currency.belongsTo(models.Portfolio, {
-        foreignKey: 'currencyId',
-        as: 'currency'
-      })
     }
   }
   Currency.init(
@@ -26,6 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
         unique: true,
+      },
+      symbol: {
+        type: DataTypes.TEXT,
+        allowNull: false,
       }
     },
     {

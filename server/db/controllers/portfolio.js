@@ -1,5 +1,6 @@
 'use strict';
 const Portfolio = require('../models').Portfolio;
+const Currency = require('../models').Currency;
 const sequelize = require('sequelize');
 
 module.exports = {
@@ -23,6 +24,7 @@ module.exports = {
       where: {
         userId: req.cookies.user_id,
       },
+      include: Currency
     }).then(async (portfolios) => {
       if (!portfolios) {
         return res.status(400).send({

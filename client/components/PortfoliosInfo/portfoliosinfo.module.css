@@ -1,0 +1,102 @@
+.main {
+    height: auto;
+}
+
+.totalPortfoliosInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    margin-top: 100px;
+    width: auto;
+    /* border: 1px solid white; */
+    margin: 20px 30px 0;
+}
+
+.totalPotrfolioStats {
+    display: flex;
+    height: auto;
+    width: auto;
+    margin-top: 100px;
+    /* border: 1px solid white; */
+    margin: 20px 30px 0;
+}
+
+.totalPortfoliosValueInfo {
+    /* border: 1px solid red; */
+    width: auto;
+}
+
+.percentChange {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.createButtonContainer {
+    display: flex;
+    align-items: center;
+    /* border: 1px solid red; */
+    width: auto;
+}
+
+.createButton {
+    padding: 5px;
+    border-radius: 10px;
+    background: #35b17f;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'DM Sans';
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.createButton:hover {
+    color: black;
+    background: #6CCC97;
+}
+
+
+.miniStats {
+    /* border: 2px solid #AEAEAE; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 80px;
+    width: auto;
+    background-color: black;
+}
+
+.upperText {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+.lowerText {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+}
+
+.portfoliosListContainer {
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    width: auto;
+    margin: 20px 30px 0;
+    /* background-color: black; */
+    border-radius: 5px;
+    /* border: 2px solid #AEAEAE; */
+}
+
+.portfolioContainer {
+    display: flex;
+    border: 1px solid white;
+    width: 100%;
+    height: 80px;
+}
