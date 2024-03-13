@@ -30,7 +30,7 @@ fastify.get('/server/test', async (request, reply) => {
 });
 
 // Run the server!
-fastify.listen({ port: 3005 }, (err) => {
+fastify.listen({ port: process.env.PORT }, (err) => {
   if (err) {
     fastify.log.error(err);
     process.exit(1);
