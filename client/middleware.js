@@ -6,9 +6,8 @@ import {
 
 export default withMiddlewareAuthRequired(async function middleware(req) {
   const path = req.nextUrl.pathname.replace('/api/', '');
-  const EXTERNAL_API_URL = 'http://localhost:3005';
   const res = NextResponse.rewrite(
-    `${EXTERNAL_API_URL}/${path}${req.nextUrl.search}`,
+    `${process.env.API_LINK}/${path}${req.nextUrl.search}`,
     req.url
   );
   const user = await getSession(req, res);

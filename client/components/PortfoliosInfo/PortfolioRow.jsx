@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import Image from 'next/image'
 import styles from './portfoliosinfo.module.css';
 import MiniStats from './MiniStats';
 import TotalPortfoliosInfo from './TotalPortfoliosInfo';
@@ -15,20 +16,32 @@ import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
+function formatDate(dateString) {
+    const date = new Date(dateString);
+
+    // Format the day
+    const day = date.getDate();
+
+    // Get the month name
+    const monthNames = [
+        "January", "February", "March", "April", "May", "June", "July",
+        "August", "September", "October", "November", "December"
+    ];
+    const monthName = monthNames[date.getMonth()];
+
+    // Format the year
+    const year = date.getFullYear();
+
+    // Construct the formatted date string
+    const formattedDate = `${day} ${monthName}, ${year}`;
+
+    return formattedDate;
+}
 
 function PortfolioRow({ portfolioData }) {
     const [open, setOpen] = useState(false);
 
-    const [portfolio, setPortfolio] = useState({
-        "id": 1,
-        "uuid": "48995826-0d2e-40ed-97e2-4c14e710b84d", "userId": "google-oauth2|116450147994105467130",
-        "title": "test", "currencyId": 1, "visibility": false,
-        "createdAt": "2024-03-10T18:20:27.528Z", "updatedAt": "2024-03-10T18:20:54.638Z",
-        "Currency": {
-            "id": 1, "name": "USD", "code": "usd",
-            "createdAt": "2024-03-10T18:21:45.952Z", "updatedAt": "2024-03-10T18:21:45.952Z"
-        }
-    })
+    const [portfolio, setPortfolio] = useState(portfolioData)
 
     return (
         <Fragment>
@@ -36,17 +49,43 @@ function PortfolioRow({ portfolioData }) {
                 key={portfolio.uuid}
                 sx={{
                     '&:last-child td, &:last-child th': { border: 0 },
-                    '& th': { color: 'white', },
-                    '& td': { color: 'white', },
+                    '& th': { color: 'white', fontFamily: 'DM Sans' },
+                    '& td': { color: 'white', fontFamily: 'DM Sans' },
                 }}
             >
                 <TableCell component="th" scope="row" >
                     {portfolio.title}
                 </TableCell>
-                <TableCell align="right">32 208,59 $</TableCell>
-                <TableCell align="right">1 911,26 $	</TableCell>
-                <TableCell align="right">12 316,04 $</TableCell>
-                <TableCell align="right">20 286,26 $</TableCell>
+                <TableCell align="right">{portfolio?.totalValue.toFixed(2)} {portfolio['Currency']?.symbol}
+                </TableCell>
+                <TableCell align="right">
+                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
+                        <Box>
+                            {portfolio?.dailyGain.toFixed(2)} {portfolio['Currency']?.symbol}
+                        </Box>
+                        <Box sx={{
+                            backgroundColor: (parseFloat(portfolio?.dailyChangePercentage) > 0) ? '#2F4020' : '#5D2626',
+                            borderRadius: '5px',
+                            padding: '0 3px',
+                            marginLeft: '5px'
+                        }}>{portfolio?.dailyChangePercentage} %</Box>
+                    </Box>
+                </TableCell>
+                <TableCell align="right">
+                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
+                        <Box>
+                            {portfolio?.totalGain.toFixed(2)} {portfolio['Currency']?.symbol}
+                        </Box>
+                        <Box sx={{
+                            backgroundColor: (parseFloat(portfolio?.totalChangePercentage) > 0) ? '#2F4020' : '#5D2626',
+                            borderRadius: '5px',
+                            padding: '0 3px',
+                            marginLeft: '5px'
+                        }}>{portfolio?.totalChangePercentage} %</Box>
+                    </Box>
+
+                </TableCell>
+                <TableCell align="right">{portfolio?.totalInvested.toFixed(2)} {portfolio['Currency']?.symbol}</TableCell>
                 <TableCell align="right">
                     <IconButton
                         aria-label="expand row"
@@ -65,8 +104,8 @@ function PortfolioRow({ portfolioData }) {
             }}>
                 <TableCell style={{ padding: 0, }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box sx={{ marginTop: 0, marginBottom: 2, }}>
-                            <Typography paddingLeft='10px' paddingTop='10px' variant="h6" gutterBottom component="div">
+                        <Box sx={{ marginTop: 0, marginBottom: 0, }}>
+                            <Typography paddingLeft='10px' paddingTop='10px' variant="h6" fontFamily='DM Sans' gutterBottom component="div">
                                 Transactions
                             </Typography>
                             <Table size="small" sx={{
@@ -84,20 +123,72 @@ function PortfolioRow({ portfolioData }) {
                                         },
                                     }}>
                                         <TableCell>Type</TableCell>
-                                        <TableCell>Coin</TableCell>
-                                        <TableCell align="right">Amount</TableCell>
-                                        <TableCell align="right">Total price ($)</TableCell>
+                                        <TableCell >Quantity</TableCell>
+                                        <TableCell align="right">Price</TableCell>
+                                        <TableCell align="right">Total price</TableCell>
                                     </TableRow>
                                 </TableHead>
-                                <TableBody>
-                                    <TableRow key={portfolio.uuid}>
-                                        <TableCell component="th" scope="row">Sell 20.02.2024 </TableCell>
-                                        <TableCell>Bitcoin</TableCell>
-                                        <TableCell align="right">0.33</TableCell>
-                                        <TableCell align="right">
-                                            2342,34 $
-                                        </TableCell>
-                                    </TableRow>
+                                <TableBody sx={{
+                                    '& th': {
+                                        borderTop: '4px solid #1A1A1A',
+                                    },
+                                    '& td': {
+                                        borderTop: '4px solid #1A1A1A',
+                                    },
+
+                                }}>
+                                    {
+                                        portfolio['Transactions'] && portfolio['Transactions'].map((el, index) =>
+                                        (
+                                            <TableRow key={portfolio.index}>
+                                                <TableCell component="th" scope="row">
+                                                    <Box sx={{
+                                                        display: 'flex',
+                                                        flexDirection: 'row',
+                                                        alignItems: 'center'
+                                                        // fontSize: '18px',
+                                                        // backgroundColor: (el.amount > 0) ? '#2F4020' : '#5D2626'
+                                                    }}>
+                                                        <Image width={30} height={30} src={el['Coin']?.image}>
+                                                        </Image>
+                                                        <Box sx={{
+                                                            // backgroundColor: '#2F4020'
+                                                            display: 'flex',
+                                                            flexDirection: 'column',
+                                                            marginLeft: '10px'
+                                                        }}>
+                                                            <Typography sx={{
+                                                                fontSize: '18px',
+                                                            }}>
+                                                                {`${(el.amount > 0) ? 'Buy' : 'Sell'} ${el['Coin']?.symbol.toUpperCase()}`}
+                                                            </Typography>
+                                                            <Typography sx={{
+                                                                fontFamily: 'DM Sans',
+                                                                fontSize: '12px',
+                                                            }}>
+                                                                {formatDate(el.date)}
+                                                            </Typography>
+
+                                                        </Box>
+                                                    </Box>
+
+
+                                                </TableCell>
+                                                <TableCell>
+                                                    <Box sx={{
+                                                        color: (el.amount > 0) ?'#34B17F' : '#E85E5E'
+                                                    }}>
+                                                    {el.amount > 0 ? '+' : '-'}{el.amount} {el['Coin']?.symbol.toUpperCase()}
+                                                    </Box>
+                                                    </TableCell>
+                                                <TableCell align="right">{el.costPerUnitInCurrency} {portfolio['Currency']?.symbol}</TableCell>
+                                                <TableCell align="right">
+                                                    {(el.amount * el.costPerUnitInCurrency).toFixed(2)} {portfolio['Currency']?.symbol}
+                                                </TableCell>
+                                            </TableRow>
+                                        ))
+                                    }
+
                                 </TableBody>
                             </Table>
                         </Box>

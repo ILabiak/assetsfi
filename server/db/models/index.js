@@ -9,7 +9,9 @@ const basename = path.basename(__filename);
 const db = {};
 require('dotenv').config();
 
-const sequelize = new Sequelize(process.env.POSTGRES);
+const sequelize = new Sequelize(process.env.POSTGRES, {
+  logging: false
+});
 
 fs.readdirSync(__dirname)
   .filter(

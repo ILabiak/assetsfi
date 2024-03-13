@@ -199,7 +199,7 @@ const calculatePortfolioStats = async (portfolio) => {
       responseObj[transaction['Coin']['code']].current_price;
     let transaction24HValue =
       transaction.amount *
-      (responseObj[transaction['Coin']['code']].current_price +
+      (responseObj[transaction['Coin']['code']].current_price -
         responseObj[transaction['Coin']['code']].price_change_24h);
 
     portfolio.dailyGain += transactionNowValue - transaction24HValue;

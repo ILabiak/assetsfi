@@ -20,36 +20,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 function PortfoliosList({ portfoliosData }) {
     const [open, setOpen] = useState(false);
 
-    const [portfolios, setPortfolios] = useState([{
-        "id": 1,
-        "uuid": "48995826-0d2e-40ed-97e2-4c14e710b84d", "userId": "google-oauth2|116450147994105467130",
-        "title": "test", "currencyId": 1, "visibility": false,
-        "createdAt": "2024-03-10T18:20:27.528Z", "updatedAt": "2024-03-10T18:20:54.638Z",
-        "Currency": {
-            "id": 1, "name": "USD", "code": "usd",
-            "createdAt": "2024-03-10T18:21:45.952Z", "updatedAt": "2024-03-10T18:21:45.952Z"
-        }
-    },
-    {
-        "id": 2,
-        "uuid": "48995826-0d2e-40ed-97e2-4c14e710b2344d", "userId": "google-oauth2|116450147994105467130",
-        "title": "Portfolio2", "currencyId": 1, "visibility": false,
-        "createdAt": "2024-03-10T18:20:27.528Z", "updatedAt": "2024-03-10T18:20:54.638Z",
-        "Currency": {
-            "id": 1, "name": "USD", "code": "usd",
-            "createdAt": "2024-03-10T18:21:45.952Z", "updatedAt": "2024-03-10T18:21:45.952Z"
-        }
-    },
-    {
-        "id": 2,
-        "uuid": "48995826-0d2e-40ed-97e2-4c14e710b2344d", "userId": "google-oauth2|116450147994105467130",
-        "title": "Portfolio2", "currencyId": 1, "visibility": false,
-        "createdAt": "2024-03-10T18:20:27.528Z", "updatedAt": "2024-03-10T18:20:54.638Z",
-        "Currency": {
-            "id": 1, "name": "USD", "code": "usd",
-            "createdAt": "2024-03-10T18:21:45.952Z", "updatedAt": "2024-03-10T18:21:45.952Z"
-        }
-    }])
+    const [portfolios, setPortfolios] = useState(portfoliosData)
 
     return (
         <Box className={styles.portfoliosListContainer}>
@@ -76,7 +47,7 @@ function PortfoliosList({ portfoliosData }) {
                         '& td': {
                             borderBottom: 'none',
                         },
-                        "& .MuiTableRow-root th:first-child": {
+                        "& .MuiTableRow-root th:first-of-type": {
                             borderTopLeftRadius: "10px",
                             borderBottomLeftRadius: "10px",
                         },
@@ -87,7 +58,7 @@ function PortfoliosList({ portfoliosData }) {
                     }} >
                         <TableRow sx={{
                             '& th': {
-                                color: 'white',
+                                color: '#AEAEAE',
                                 fontSize: '12px',
                                 fontFamily: 'DM Sans',
                                 backgroundColor: 'black',
