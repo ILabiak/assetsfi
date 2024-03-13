@@ -53,6 +53,14 @@ function PortfoliosList({ portfoliosData }) {
 
     return (
         <Box className={styles.portfoliosListContainer}>
+            <Typography sx={{
+                fontFamily: 'DM Sans',
+                fontSize: '16px',
+                color: '#AEAEAE',
+                textDecoration: 'none',
+            }}>
+                My Portfolios
+            </Typography>
             <TableContainer sx={{
                 borderRadius: '5px'
             }}>

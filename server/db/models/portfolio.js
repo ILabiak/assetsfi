@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       Portfolio.belongsTo(models.Currency, {
         foreignKey: 'currencyId'
       });
+      Portfolio.hasMany(models.Transaction, {
+        foreignKey: 'portfolioId'
+      });
     }
   }
   Portfolio.init(

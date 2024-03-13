@@ -85,7 +85,8 @@
 
 .portfoliosListContainer {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: flex-start;
     height: auto;
     width: auto;
     margin: 20px 30px 0;

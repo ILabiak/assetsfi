@@ -1,4 +1,4 @@
-const fastify = require('fastify')({ logger: true });
+const fastify = require('fastify')({ logger: false });
 const jwt = require('jsonwebtoken');
 
 fastify.register(require('@fastify/cors'), {

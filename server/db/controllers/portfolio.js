@@ -1,7 +1,10 @@
 'use strict';
 const Portfolio = require('../models').Portfolio;
 const Currency = require('../models').Currency;
+const Transaction = require('../models').Transaction;
+const Coin = require('../models').Coin;
 const sequelize = require('sequelize');
+const { calculatePortfolioStats } = require('./utils');
 
 module.exports = {
   getByUUID(req, res) {
@@ -24,35 +27,41 @@ module.exports = {
       where: {
         userId: req.cookies.user_id,
       },
-      include: Currency
+      // raw: true,
+      // nest: true,
+      include: [
+        {
+          model: Transaction,
+          include: [
+            {
+              model: Coin,
+            },
+          ],
+        },
+        {
+          model: Currency,
+        },
+      ],
     }).then(async (portfolios) => {
       if (!portfolios) {
         return res.status(400).send({
           message: 'Portfolios Not Found',
         });
       }
-      res.status(200).send(portfolios);
+      const results = [];
+      const rawData = portfolios.map((node) => node.get({ plain: true }));
+      try {
+        for await (let portfolio of rawData) {
+          portfolio = await calculatePortfolioStats(portfolio);
+        }
+        res.status(200).send(rawData);
+      } catch (err) {
+        console.log(err);
+      }
     });
   },
 
-  getBySectionId(req, res) {
-    return Portfolio.findAll({
-      where: {
-        section_id: req.params.section_id,
-      },
-    })
-      .then(async (portfolios) => {
-        const portfoliosRes = [];
-        for (const portfolio of portfolios) {
-          const handledPortfolio = await handlePortfolio(portfolio, res);
-          portfoliosRes.push(handledPortfolio);
-        }
-        res.status(200).send(portfoliosRes);
-      })
-      .catch((error) => {
-        res.status(400).send(error);
-      });
-  },
+
 
   add(req, res) {
     return Portfolio.create({
