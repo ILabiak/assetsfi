@@ -25,7 +25,7 @@ module.exports = {
   getUserPortfolios(req, res) {
     return Portfolio.findAll({
       where: {
-        userId: req.cookies.user_id,
+        userId: req.user.sub,
       },
       // raw: true,
       // nest: true,

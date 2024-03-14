@@ -9,6 +9,7 @@ const basename = path.basename(__filename);
 const db = {};
 require('dotenv').config();
 
+// console.log(process.env)
 const sequelize = new Sequelize(process.env.POSTGRES, {
   logging: false
 });

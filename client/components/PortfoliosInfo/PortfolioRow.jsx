@@ -64,7 +64,7 @@ function PortfolioRow({ portfolioData }) {
                             {portfolio?.dailyGain.toFixed(2)} {portfolio['Currency']?.symbol}
                         </Box>
                         <Box sx={{
-                            backgroundColor: (parseFloat(portfolio?.dailyChangePercentage) > 0) ? '#2F4020' : '#5D2626',
+                            backgroundColor: (parseFloat(portfolio?.dailyChangePercentage) > 0) ? '#34B17F' : '#5D2626',
                             borderRadius: '5px',
                             padding: '0 3px',
                             marginLeft: '5px'
@@ -77,7 +77,7 @@ function PortfolioRow({ portfolioData }) {
                             {portfolio?.totalGain.toFixed(2)} {portfolio['Currency']?.symbol}
                         </Box>
                         <Box sx={{
-                            backgroundColor: (parseFloat(portfolio?.totalChangePercentage) > 0) ? '#2F4020' : '#5D2626',
+                            backgroundColor: (parseFloat(portfolio?.totalChangePercentage) > 0) ? '#34B17F' : '#5D2626',
                             borderRadius: '5px',
                             padding: '0 3px',
                             marginLeft: '5px'

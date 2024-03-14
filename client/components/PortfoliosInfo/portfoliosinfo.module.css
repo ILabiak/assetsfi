@@ -39,22 +39,6 @@
     width: auto;
 }
 
-.createButton {
-    padding: 5px;
-    border-radius: 10px;
-    background: #35b17f;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    font-family: 'DM Sans';
-    transition: color 0.8s ease, background 0.8s ease;
-}
-
-.createButton:hover {
-    color: black;
-    background: #6CCC97;
-}
-
 
 .miniStats {
     /* border: 2px solid #AEAEAE; */

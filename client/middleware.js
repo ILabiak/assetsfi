@@ -11,8 +11,10 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
     req.url
   );
   const user = await getSession(req, res);
+  // console.log(user)
   //   console.log(user?.user?.sub);
-  res.cookies.set('user_id', user?.user?.sub);
+  // res.cookies.set('user_id', user?.user?.sub);
+  res.headers.set('Authorization', `Bearer ${user?.accessToken}`);
 
   return res;
 });

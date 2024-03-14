@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styles from './portfoliosinfo.module.css';
+import CreatePortfolioButton from '@/components/CreatePortfolioButton/CreatePortfolioButton';
 import { Typography, Box } from '@mui/material';
 import { useRouter } from 'next/navigation'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
@@ -68,7 +69,7 @@ function TotalPortfoliosInfo({ value, percentage }) {
                     fontSize: '20px',
                     marginRight: '20px'
                 }} />
-                <Box className={styles.createButton}>Create portfolio</Box>
+                <CreatePortfolioButton/>
             </Box>
         </Box>
 
