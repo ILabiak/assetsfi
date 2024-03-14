@@ -53,7 +53,7 @@
     /* border: 1px solid red; */
 }
 
-.buttonsContainer{
+.buttonsContainer {
     display: flex;
     justify-content: flex-end;
     width: auto;
@@ -77,4 +77,13 @@
 .createPortfolioButton:hover {
     color: black;
     background: #6CCC97;
+}
+
+.inputsContainer input:-webkit-autofill,
+.inputsContainer input:-webkit-autofill:hover,
+.inputsContainer input:-webkit-autofill:focus,
+.inputsContainer input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #313337 inset !important;
+    -webkit-text-fill-color: #E8E9EB;
+    font-family: 'DM Sans';;
 }

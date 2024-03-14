@@ -99,9 +99,10 @@ function PortfolioRow({ portfolioData }) {
                     </IconButton>
                 </TableCell>
             </TableRow>
-            <TableRow sx={{
-                '& th': { color: 'white' }, '& td': { color: 'white' },
-            }}>
+            <TableRow key={`${portfolio.uuid}-transactionsTable`}
+                sx={{
+                    '& th': { color: 'white' }, '& td': { color: 'white' },
+                }}>
                 <TableCell style={{ padding: 0, }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ marginTop: 0, marginBottom: 0, }}>
@@ -114,16 +115,18 @@ function PortfolioRow({ portfolioData }) {
 
                             }}>
                                 <TableHead>
-                                    <TableRow sx={{
-                                        '& th': {
-                                            color: 'white',
-                                            fontSize: '12px',
-                                            fontFamily: 'DM Sans',
-                                            backgroundColor: 'black',
-                                        },
-                                    }}>
+                                    <TableRow
+                                        key={`${portfolio.uuid}-transactionsHead`}
+                                        sx={{
+                                            '& th': {
+                                                color: 'white',
+                                                fontSize: '12px',
+                                                fontFamily: 'DM Sans',
+                                                backgroundColor: 'black',
+                                            },
+                                        }}>
                                         <TableCell>Type</TableCell>
-                                        <TableCell >Quantity</TableCell>
+                                        <TableCell>Quantity</TableCell>
                                         <TableCell align="right">Price</TableCell>
                                         <TableCell align="right">Total price</TableCell>
                                     </TableRow>
@@ -140,7 +143,7 @@ function PortfolioRow({ portfolioData }) {
                                     {
                                         portfolio['Transactions'] && portfolio['Transactions'].map((el, index) =>
                                         (
-                                            <TableRow key={portfolio.index}>
+                                            <TableRow key={`${index}`}>
                                                 <TableCell component="th" scope="row">
                                                     <Box sx={{
                                                         display: 'flex',
@@ -149,7 +152,7 @@ function PortfolioRow({ portfolioData }) {
                                                         // fontSize: '18px',
                                                         // backgroundColor: (el.amount > 0) ? '#2F4020' : '#5D2626'
                                                     }}>
-                                                        <Image width={30} height={30} src={el['Coin']?.image}>
+                                                        <Image alt='coinImg' width={30} height={30} src={el['Coin']?.image}>
                                                         </Image>
                                                         <Box sx={{
                                                             // backgroundColor: '#2F4020'
@@ -174,13 +177,14 @@ function PortfolioRow({ portfolioData }) {
 
 
                                                 </TableCell>
-                                                <TableCell>
+                                                <TableCell
+                                                >
                                                     <Box sx={{
-                                                        color: (el.amount > 0) ?'#34B17F' : '#E85E5E'
+                                                        color: (el.amount > 0) ? '#34B17F' : '#E85E5E'
                                                     }}>
-                                                    {el.amount > 0 ? '+' : '-'}{el.amount} {el['Coin']?.symbol.toUpperCase()}
+                                                        {el.amount > 0 ? '+' : '-'}{el.amount} {el['Coin']?.symbol.toUpperCase()}
                                                     </Box>
-                                                    </TableCell>
+                                                </TableCell>
                                                 <TableCell align="right">{el.costPerUnitInCurrency} {portfolio['Currency']?.symbol}</TableCell>
                                                 <TableCell align="right">
                                                     {(el.amount * el.costPerUnitInCurrency).toFixed(2)} {portfolio['Currency']?.symbol}

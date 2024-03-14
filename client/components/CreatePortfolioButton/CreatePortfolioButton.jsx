@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './createportfoliobutton.module.css';
-import { Button, Typography, Box, Backdrop, TextField } from '@mui/material';
+import { Button, Typography, Box, Backdrop, TextField, Dialog } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const currencies = [
@@ -21,9 +21,15 @@ const currencies = [
 function CreatePortfolioButton({ isLarge }) {
     const [backdropOpen, setBackdropOpen] = useState(false)
     const [name, setName] = useState("");
+    const portfolioCreateRef = useRef(null);
 
-    const handleClose = () => {
-        // setBackdropOpen(false);
+    const handleClose = (event) => {
+        if (
+            portfolioCreateRef.current &&
+            !portfolioCreateRef.current.contains(event.target)
+        ) {
+            setBackdropOpen(false);
+        }
     };
     const handleOpen = () => {
         setBackdropOpen(true);
@@ -31,13 +37,17 @@ function CreatePortfolioButton({ isLarge }) {
 
     return (
         <React.Fragment>
-            <Box sx={{
-                padding: isLarge ? '10px 30px' : '5px',
-                marginTop: isLarge ? '10px' : '0px',
-            }} className={styles.createButton}>
+            <Box
+                onClick={handleOpen}
+                sx={{
+                    padding: isLarge ? '10px 30px' : '5px',
+                    marginTop: isLarge ? '10px' : '0px',
+                }} className={styles.createButton}>
                 Create portfolio
             </Box>
             <Backdrop
+                onClick={handleClose}
+
                 sx={{
                     color: '#fff',
                     zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -45,9 +55,8 @@ function CreatePortfolioButton({ isLarge }) {
                     backdropFilter: 'blur(5px)'
                 }}
                 open={backdropOpen}
-                onClick={handleClose}
             >
-                <Box className={styles.createPortfolioContainer}>
+                <Box className={styles.createPortfolioContainer} ref={portfolioCreateRef}>
                     <Typography
                         sx={{
                             fontFamily: 'DM Sans',
@@ -86,7 +95,8 @@ function CreatePortfolioButton({ isLarge }) {
                                 input: {
                                     backgroundColor: '#313337',
                                     borderRadius: '5px',
-                                    color: '#E8E9EB'
+                                    color: '#E8E9EB',
+                                    fontSize: '16px',
                                 },
                                 '& .MuiOutlinedInput-root': {
                                     '&.Mui-focused fieldset': {
@@ -98,7 +108,8 @@ function CreatePortfolioButton({ isLarge }) {
                                     '&:hover fieldset': {
                                         borderColor: 'white',
                                     },
-                                }
+                                },
+                                
                             }}
                         />
                         <TextField

@@ -13,13 +13,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 function PortfoliosInfo({ user, error, isLoading }) {
-    const [portfloiosData, setPortfoliosData] = useState({})
+    const [portfloiosData, setPortfoliosData] = useState()
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // const response = await fetch('/api/server/portfoliosdata');
-                const response = await fetch('/api/');
+                const response = await fetch('/api/server/portfoliosdata');
                 if (response.status === 200) {
                     const data = await response.json();
                     setPortfoliosData(data)
@@ -99,17 +98,6 @@ function PortfoliosInfo({ user, error, isLoading }) {
                     </Box>
                 )
             }
-
-            {/* {
-                portfloiosData ? (
-                    
-                ) : (
-                    
-                )
-            } */}
-
-
-
         </Box>
     );
 }

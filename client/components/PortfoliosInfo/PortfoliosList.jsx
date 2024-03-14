@@ -102,34 +102,7 @@ function PortfoliosList({ portfoliosData }) {
                         },
                     }}>
                         {portfolios.map((el) => (
-                            // <TableRow
-                            //     key={el.uuid}
-                            //     sx={{
-                            //         '&:last-child td, &:last-child th': { border: 0 },
-                            //         '& th': { color: 'white' }, '& td': { color: 'white' }
-                            //     }}
-                            // >
-                            //     <TableCell component="th" scope="row">
-                            //         {el.title}
-                            //     </TableCell>
-                            //     <TableCell align="right">32 208,59 $</TableCell>
-                            //     <TableCell align="right">1 911,26 $	</TableCell>
-                            //     <TableCell align="right">12 316,04 $</TableCell>
-                            //     <TableCell align="right">20 286,26 $</TableCell>
-                            //     <TableCell align="right">
-                            //     <IconButton
-                            //             aria-label="expand row"
-                            //             size="small"
-                            //             sx={{
-                            //                 color: 'white'
-                            //             }}
-                            //             onClick={() => setOpen(!open)}
-                            //         >
-                            //             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                            //         </IconButton>
-                            //     </TableCell>
-                            // </TableRow>
-                            <PortfolioRow portfolioData={el} />
+                            <PortfolioRow key={`${el.uuid}-mainRow`} portfolioData={el} />
                         ))}
                     </TableBody>
                 </Table>
