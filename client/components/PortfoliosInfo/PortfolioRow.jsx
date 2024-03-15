@@ -4,6 +4,7 @@ import styles from './portfoliosinfo.module.css';
 import MiniStats from './MiniStats';
 import TotalPortfoliosInfo from './TotalPortfoliosInfo';
 import MenuDeletePortfolio from '@/components/MenuDeletePortfolio/MenuDeletePortfolio'
+import MenuChangePortfolio from '@/components/MenuChangePortfolio/MenuChangePortfolio'
 import {
     Typography, Box, Table, TableCell, TableContainer,
     TableHead, TableRow, TableBody, Collapse
@@ -157,15 +158,16 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                         open={menuOpen}
                         onClose={handleMenuClose}
                     >
-                        <MenuItem key={'renamePortfolio'} >
+                        {/* <MenuItem key={'renamePortfolio'} >
                             Rename portfolio
-                        </MenuItem>
+                        </MenuItem> */}
                         {/* <MenuItem key={'deletePortfolio'} >
                             Delete portfolio
                         </MenuItem> */}
                         {/* {options.map((option) => (
                             
                         ))} */}
+                        <MenuChangePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange}/>
                         <MenuDeletePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange}/>
                     </Menu>
                 </TableCell>
@@ -198,6 +200,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                                         }}>
                                         <TableCell>Type</TableCell>
                                         <TableCell>Quantity</TableCell>
+                                        <TableCell align="right">Fees</TableCell>
                                         <TableCell align="right">Price</TableCell>
                                         <TableCell align="right">Total price</TableCell>
                                     </TableRow>
@@ -256,6 +259,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                                                         {el.amount > 0 ? '+' : '-'}{el.amount} {el['Coin']?.symbol.toUpperCase()}
                                                     </Box>
                                                 </TableCell>
+                                                <TableCell align="right">{el.fees} {portfolio['Currency']?.symbol}</TableCell>
                                                 <TableCell align="right">{el.costPerUnitInCurrency} {portfolio['Currency']?.symbol}</TableCell>
                                                 <TableCell align="right">
                                                     {(el.amount * el.costPerUnitInCurrency).toFixed(2)} {portfolio['Currency']?.symbol}

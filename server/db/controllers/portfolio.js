@@ -83,6 +83,29 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
+  update(req, res) {
+    return Portfolio.findOne({
+      where: {
+        userId: req.user.sub,
+        uuid: req.body.uuid,
+      },
+    })
+      .then((portfolio) => {
+        if (!portfolio) {
+          return res.status(404).send({
+            message: 'Portfolio Not Found',
+          });
+        }
+        return portfolio
+          .update({
+            title: req.body.name || portfolio.title,
+          })
+          .then(() => res.status(200).send(portfolio))
+          .catch((error) => res.status(400).send(error));
+      })
+      .catch((error) => res.status(400).send(error));
+  },
+
   delete(req, res) {
     return Portfolio.findOne({
       where: {
