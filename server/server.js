@@ -1,5 +1,4 @@
-const fastify = require('fastify')({ logger: false });
-const jwt = require('jsonwebtoken');
+const fastify = require('fastify')({ logger: true });
 const fs = require('fs');
 
 fastify.register(require('./routes'));
@@ -18,30 +17,28 @@ fastify.register(require('@fastify/jwt'), {
   secret: { public: fs.readFileSync('./public.rem') },
 });
 
-fastify.addHook('onRequest', async (request, reply) => {
+fastify.addHook('onRequest', async (req, res) => {
   try {
-    const decoded = await request.jwtVerify();
-    // console.log(JSON.stringify(decoded, null,2))
+    if (req.routeOptions.url === '/currencies') {
+      return;
+    }
+    await req.jwtVerify();
   } catch (err) {
-    reply.send(err);
+    res.send(err);
   }
 });
 
-// Declare a route
-fastify.get('/', async (request, reply) => {
-  // console.log(request.user)
-  reply.send({ hello: 'world' });
+fastify.get('/', async (req, res) => {
+  // console.log(req.user)
+  res.send({ hello: 'world' });
 });
 
-fastify.get('/server/test', async (request, reply) => {
-  //   console.log(request.cookies);
-  // console.log(request.user)
-
+fastify.get('/test', async (req, res) => {
   try {
-    reply.send({ message: 'API call successful' });
+    res.send({ message: 'API call successful' });
   } catch (error) {
     console.error('Error verifying token:', error);
-    reply.status(401).send({ message: 'Unauthorized' });
+    res.status(401).send({ message: 'Unauthorized' });
   }
 });
 

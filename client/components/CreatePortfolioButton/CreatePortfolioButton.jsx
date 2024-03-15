@@ -1,27 +1,31 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './createportfoliobutton.module.css';
-import { Button, Typography, Box, Backdrop, TextField, Dialog } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Typography, Box, Backdrop, TextField } from '@mui/material';
 
-const currencies = [
-    {
-        value: 'USD',
-        label: 'USD $',
-    },
-    {
-        value: 'EUR',
-        label: 'EUR €',
-    },
-    {
-        value: 'UAH',
-        label: 'UAH ₴',
-    },
-];
-
-function CreatePortfolioButton({ isLarge }) {
+function CreatePortfolioButton({ isLarge, handlePortfoliosChange }) {
+    const [currencies, setCurrencies] = useState();
     const [backdropOpen, setBackdropOpen] = useState(false)
+    const [createButtonActive, setCreateButtonActive] = useState(false)
     const [name, setName] = useState("");
+    const [currencyId, setCurrencyId] = useState(1);
     const portfolioCreateRef = useRef(null);
+
+    useEffect(() => {
+        const fetchCurrencies = async () => {
+            try {
+                const response = await fetch('/api/server/currencies');
+                if (response.status === 200) {
+                    const data = await response.json();
+                    setCurrencies(data)
+                } else {
+                    console.log('Some other error');
+                }
+            } catch (error) {
+                console.log('Error while getting portfolios data', error);
+            }
+        }
+        fetchCurrencies().catch(console.error)
+    }, []);
 
     const handleClose = (event) => {
         if (
@@ -34,6 +38,38 @@ function CreatePortfolioButton({ isLarge }) {
     const handleOpen = () => {
         setBackdropOpen(true);
     };
+
+    const handleNameChange = (value) => {
+        setName(value)
+        if (value.length > 0 && value.length < 50
+            && value.match(/^[A-Za-z0-9\s\-_,\.;:()]+$/)) {
+            setCreateButtonActive(true)
+        } else {
+            setCreateButtonActive(false)
+        }
+    }
+
+    const handlePortfolioCreate = async () => {
+        if (!createButtonActive) return;
+        setCreateButtonActive(false)
+        console.log({ name, currencyId })
+        // console.log('123')
+        const response = await fetch('/api/server/portfolio/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, currencyId }),
+            credentials: 'include'
+        });
+        if (response.status === 201) {
+            setBackdropOpen(false)
+            handlePortfoliosChange();
+        } else {
+            console.log('Some other error');
+            setCreateButtonActive(true)
+        }
+    }
 
     return (
         <React.Fragment>
@@ -77,7 +113,7 @@ function CreatePortfolioButton({ isLarge }) {
                             label="Name"
                             value={name}
                             onChange={(e) => {
-                                setName(e.target.value);
+                                handleNameChange(e.target.value);
                             }}
                             fullWidth
                             sx={{
@@ -109,15 +145,19 @@ function CreatePortfolioButton({ isLarge }) {
                                         borderColor: 'white',
                                     },
                                 },
-                                
+
                             }}
                         />
-                        <TextField
+                        {currencies && <TextField
                             id="outlined-select-currency-native"
                             select
                             label="Currency"
+                            value={currencyId}
+                            onChange={(event) => {
+                                setCurrencyId(parseInt(event.target.value));
+                            }}
                             fullWidth
-                            defaultValue="USD"
+                            // defaultValue={currencies[0]?.id}
                             SelectProps={{
                                 native: true,
                             }}
@@ -149,19 +189,24 @@ function CreatePortfolioButton({ isLarge }) {
                             }}
                         >
                             {currencies.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
+                                <option key={option.id} value={option.id}>
+                                    {option.name}
                                 </option>
                             ))}
                         </TextField>
+                        }
                     </Box>
                     <Box className={styles.buttonsContainer}>
-                        <Box className={styles.cancelButton} sx={{
-                            marginRight: '10px'
-                        }}>
+                        <Box className={styles.cancelButton}
+                            onClick={() => setBackdropOpen(false)}
+                            sx={{
+                                marginRight: '10px'
+                            }}>
                             Cancel
                         </Box>
-                        <Box className={styles.createPortfolioButton}>
+                        <Box
+                            onClick={handlePortfolioCreate}
+                            className={`${styles.createPortfolioButton} ${!createButtonActive ? styles.disabled : ''}`}>
                             Create
                         </Box>
 

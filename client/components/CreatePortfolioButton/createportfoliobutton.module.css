@@ -79,6 +79,10 @@
     background: #6CCC97;
 }
 
+.disabled{
+    opacity: .5;
+}
+
 .inputsContainer input:-webkit-autofill,
 .inputsContainer input:-webkit-autofill:hover,
 .inputsContainer input:-webkit-autofill:focus,

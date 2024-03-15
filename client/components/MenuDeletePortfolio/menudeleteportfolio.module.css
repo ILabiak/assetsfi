@@ -1,0 +1,96 @@
+.deletePortfolioContainer {
+    /* border: 1px solid white; */
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    min-width: 350px;
+    /* min-height: 45%; */
+    height: auto;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+}
+
+.warningContainer{
+border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.warning {
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+    height: auto;
+    padding: 10px 20px 10px 20px;
+    /* border: 1px white solid; */
+}
+
+.deletePortfolioButton {
+    width: 100%;
+    margin-left: 10px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: #A32F2F;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'DM Sans';
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.deletePortfolioButton:hover {
+    color: black;
+    background: #E19D9C;
+}
+
+.cancelButton {
+    width: 100%;
+    margin-right: 10px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    /* background: #313337; */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'DM Sans';
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.cancelButton:hover {
+    color: #6CCC97;
+    /* background: #6CCC97; */
+}
+
+.deleteIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #A32F2F;
+    border-radius: 5px;
+    padding: 10px;
+    height: 50px;
+    width: 50px;
+}
+
+.warningTextBox {
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 10px;
+}
+
+.disabled {
+    opacity: .5;
+}

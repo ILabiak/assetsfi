@@ -8,7 +8,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
-function TotalPortfoliosInfo({ value, percentage }) {
+function TotalPortfoliosInfo({ value, percentage, handlePortfoliosChange }) {
 
     return (
         <Box className={styles.totalPortfoliosInfoContainer}>
@@ -69,7 +69,7 @@ function TotalPortfoliosInfo({ value, percentage }) {
                     fontSize: '20px',
                     marginRight: '20px'
                 }} />
-                <CreatePortfolioButton/>
+                <CreatePortfolioButton handlePortfoliosChange={handlePortfoliosChange}/>
             </Box>
         </Box>
 

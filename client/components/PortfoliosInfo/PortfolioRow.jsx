@@ -3,6 +3,7 @@ import Image from 'next/image'
 import styles from './portfoliosinfo.module.css';
 import MiniStats from './MiniStats';
 import TotalPortfoliosInfo from './TotalPortfoliosInfo';
+import MenuDeletePortfolio from '@/components/MenuDeletePortfolio/MenuDeletePortfolio'
 import {
     Typography, Box, Table, TableCell, TableContainer,
     TableHead, TableRow, TableBody, Collapse
@@ -14,7 +15,11 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';;
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -38,10 +43,19 @@ function formatDate(dateString) {
     return formattedDate;
 }
 
-function PortfolioRow({ portfolioData }) {
+function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
     const [open, setOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const menuOpen = Boolean(anchorEl);
 
     const [portfolio, setPortfolio] = useState(portfolioData)
+
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <Fragment>
@@ -56,19 +70,22 @@ function PortfolioRow({ portfolioData }) {
                 <TableCell component="th" scope="row" >
                     {portfolio.title}
                 </TableCell>
-                <TableCell align="right">{portfolio?.totalValue.toFixed(2)} {portfolio['Currency']?.symbol}
+                <TableCell align="right">{`${portfolio?.totalValue.toFixed(2)} ${portfolio['Currency']?.symbol}`}
                 </TableCell>
                 <TableCell align="right">
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
-                            {portfolio?.dailyGain.toFixed(2)} {portfolio['Currency']?.symbol}
+                            {`${portfolio?.dailyGain.toFixed(2)} ${portfolio['Currency']?.symbol}`}
                         </Box>
-                        <Box sx={{
-                            backgroundColor: (parseFloat(portfolio?.dailyChangePercentage) > 0) ? '#34B17F' : '#5D2626',
-                            borderRadius: '5px',
-                            padding: '0 3px',
-                            marginLeft: '5px'
-                        }}>{portfolio?.dailyChangePercentage} %</Box>
+                        {!isNaN(portfolio?.dailyChangePercentage) &&
+                            <Box sx={{
+                                backgroundColor: (parseFloat(portfolio?.dailyChangePercentage) > 0) ? '#34B17F' : '#5D2626',
+                                borderRadius: '5px',
+                                padding: '0 3px',
+                                marginLeft: '5px'
+                            }}>{`${portfolio?.dailyChangePercentage} %`}
+                            </Box>
+                        }
                     </Box>
                 </TableCell>
                 <TableCell align="right">
@@ -76,12 +93,15 @@ function PortfolioRow({ portfolioData }) {
                         <Box>
                             {portfolio?.totalGain.toFixed(2)} {portfolio['Currency']?.symbol}
                         </Box>
-                        <Box sx={{
-                            backgroundColor: (parseFloat(portfolio?.totalChangePercentage) > 0) ? '#34B17F' : '#5D2626',
-                            borderRadius: '5px',
-                            padding: '0 3px',
-                            marginLeft: '5px'
-                        }}>{portfolio?.totalChangePercentage} %</Box>
+                        {!isNaN(portfolio?.totalChangePercentage) &&
+                            <Box sx={{
+                                backgroundColor: (parseFloat(portfolio?.totalChangePercentage) > 0) ? '#34B17F' : '#5D2626',
+                                borderRadius: '5px',
+                                padding: '0 3px',
+                                marginLeft: '5px'
+                            }}>
+                                {portfolio?.totalChangePercentage} %
+                            </Box>}
                     </Box>
 
                 </TableCell>
@@ -97,6 +117,57 @@ function PortfolioRow({ portfolioData }) {
                     >
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
+                    <IconButton
+                        aria-label="more"
+                        id="long-button"
+                        aria-controls={menuOpen ? 'long-menu' : undefined}
+                        aria-expanded={menuOpen ? 'true' : undefined}
+                        aria-haspopup="true"
+                        sx={{
+                            color: 'white'
+                        }}
+                        onClick={handleMenuClick}
+                    >
+                        <MoreVertIcon />
+                    </IconButton>
+                    <Menu
+                        id="portfolio-menu"
+                        sx={{
+                            mt: '-30px',
+                            ml: '-60px',
+                            '& .MuiPaper-root': {
+                                backgroundColor: '#000000',
+                                border: '1px solid white',
+                                borderRadius: '10px',
+                                color: 'white',
+                                padding: '0px',
+                            },
+                            '& .MuiMenuItem-root': {
+                                ml: '5px',
+                                mr: '5px',
+                                '&:hover': {
+                                    backgroundColor: "#34B17F",
+                                    borderRadius: '5px',
+                                },
+                            },
+                        }}
+                        anchorEl={anchorEl}
+                        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                        transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+                        open={menuOpen}
+                        onClose={handleMenuClose}
+                    >
+                        <MenuItem key={'renamePortfolio'} >
+                            Rename portfolio
+                        </MenuItem>
+                        {/* <MenuItem key={'deletePortfolio'} >
+                            Delete portfolio
+                        </MenuItem> */}
+                        {/* {options.map((option) => (
+                            
+                        ))} */}
+                        <MenuDeletePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange}/>
+                    </Menu>
                 </TableCell>
             </TableRow>
             <TableRow key={`${portfolio.uuid}-transactionsTable`}

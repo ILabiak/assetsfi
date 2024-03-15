@@ -12,24 +12,31 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
+
 function PortfoliosInfo({ user, error, isLoading }) {
     const [portfloiosData, setPortfoliosData] = useState()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('/api/server/portfoliosdata');
-                if (response.status === 200) {
-                    const data = await response.json();
-                    setPortfoliosData(data)
-                } else if (response.status === 401) {
-                } else {
-                    console.log('Some other error');
-                }
-            } catch (error) {
-                console.log('Error while getting portfolios data', error);
+    const fetchData = async () => {
+        try {
+            const response = await fetch('/api/server/portfoliosdata');
+            if (response.status === 200) {
+                const data = await response.json();
+                setPortfoliosData(data)
+            } else if (response.status === 401) {
+            } else {
+                console.log('Some other error');
             }
+        } catch (error) {
+            console.log('Error while getting portfolios data', error);
         }
+    }
+
+    const handlePortfoliosChange = () => {
+        setPortfoliosData()
+        fetchData().catch(console.error)
+    }
+
+    useEffect(() => {
         fetchData().catch(console.error)
     }, []);
 
@@ -45,7 +52,7 @@ function PortfoliosInfo({ user, error, isLoading }) {
                 portfloiosData ? (
                     portfloiosData.length > 0 ? (
                         <Box>
-                            <TotalPortfoliosInfo value={'13 324,32 $'} percentage={'12,35 %'} />
+                            <TotalPortfoliosInfo value={'13 324,32 $'} percentage={'12,35 %'} handlePortfoliosChange={handlePortfoliosChange} />
 
                             <Box className={styles.totalPotrfolioStats}>
                                 <Grid container columnSpacing={4} spacing={1}>
@@ -61,7 +68,7 @@ function PortfoliosInfo({ user, error, isLoading }) {
                                 </Grid>
                             </Box>
 
-                            <PortfoliosList portfoliosData={portfloiosData} />
+                            <PortfoliosList portfoliosData={portfloiosData} handlePortfoliosChange={handlePortfoliosChange} />
                         </Box>
                     ) : (
                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -85,7 +92,7 @@ function PortfoliosInfo({ user, error, isLoading }) {
                                 }}>
                                     You don't have any portfolios yet
                                 </Typography>
-                                <CreatePortfolioButton isLarge={true}/>
+                                <CreatePortfolioButton isLarge={true} handlePortfoliosChange={handlePortfoliosChange}/>
                             </Box>
 
                         </Box>

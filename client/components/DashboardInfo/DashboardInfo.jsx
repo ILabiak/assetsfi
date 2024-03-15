@@ -33,7 +33,7 @@ function DashboardInfo({ user, error, isLoading }) {
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Box className={styles.miniStat}>
-                            <MiniChartNoSSR colorTheme="dark" symbol='AAPLUSD' isTransparent='true' autosize='true' />
+                            <MiniChartNoSSR colorTheme="dark" symbol='NASDAQ:AAPL' isTransparent='true' autosize='true' />
                         </Box>
                     </Grid>
                 </Grid>

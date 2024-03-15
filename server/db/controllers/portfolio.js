@@ -4,6 +4,7 @@ const Currency = require('../models').Currency;
 const Transaction = require('../models').Transaction;
 const Coin = require('../models').Coin;
 const sequelize = require('sequelize');
+const { v4: uuidv4 } = require('uuid');
 const { calculatePortfolioStats } = require('./utils');
 
 module.exports = {
@@ -27,8 +28,6 @@ module.exports = {
       where: {
         userId: req.user.sub,
       },
-      // raw: true,
-      // nest: true,
       include: [
         {
           model: Transaction,
@@ -61,18 +60,36 @@ module.exports = {
     });
   },
 
-
-
   add(req, res) {
+    if (!req.body.name || !req.body.currencyId) {
+      res.status(400).send({
+        status: false,
+        message: 'Not enough data to create portfolio',
+      });
+    }
+    if (!req.user.sub) {
+      res.status(400).send({
+        status: false,
+        message: 'User not authorised',
+      });
+    }
     return Portfolio.create({
-      //
+      // uuid: uuidv4(),
+      userId: req.user.sub,
+      title: req.body.name,
+      currencyId: req.body.currencyId,
     })
-      .then((section) => res.status(201).send(section))
+      .then((portfolio) => res.status(201).send(portfolio))
       .catch((error) => res.status(400).send(error));
   },
 
   delete(req, res) {
-    return Portfolio.findByPk(req.params.id)
+    return Portfolio.findOne({
+      where: {
+        userId: req.user.sub,
+        uuid: req.body.uuid,
+      },
+    })
       .then((portfolio) => {
         if (!portfolio) {
           return res.status(400).send({

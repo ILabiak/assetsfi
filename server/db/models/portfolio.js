@@ -40,6 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       visibility: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: false
       },
     },
     {

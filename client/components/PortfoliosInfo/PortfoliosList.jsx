@@ -17,7 +17,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
-function PortfoliosList({ portfoliosData }) {
+function PortfoliosList({ portfoliosData, handlePortfoliosChange }) {
     const [open, setOpen] = useState(false);
 
     const [portfolios, setPortfolios] = useState(portfoliosData)
@@ -78,6 +78,7 @@ function PortfoliosList({ portfoliosData }) {
                         '& th': {
                             borderBottom: 'none',
                             backgroundColor: 'black',
+                            flexDirection: 'row',
                         },
                         '& td': {
                             borderBottom: 'none',
@@ -102,7 +103,7 @@ function PortfoliosList({ portfoliosData }) {
                         },
                     }}>
                         {portfolios.map((el) => (
-                            <PortfolioRow key={`${el.uuid}-mainRow`} portfolioData={el} />
+                            <PortfolioRow key={`${el.uuid}-mainRow`} portfolioData={el} handlePortfoliosChange={handlePortfoliosChange} />
                         ))}
                     </TableBody>
                 </Table>

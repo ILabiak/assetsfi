@@ -144,14 +144,12 @@ const coingeckoResponse = [
 const calculatePortfolioStats = async (portfolio) => {
   const uniqueCoins = {};
   const coingeckoCoins = [];
-  const currencies = new Set();
-  portfolio.dailyGain= 0,
-  portfolio.totalGain= 0,
-  portfolio.totalInvested= 0,
-  portfolio.totalValue= 0,
-  portfolio.dailyChangePercentage= 0,
-  portfolio.totalChangePercentage= 0,
-
+  portfolio.dailyGain = 0;
+  portfolio.totalGain = 0;
+  portfolio.totalInvested = 0;
+  portfolio.totalValue = 0;
+  portfolio.dailyChangePercentage = 0;
+  portfolio.totalChangePercentage = 0;
   portfolio.Transactions.forEach((transaction) => {
     const coinId = transaction.coinId;
     if (!(coinId in uniqueCoins)) {
@@ -179,7 +177,7 @@ const calculatePortfolioStats = async (portfolio) => {
 
   let responseArr;
   try {
-    const response = await fetch(url, options)
+    const response = await fetch(url, options);
     responseArr = await response.json();
     // responseArr = coingeckoResponse;
     // console.log(responseArr)
@@ -207,14 +205,10 @@ const calculatePortfolioStats = async (portfolio) => {
     portfolio.totalInvested += transactionStartValue;
     portfolio.totalValue += transactionNowValue;
   });
-  portfolio.dailyChangePercentage = (
-    (portfolio.dailyGain * 100) /
-    portfolio.totalValue
-  ).toFixed(2);
-  portfolio.totalChangePercentage = (
-    (portfolio.totalGain * 100) /
-    portfolio.totalInvested
-  ).toFixed(2);
+  portfolio.dailyChangePercentage =
+    ((portfolio.dailyGain * 100) / portfolio.totalValue).toFixed(2);
+  portfolio.totalChangePercentage =
+    ((portfolio.totalGain * 100) / portfolio.totalInvested).toFixed(2);
   return portfolio;
 };
 
@@ -224,5 +218,5 @@ const calculatePortfolioStats = async (portfolio) => {
 // })();
 
 module.exports = {
-    calculatePortfolioStats
-}
+  calculatePortfolioStats,
+};
