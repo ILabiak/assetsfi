@@ -5,21 +5,38 @@ const Transaction = require('../models').Transaction;
 const Coin = require('../models').Coin;
 const sequelize = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
-const { calculatePortfolioStats } = require('./utils');
+const { calculatePortfolioStats, calculatePortfolioCoins } = require('./utils');
 
 module.exports = {
   getByUUID(req, res) {
     return Portfolio.findOne({
       where: {
+        userId: req.user.sub,
         uuid: req.params.uuid,
       },
+      include: [
+        {
+          model: Transaction,
+          include: [
+            {
+              model: Coin,
+            },
+          ],
+        },
+        {
+          model: Currency,
+        },
+      ],
+      order: [[{ model: Transaction }, 'date', 'DESC']],
     }).then(async (portfolio) => {
+      let portfolioData = portfolio.get({ plain: true });
+      portfolioData = await calculatePortfolioCoins(portfolioData)
       if (!portfolio) {
         return res.status(400).send({
           message: 'Portfolio Not Found',
         });
       }
-      res.status(200).send(portfolio);
+      res.status(200).send(portfolioData);
     });
   },
 
@@ -40,6 +57,10 @@ module.exports = {
         {
           model: Currency,
         },
+      ],
+      order: [
+        ['id', 'ASC'],
+        [{ model: Transaction }, 'date', 'DESC'],
       ],
     }).then(async (portfolios) => {
       if (!portfolios) {

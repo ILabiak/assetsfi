@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import styles from './portfoliosinfo.module.css';
+import styles from './ministats.module.css';
 import {Typography, Box } from '@mui/material';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-
-
 
 function MiniStats({ title, percentage, value }) {
 

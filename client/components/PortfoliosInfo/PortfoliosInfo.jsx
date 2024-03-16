@@ -1,7 +1,6 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './portfoliosinfo.module.css';
-import MiniStats from './MiniStats';
-import TotalPortfoliosInfo from './TotalPortfoliosInfo';
+import TotalPortfoliosInfo from '@/components/TotalPortfolioInfo/TotalPortfoliosInfo';
 import CreatePortfolioButton from '@/components/CreatePortfolioButton/CreatePortfolioButton';
 import PortfoliosList from './PortfoliosList';
 import { Button, Typography, Box, Grid } from '@mui/material';
@@ -52,9 +51,9 @@ function PortfoliosInfo({ user, error, isLoading }) {
                 portfloiosData ? (
                     portfloiosData.length > 0 ? (
                         <Box>
-                            <TotalPortfoliosInfo value={'13 324,32 $'} percentage={'12,35 %'} handlePortfoliosChange={handlePortfoliosChange} />
+                            <TotalPortfoliosInfo totalData={portfloiosData[0]} handlePortfoliosChange={handlePortfoliosChange} singlePortfolio={false} />
 
-                            <Box className={styles.totalPotrfolioStats}>
+                            {/* <Box className={styles.totalPotrfolioStats}>
                                 <Grid container columnSpacing={4} spacing={1}>
                                     <Grid item xs={12} md={4}>
                                         <MiniStats title={'Daily Gain'} percentage={'2.28%'} value={'332,75 $'} />
@@ -66,7 +65,7 @@ function PortfoliosInfo({ user, error, isLoading }) {
                                         <MiniStats title={'Total Invested'} percentage={''} value={'23 451,15 $'} />
                                     </Grid>
                                 </Grid>
-                            </Box>
+                            </Box> */}
 
                             <PortfoliosList portfoliosData={portfloiosData} handlePortfoliosChange={handlePortfoliosChange} />
                         </Box>

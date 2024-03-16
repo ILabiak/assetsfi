@@ -1,27 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import styles from './portfoliosinfo.module.css';
-import PortfolioRow from './PortfolioRow';
+import styles from './transactiontable.module.css';
+import TransactionRow from './TransactionRow'
+// import PortfolioRow from './PortfolioRow';
 import {
     Typography, Box, Table, TableCell, TableContainer,
     TableHead, TableRow, TableBody, Collapse
 } from '@mui/material';
 
 
-function PortfoliosList({ portfoliosData, handlePortfoliosChange }) {
+function TransactionsTable({ transactions, currency, handlePortfoliosChange }) {
     const [open, setOpen] = useState(false);
-
-    const [portfolios, setPortfolios] = useState(portfoliosData)
+    const [transactionsData, setTransactionsData] = useState(transactions)
 
     return (
-        <Box className={styles.portfoliosListContainer}>
-            <Typography sx={{
-                fontFamily: 'DM Sans',
-                fontSize: '16px',
-                color: '#AEAEAE',
-                textDecoration: 'none',
-            }}>
-                My Portfolios
-            </Typography>
+        <Box className={styles.coinStatsContainer}>
             <TableContainer sx={{
                 borderRadius: '5px'
             }}>
@@ -55,11 +47,11 @@ function PortfoliosList({ portfoliosData, handlePortfoliosChange }) {
                             },
 
                         }}>
-                            <TableCell>Name</TableCell>
-                            <TableCell align="right">Total value</TableCell>
-                            <TableCell align="right">24H change</TableCell>
-                            <TableCell align="right">Total change</TableCell>
-                            <TableCell align="right">Total invested</TableCell>
+                            <TableCell>Type</TableCell>
+                            <TableCell>Quantity</TableCell>
+                            <TableCell align="right">Fees</TableCell>
+                            <TableCell align="right">Price</TableCell>
+                            <TableCell align="right">Total price</TableCell>
                             <TableCell align="right"></TableCell>
                         </TableRow>
                     </TableHead>
@@ -92,8 +84,8 @@ function PortfoliosList({ portfoliosData, handlePortfoliosChange }) {
                             borderBottomRightRadius: "10px",
                         },
                     }}>
-                        {portfolios.map((el) => (
-                            <PortfolioRow key={`${el.uuid}-mainRow`} portfolioData={el} handlePortfoliosChange={handlePortfoliosChange} />
+                        {transactionsData.map((transaction) => (
+                            <TransactionRow key={`transaction-${transaction.id}`} transactionData={transaction} currency={currency} />
                         ))}
                     </TableBody>
                 </Table>
@@ -102,4 +94,4 @@ function PortfoliosList({ portfoliosData, handlePortfoliosChange }) {
     );
 }
 
-export default PortfoliosList;
+export default TransactionsTable;

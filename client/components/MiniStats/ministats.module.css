@@ -1,0 +1,26 @@
+.miniStats {
+    /* border: 2px solid #AEAEAE; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 80px;
+    width: auto;
+    background-color: black;
+}
+
+.upperText {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+.lowerText {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+}

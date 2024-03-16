@@ -11,7 +11,7 @@ require('dotenv').config();
 
 // console.log(process.env)
 const sequelize = new Sequelize(process.env.POSTGRES, {
-  logging: true
+  logging: false
 });
 
 fs.readdirSync(__dirname)

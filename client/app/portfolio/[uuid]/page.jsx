@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from "./page.module.css";
 import Head from 'next/head';
 import DashboardHeader from '@/components/DashboardHeader/DashboardHeader';
-import PortfoliosInfo from '@/components/PortfoliosInfo/PortfoliosInfo';
+import PortfolioData from '@/components/PortfolioData/PortfolioData';
 import Footer from '@/components/Footer/Footer';
 import BackDrop from '@/components/BackDrop/BackDrop';
 import Sidebar from '@/components/Sidebar/Sidebar';
@@ -11,7 +11,7 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 import { useCookies } from 'react-cookie';
 
 
-export default function Portfolios() {
+export default function Portfolio({params}) {
     const { user, error, isLoading } = useUser();
     const [open, setOpen] = useState(true);
     return (
@@ -23,9 +23,9 @@ export default function Portfolios() {
             {/* <BackDrop isloading={isLoading} open={open} setOpen={setOpen} delay={500} /> */}
             {!isLoading && (
                 <div className={styles.wrap}>
-                    <DashboardHeader title={'My portfolios'} />
+                    <DashboardHeader title={'Portfolio Overview'} />
                     <Sidebar />
-                    <PortfoliosInfo/>
+                    <PortfolioData uuid={params.uuid}/>
                 </div>
             )}
         </main>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Image from 'next/image'
 import styles from './portfoliosinfo.module.css';
-import MiniStats from './MiniStats';
-import TotalPortfoliosInfo from './TotalPortfoliosInfo';
+import MiniStats from '../MiniStats/MiniStats';
+import TotalPortfoliosInfo from '../TotalPortfolioInfo/TotalPortfoliosInfo';
 import MenuDeletePortfolio from '@/components/MenuDeletePortfolio/MenuDeletePortfolio'
 import MenuChangePortfolio from '@/components/MenuChangePortfolio/MenuChangePortfolio'
 import {
@@ -76,7 +76,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                 <TableCell align="right">
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
-                            {`${portfolio?.dailyGain.toFixed(2)} ${portfolio['Currency']?.symbol}`}
+                            {`${portfolio?.dailyChange.toFixed(2)} ${portfolio['Currency']?.symbol}`}
                         </Box>
                         {!isNaN(portfolio?.dailyChangePercentage) &&
                             <Box sx={{
@@ -92,7 +92,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                 <TableCell align="right">
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
-                            {portfolio?.totalGain.toFixed(2)} {portfolio['Currency']?.symbol}
+                            {portfolio?.totalChange.toFixed(2)} {portfolio['Currency']?.symbol}
                         </Box>
                         {!isNaN(portfolio?.totalChangePercentage) &&
                             <Box sx={{
@@ -158,15 +158,6 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                         open={menuOpen}
                         onClose={handleMenuClose}
                     >
-                        {/* <MenuItem key={'renamePortfolio'} >
-                            Rename portfolio
-                        </MenuItem> */}
-                        {/* <MenuItem key={'deletePortfolio'} >
-                            Delete portfolio
-                        </MenuItem> */}
-                        {/* {options.map((option) => (
-                            
-                        ))} */}
                         <MenuChangePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange}/>
                         <MenuDeletePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange}/>
                     </Menu>
@@ -182,11 +173,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                             <Typography paddingLeft='10px' paddingTop='10px' variant="h6" fontFamily='DM Sans' gutterBottom component="div">
                                 Transactions
                             </Typography>
-                            <Table size="small" sx={{
-                                // border: '1px solid',
-                                // borderRadius: '5px',
-
-                            }}>
+                            <Table size="small">
                                 <TableHead>
                                     <TableRow
                                         key={`${portfolio.uuid}-transactionsHead`}

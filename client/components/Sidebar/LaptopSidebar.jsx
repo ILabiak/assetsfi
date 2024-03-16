@@ -97,6 +97,7 @@ const LaptopSidebar = React.memo(() => {
                             <ListItemButton className={styles.listItem} selected={item.active}
                                 onClick={() => router.push(item.href)}
                                 sx={{
+                                    borderRadius: '5px',
                                     "&.Mui-selected": {
                                         backgroundColor: "#0328EE"
                                     },
@@ -146,7 +147,9 @@ const LaptopSidebar = React.memo(() => {
                 }} />
                 <List>
                     <ListItem key='logout'>
-                        <ListItemButton onClick={() => { router.push('/api/auth/logout') }} className={styles.listItem} sx={{
+                        <ListItemButton onClick={() => { router.push('/api/auth/logout') }} className={styles.listItem} 
+                        sx={{
+                            borderRadius: '5px',
                             "&.Mui-selected": {
                                 backgroundColor: "#0328EE"
                             },
@@ -166,7 +169,7 @@ const LaptopSidebar = React.memo(() => {
                                 }
                             }
                         }}>
-                            <ListItemIcon sx={{ color: '#AEAEAE' }}>
+                            <ListItemIcon sx={{ color: '#AEAEAE', }}>
                                 <LogoutIcon />
                             </ListItemIcon>
                             <Typography sx={{
