@@ -51,7 +51,7 @@ function PortfoliosInfo({ user, error, isLoading }) {
                 portfloiosData ? (
                     portfloiosData.length > 0 ? (
                         <Box>
-                            <TotalPortfoliosInfo totalData={portfloiosData[0]} handlePortfoliosChange={handlePortfoliosChange} singlePortfolio={false} />
+                            <TotalPortfoliosInfo totalData={portfloiosData[0]} handlePortfolioChange={handlePortfoliosChange} singlePortfolio={false} />
 
                             {/* <Box className={styles.totalPotrfolioStats}>
                                 <Grid container columnSpacing={4} spacing={1}>

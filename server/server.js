@@ -19,7 +19,12 @@ fastify.register(require('@fastify/jwt'), {
 
 fastify.addHook('onRequest', async (req, res) => {
   try {
-    if (req.routeOptions.url === '/currencies') {
+    console.log(req.routeOptions.url);
+    if (
+      req.routeOptions.url === '/currencies' ||
+      req.routeOptions.url === '/coins' ||
+      req.routeOptions.url === '/currency/:currency'
+    ) {
       return;
     }
     await req.jwtVerify();

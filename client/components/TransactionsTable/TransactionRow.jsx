@@ -97,7 +97,7 @@ function TransactionRow({ transactionData, currency, handlePortfoliosChange }) {
                     <Box sx={{
                         color: (transaction.amount > 0) ? '#34B17F' : '#E85E5E'
                     }}>
-                        {transaction.amount > 0 ? '+' : '-'}{transaction.amount} {transaction['Coin']?.symbol.toUpperCase()}
+                        {transaction.amount > 0 ? '+' : ''}{transaction.amount} {transaction['Coin']?.symbol.toUpperCase()}
                     </Box>
                 </TableCell>
                 <TableCell align="right">{transaction.fees} {currency?.symbol}</TableCell>

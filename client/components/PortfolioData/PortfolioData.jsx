@@ -35,7 +35,7 @@ function PortfolioData({ uuid }) {
         }
     }
 
-    const handlePortfoliosChange = () => {
+    const handlePortfolioChange = () => {
         setPortfolioData()
         fetchData().catch(console.error)
     }
@@ -95,7 +95,7 @@ function PortfolioData({ uuid }) {
                                 color: 'white',
                                 display: tabValue == 0 ? 'inline' : 'none'
                             }}>
-                                <TotalPortfoliosInfo totalData={portfloioData} handlePortfoliosChange={() => true} singlePortfolio={true} />
+                                <TotalPortfoliosInfo totalData={portfloioData} handlePortfolioChange={handlePortfolioChange} singlePortfolio={true} />
                                 <CoinsStatsTable portfolio={portfloioData} />
                             </Box>
 
@@ -110,7 +110,7 @@ function PortfolioData({ uuid }) {
                                     ml: '30px',
                                     textDecoration: 'none',
                                 }}>Transactions</Typography>
-                                <TransactionsTable transactions={portfloioData['Transactions']} />
+                                <TransactionsTable transactions={portfloioData['Transactions']} currency={portfloioData['Currency']} />
                             </Box>
 
                         </Box>

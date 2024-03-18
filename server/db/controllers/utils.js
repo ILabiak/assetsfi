@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
@@ -28,7 +30,7 @@ const calculatePortfolioStats = async (portfolio) => {
   const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${portfolio.Currency.code}&ids=${coingeckoCoinsStr}&price_change_percentage=24h`;
   const options = {
     method: 'GET',
-    headers: { 'x-cg-demo-api-key': 'CG-bthjfURcC7USJnm7QVV3fwSo' },
+    headers: { 'x-cg-demo-api-key': process.env.COINGECKO_API },
   };
 
   let responseArr;
@@ -47,7 +49,12 @@ const calculatePortfolioStats = async (portfolio) => {
 
   portfolio.Transactions.forEach((transaction) => {
     let transactionStartValue =
-      transaction.amount * transaction.costPerUnitInCurrency + transaction.fees;
+      transaction.amount * transaction.costPerUnitInCurrency;
+    if (transaction.amount < 0) {
+      transactionStartValue -= transaction.fees;
+    } else {
+      transactionStartValue += transaction.fees;
+    }
     let transactionNowValue =
       transaction.amount *
       responseObj[transaction['Coin']['code']].current_price;
@@ -115,7 +122,7 @@ const calculatePortfolioCoins = async (portfolio) => {
   const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${portfolio.Currency.code}&ids=${coingeckoCoinsStr}&price_change_percentage=24h`;
   const options = {
     method: 'GET',
-    headers: { 'x-cg-demo-api-key': 'CG-bthjfURcC7USJnm7QVV3fwSo' },
+    headers: { 'x-cg-demo-api-key': process.env.COINGECKO_API },
   };
 
   let responseArr;
@@ -134,7 +141,12 @@ const calculatePortfolioCoins = async (portfolio) => {
 
   portfolio.Transactions.forEach((transaction) => {
     let transactionStartValue =
-      transaction.amount * transaction.costPerUnitInCurrency + transaction.fees;
+      transaction.amount * transaction.costPerUnitInCurrency;
+    if (transaction.amount < 0) {
+      transactionStartValue -= transaction.fees;
+    } else {
+      transactionStartValue += transaction.fees;
+    }
     let transactionNowValue =
       transaction.amount *
       responseObj[transaction['Coin']['code']].current_price;
@@ -150,8 +162,8 @@ const calculatePortfolioCoins = async (portfolio) => {
     portfolio.totalInvested += transactionStartValue;
     portfolio.totalValue += transactionNowValue;
 
-
-    portfolio.coins[transaction.Coin.id].price = responseObj[transaction['Coin']['code']].current_price;
+    portfolio.coins[transaction.Coin.id].price =
+      responseObj[transaction['Coin']['code']].current_price;
     portfolio.coins[transaction.Coin.id].amount += transaction.amount;
     portfolio.coins[transaction.Coin.id].dailyChange += dailyChange;
     portfolio.coins[transaction.Coin.id].totalChange += totalChange;
@@ -191,7 +203,9 @@ const calculatePortfolioCoins = async (portfolio) => {
 //   console.timeEnd('Execution time');
 // })();
 
+console.log(process.env.COINGECKO_API);
+
 module.exports = {
   calculatePortfolioStats,
-  calculatePortfolioCoins
+  calculatePortfolioCoins,
 };

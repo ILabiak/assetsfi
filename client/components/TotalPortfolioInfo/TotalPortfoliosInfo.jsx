@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './totalportfolioinfo.module.css';
 import CreatePortfolioButton from '@/components/CreatePortfolioButton/CreatePortfolioButton';
+import CreateTransactionButton from '@/components/CreateTransactionButton/CreateTransactionButton'
 import { Typography, Box, Grid } from '@mui/material';
 import MiniStats from '@/components/MiniStats/MiniStats';
 import { useRouter } from 'next/navigation'
@@ -10,7 +11,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
-function TotalPortfoliosInfo({ totalData, handlePortfoliosChange, singlePortfolio }) {
+function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio }) {
 
     return (
         <Box sx={{
@@ -76,6 +77,7 @@ function TotalPortfoliosInfo({ totalData, handlePortfoliosChange, singlePortfoli
                         marginRight: '20px'
                     }} />
                     {/* <CreatePortfolioButton handlePortfoliosChange={handlePortfoliosChange} /> */}
+                    <CreateTransactionButton currency={totalData['Currency']} portfolio={totalData} handleTransactionsChange={handlePortfolioChange}/>
                 </Box> :
                     <Box className={styles.createButtonContainer}>
                         <VisibilityIcon sx={{
@@ -83,7 +85,7 @@ function TotalPortfoliosInfo({ totalData, handlePortfoliosChange, singlePortfoli
                             fontSize: '20px',
                             marginRight: '20px'
                         }} />
-                        <CreatePortfolioButton handlePortfoliosChange={handlePortfoliosChange} />
+                        <CreatePortfolioButton handlePortfoliosChange={handlePortfolioChange} portfolio={totalData} />
                     </Box>
                 }
             </Box>

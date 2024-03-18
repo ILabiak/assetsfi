@@ -1,7 +1,11 @@
 const controllers = require('../db/controllers');
 
-const { portfolio: portfolioController, currency: currencyController } =
-  controllers;
+const {
+  portfolio: portfolioController,
+  currency: currencyController,
+  coin: coinController,
+  transaction: transactionController,
+} = controllers;
 
 async function routes(fastify /*, options*/) {
   /* Portfolio Routes */
@@ -13,6 +17,13 @@ async function routes(fastify /*, options*/) {
 
   /* Currency Routes */
   fastify.get('/currencies', currencyController.getCurrencies);
+  fastify.get('/currency/:currency', currencyController.getCurrencyRate);
+
+  /* Coin Routes */
+  fastify.get('/coins', coinController.getCoins);
+
+  /* Transaction Routes */
+  fastify.post('/transaction/create', transactionController.add);
 }
 
 module.exports = routes;

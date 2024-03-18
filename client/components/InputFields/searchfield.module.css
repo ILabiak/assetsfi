@@ -1,0 +1,19 @@
+.searchResult {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 40px;
+    width: auto;
+    margin: 5px 10px 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.searchResult:hover {
+background-color: #024D41;
+}
+
+.searchImg {
+    margin-left: 10px;
+}
