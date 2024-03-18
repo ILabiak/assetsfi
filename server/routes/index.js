@@ -24,6 +24,8 @@ async function routes(fastify /*, options*/) {
 
   /* Transaction Routes */
   fastify.post('/transaction/create', transactionController.add);
+  fastify.put('/transaction/update', transactionController.update);
+  fastify.delete('/transaction/delete', transactionController.delete);
 }
 
 module.exports = routes;

@@ -90,7 +90,7 @@ function CoinsStatsRow({ coinData, currency, handlePortfoliosChange }) {
 
                 </TableCell>
                 <TableCell align="right">{coin?.totalInvested.toFixed(2)} {currency?.symbol}</TableCell>
-                <TableCell align="right">
+                {/* <TableCell align="right">
                     <IconButton
                         aria-label="more"
                         id="long-button"
@@ -132,7 +132,7 @@ function CoinsStatsRow({ coinData, currency, handlePortfoliosChange }) {
                         onClose={handleMenuClose}
                     >
                     </Menu>
-                </TableCell>
+                </TableCell> */}
             </TableRow>
         </Fragment>
     );

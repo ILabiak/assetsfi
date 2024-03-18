@@ -1,5 +1,6 @@
 'use strict';
 const Transaction = require('../models').Transaction;
+const Coin = require('../models').Coin;
 const Portfolio = require('../models').Portfolio;
 const sequelize = require('sequelize');
 
@@ -46,50 +47,113 @@ module.exports = {
   },
 
   update(req, res) {
-    return Transaction.findOne({
+    if (!req.body.id || !req.body.portfolioId) {
+      res.status(400).send({
+        status: false,
+        message: 'Not enough data to edit transaction',
+      });
+    }
+    if (!req.user.sub) {
+      res.status(400).send({
+        status: false,
+        message: 'User not authorised',
+      });
+    }
+    return Portfolio.findOne({
       where: {
         userId: req.user.sub,
-        uuid: req.body.uuid,
+        id: req.body.portfolioId,
       },
-    })
-      .then((transaction) => {
-        if (!transaction) {
-          return res.status(404).send({
-            message: 'Transaction Not Found',
-          });
-        }
-        return transaction
-          .update({
-            title: req.body.name || transaction.title,
-          })
-          .then(() => res.status(200).send(transaction))
-          .catch((error) => res.status(400).send(error));
+    }).then(async (portfolio) => {
+      if (!portfolio) {
+        return res.status(400).send({
+          message:
+            'Portfolio Not Found to create transaction of user does not have access to that portfilio',
+        });
+      }
+      return Transaction.findOne({
+        where: {
+          portfolioId: portfolio.id,
+          id: req.body.id,
+        },
+        include: [
+          {
+            model: Coin,
+          },
+        ],
       })
-      .catch((error) => res.status(400).send(error));
+        .then((transaction) => {
+          if (!transaction) {
+            return res.status(404).send({
+              message: 'Transaction Not Found',
+            });
+          }
+          return transaction
+            .update({
+              date: req.body.date || transaction.date,
+              amount: req.body.amount || transaction.amount,
+              fees: req.body.fees || transaction.fees,
+              description: req.body.description || transaction.description,
+              costPerUnitInUsd:
+                req.body.costPerUnitInUsd || transaction.costPerUnitInUsd,
+              costPerUnitInCurrency:
+                req.body.costPerUnitInCurrency ||
+                transaction.costPerUnitInCurrency,
+            })
+            .then(() => res.status(200).send(transaction))
+            .catch((error) => res.status(400).send(error));
+        })
+        .catch((error) => res.status(400).send(error));
+    });
   },
 
   delete(req, res) {
-    return Transaction.findOne({
+    if (!req.body.id || !req.body.portfolioId) {
+      res.status(400).send({
+        status: false,
+        message: 'Not enough data to delete transaction',
+      });
+    }
+    if (!req.user.sub) {
+      res.status(400).send({
+        status: false,
+        message: 'User not authorised',
+      });
+    }
+    return Portfolio.findOne({
       where: {
         userId: req.user.sub,
-        uuid: req.body.uuid,
+        id: req.body.portfolioId,
       },
-    })
-      .then((transaction) => {
-        if (!transaction) {
-          return res.status(400).send({
-            message: 'Transaction Not Found',
-          });
-        }
-        return transaction
-          .destroy()
-          .then(() =>
-            res
-              .status(200)
-              .send({ message: 'Transaction was successfully deleted!' })
-          )
-          .catch((error) => res.status(400).send(error));
+    }).then(async (portfolio) => {
+      if (!portfolio) {
+        return res.status(400).send({
+          message:
+            'Portfolio Not Found to delete transaction of user does not have access to that portfilio',
+        });
+      }
+      return Transaction.findOne({
+        where: {
+          portfolioId: portfolio.id,
+          id: req.body.id,
+        },
       })
-      .catch((error) => res.status(400).send(error));
+        .then((transaction) => {
+          if (!transaction) {
+            return res.status(404).send({
+              message: 'Transaction Not Found',
+            });
+          }
+          return transaction
+            .destroy()
+            .then(() =>
+              res
+                .status(200)
+                .send({ message: 'Transaction was successfully deleted!' })
+            )
+            .catch((error) => res.status(400).send(error));
+        })
+        .catch((error) => res.status(400).send(error));
+    });
   },
 };

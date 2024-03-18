@@ -6,7 +6,7 @@ import TotalPortfoliosInfo from '../TotalPortfolioInfo/TotalPortfoliosInfo';
 import MenuDeletePortfolio from '@/components/MenuDeletePortfolio/MenuDeletePortfolio'
 import MenuChangePortfolio from '@/components/MenuChangePortfolio/MenuChangePortfolio'
 import {
-    Typography, Box, Table, TableCell, TableContainer,
+    Typography, Box, Link, Table, TableCell, TableContainer,
     TableHead, TableRow, TableBody, Collapse
 } from '@mui/material';
 import { useRouter } from 'next/navigation'
@@ -69,7 +69,22 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                 }}
             >
                 <TableCell component="th" scope="row" >
-                    {portfolio.title}
+                    <Link 
+                    href={`/portfolio/${portfolio.uuid}`}
+                    sx={{
+                        padding: '5px',
+                        color: 'white',
+                        width: 'auto',
+                        textDecoration: 'none',
+                        "&:hover": {
+                            cursor: 'pointer',
+                            backgroundColor:'#34B17F',
+                            borderRadius: '5px',
+                        }
+                    }}>
+                        {portfolio.title}
+                    </Link>
+
                 </TableCell>
                 <TableCell align="right">{`${portfolio?.totalValue.toFixed(2)} ${portfolio['Currency']?.symbol}`}
                 </TableCell>
@@ -158,8 +173,8 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                         open={menuOpen}
                         onClose={handleMenuClose}
                     >
-                        <MenuChangePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange}/>
-                        <MenuDeletePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange}/>
+                        <MenuChangePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange} />
+                        <MenuDeletePortfolio portfolio={portfolio} handlePortfoliosChange={handlePortfoliosChange} />
                     </Menu>
                 </TableCell>
             </TableRow>
@@ -243,7 +258,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                                                     <Box sx={{
                                                         color: (el.amount > 0) ? '#34B17F' : '#E85E5E'
                                                     }}>
-                                                        {el.amount > 0 ? '+' : '-'}{el.amount} {el['Coin']?.symbol.toUpperCase()}
+                                                        {el.amount > 0 ? '+' : ''}{el.amount} {el['Coin']?.symbol.toUpperCase()}
                                                     </Box>
                                                 </TableCell>
                                                 <TableCell align="right">{el.fees} {portfolio['Currency']?.symbol}</TableCell>

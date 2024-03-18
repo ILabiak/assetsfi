@@ -54,7 +54,7 @@ function CoinsStatsTable({ portfolio, handlePortfoliosChange }) {
                             <TableCell align="right">24H change</TableCell>
                             <TableCell align="right">Total change</TableCell>
                             <TableCell align="right">Total invested</TableCell>
-                            <TableCell align="right"></TableCell>
+                            {/* <TableCell align="right"></TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody sx={{

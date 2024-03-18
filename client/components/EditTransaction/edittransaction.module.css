@@ -1,0 +1,118 @@
+.createButton {
+    text-align: center;
+    padding: 5px;
+    border-radius: 10px;
+    background: #35b17f;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'DM Sans';
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.createButton:hover {
+    color: black;
+    background: #6CCC97;
+}
+
+.cancelButton {
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    /* background: #313337; */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'DM Sans';
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.cancelButton:hover {
+    color: #6CCC97;
+    /* background: #6CCC97; */
+}
+
+.createPortfolioContainer {
+    /* border: 1px solid white; */
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    /* min-height: 45%; */
+    height: auto;
+    background-color: #1A1A1A;
+    border-radius: 10px;
+}
+
+.inputsContainer {
+    padding: 30px 20px 20px 20px;
+    /* padding-bottom: 30px; */
+    width: auto;
+    height: auto;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    /* border: 1px solid red; */
+}
+
+.buttonsContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: auto;
+    height: auto;
+    padding: 10px 20px 10px 20px;
+    /* border: 1px white solid; */
+}
+
+.createPortfolioButton {
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: #35b17f;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'DM Sans';
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.createPortfolioButton:hover {
+    color: black;
+    background: #6CCC97;
+}
+
+.disabled{
+    opacity: .5;
+}
+
+.inputsContainer input:-webkit-autofill,
+.inputsContainer input:-webkit-autofill:hover,
+.inputsContainer input:-webkit-autofill:focus,
+.inputsContainer input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #313337 inset !important;
+    -webkit-text-fill-color: #E8E9EB;
+    font-family: 'DM Sans';;
+}
+
+.searchResult {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    height: 40px;
+    width: auto;
+    margin: 5px 10px 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.searchResult:hover {
+background-color: #024D41;
+}
+
+.searchImg {
+    margin-left: 10px;
+}
+
+.datePickerIcon {
+    background-color: green;
+    color: green
+}

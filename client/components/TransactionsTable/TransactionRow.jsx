@@ -2,8 +2,8 @@ import React, { useState, useEffect, Fragment } from 'react';
 import Image from 'next/image'
 import styles from './transactiontable.module.css';
 import TotalPortfoliosInfo from '../TotalPortfolioInfo/TotalPortfoliosInfo';
-import MenuDeletePortfolio from '@/components/MenuDeletePortfolio/MenuDeletePortfolio'
-import MenuChangePortfolio from '@/components/MenuChangePortfolio/MenuChangePortfolio'
+import MenuChangeTransaction from '@/components/MenuChangeTransaction/MenuChangeTransaction'
+import MenuDeleteTransaction from '@/components/MenuDeleteTransaction/MenuDeleteTransaction'
 import {
     Typography, Box, Table, TableCell, TableRow
 } from '@mui/material';
@@ -35,7 +35,7 @@ function formatDate(dateString) {
 }
 
 
-function TransactionRow({ transactionData, currency, handlePortfoliosChange }) {
+function TransactionRow({ transactionData, currency, handleTransactionsChange }) {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
@@ -48,6 +48,12 @@ function TransactionRow({ transactionData, currency, handlePortfoliosChange }) {
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
+
+    // const handleTransactionsChange = (data) => {
+    //     if(data?.id && data?.amount){
+    //         setTransaction(data)
+    //     }
+    // }
 
     return (
         <Fragment>
@@ -146,6 +152,8 @@ function TransactionRow({ transactionData, currency, handlePortfoliosChange }) {
                         open={menuOpen}
                         onClose={handleMenuClose}
                     >
+                        <MenuChangeTransaction transaction={transaction} currency={currency} handleTransactionsChange={handleTransactionsChange} />
+                        <MenuDeleteTransaction transaction={transaction} handleTransactionsChange={handleTransactionsChange} />
                     </Menu>
                 </TableCell>
             </TableRow>

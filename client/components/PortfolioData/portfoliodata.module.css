@@ -79,3 +79,18 @@
     height: auto;
     margin: 20px 30px 0;
 }
+
+.transactionsHead {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: auto;
+    width: auto;
+    /* border: 1px solid white; */
+    margin: 0px 30px 0;
+}
+
+.createButtonBox {
+    display: flex;
+    align-items: center;
+}

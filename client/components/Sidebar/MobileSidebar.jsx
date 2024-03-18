@@ -24,7 +24,7 @@ const MobileSidebar = React.memo(() => {
     const pathname = usePathname()
 
     const sidebarPages = [{ text: 'Home', icon: <WindowIcon />, active: pathname == '/dashboard' ? true : false, href: '/dashboard' },
-    { text: 'Transactions', icon: <SwapVerticalCircleIcon />, active: pathname == '/transactions' ? true : false, href: '/transactions' },
+    // { text: 'Transactions', icon: <SwapVerticalCircleIcon />, active: pathname == '/transactions' ? true : false, href: '/transactions' },
     { text: 'Portfolios', icon: <WalletIcon />, active: pathname == '/portfolios' ? true : false, href: '/portfolios' },
     { text: 'Log out', icon: <WalletIcon />, active: false, href: '/api/auth/logout' }]
     return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './portfoliodata.module.css';
 import TotalPortfoliosInfo from '@/components/TotalPortfolioInfo/TotalPortfoliosInfo';
+import CreateTransactionButton from '@/components/CreateTransactionButton/CreateTransactionButton'
 import CoinsStatsTable from '@/components/CoinsStatsTable/CoinsStatsTable';
 import TransactionsTable from '@/components/TransactionsTable/TransactionsTable';
 import { Button, Typography, Box, Grid, Tabs, Tab } from '@mui/material';
@@ -20,6 +21,7 @@ function PortfolioData({ uuid }) {
         setTabValue(newValue);
     };
 
+
     const fetchData = async () => {
         try {
             const response = await fetch(`/api/server/portfolio/${uuid}`);
@@ -35,7 +37,7 @@ function PortfolioData({ uuid }) {
         }
     }
 
-    const handlePortfolioChange = () => {
+    const handleTransactionsChange = () => {
         setPortfolioData()
         fetchData().catch(console.error)
     }
@@ -95,7 +97,7 @@ function PortfolioData({ uuid }) {
                                 color: 'white',
                                 display: tabValue == 0 ? 'inline' : 'none'
                             }}>
-                                <TotalPortfoliosInfo totalData={portfloioData} handlePortfolioChange={handlePortfolioChange} singlePortfolio={true} />
+                                <TotalPortfoliosInfo totalData={portfloioData} handlePortfolioChange={handleTransactionsChange} singlePortfolio={true} />
                                 <CoinsStatsTable portfolio={portfloioData} />
                             </Box>
 
@@ -103,14 +105,22 @@ function PortfolioData({ uuid }) {
                                 color: 'white',
                                 display: tabValue == 1 ? 'inline' : 'none'
                             }}>
-                                <Typography sx={{
-                                    fontFamily: 'DM Sans',
-                                    fontSize: '30px',
-                                    color: 'white',
-                                    ml: '30px',
-                                    textDecoration: 'none',
-                                }}>Transactions</Typography>
-                                <TransactionsTable transactions={portfloioData['Transactions']} currency={portfloioData['Currency']} />
+                                <Box className={styles.transactionsHead}>
+                                    <Typography sx={{
+                                        fontFamily: 'DM Sans',
+                                        fontSize: '30px',
+                                        color: 'white',
+                                        // ml: '30px',
+                                        textDecoration: 'none',
+                                    }}>Transactions</Typography>
+                                    <Box className={styles.createButtonBox}>
+                                        <CreateTransactionButton currency={portfloioData['Currency']} portfolio={portfloioData} handleTransactionsChange={handleTransactionsChange} />
+                                    </Box>
+                                </Box>
+
+                                <TransactionsTable transactions={portfloioData['Transactions']}
+                                    currency={portfloioData['Currency']}
+                                    handleTransactionsChange={handleTransactionsChange} />
                             </Box>
 
                         </Box>

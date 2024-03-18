@@ -7,52 +7,26 @@ import FeesField from '../InputFields/FeesField'
 import TotalPriceField from '../InputFields/TotalPriceField'
 import NoteField from '../InputFields/NoteField'
 import DateField from '../InputFields/DateField';
-import styles from './createtransaction.module.css';
+import styles from './edittransaction.module.css';
 import { Typography, Box, Backdrop, TextField } from '@mui/material';
 
-const filterData = (query, data) => {
-    if (!query) {
-        return;
-    } else {
-        const filtered = data.filter((d) => d.name.toLowerCase().includes(query.toLowerCase()))
-        if (filtered.length > 0) {
-            return filtered;
-        }
-    }
-};
 
 const numberRegex = /^[-+]?\d+(\.\d{0,5})?$/;
 
-function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, backdropOpen, setBackdropOpen, currency, portfolio, handleTransactionsChange }) {
-    const [coins, setCoins] = useState()
+function EditTransaction({ transactionEditRef, handleClose, backdropOpen, setBackdropOpen, currency, transaction, handleTransactionsChange }) {
     const [searchQuery, setSearchQuery] = useState("");
-    const dataFiltered = filterData(searchQuery, coins);
-    const [createButtonActive, setCreateButtonActive] = useState(false)
+    const [editButtonActive, setEditButtonActive] = useState(false)
     const [name, setName] = useState("");
     const [currencyId, setCurrencyId] = useState(currency?.id);
-    const [asset, setAsset] = useState();
-    const [quantity, setQuantity] = useState("");
-    const [price, setPrice] = useState("");
+    const [asset, setAsset] = useState(transaction['Coin']);
+    const [quantity, setQuantity] = useState(transaction?.amount);
+    const [price, setPrice] = useState(transaction?.costPerUnitInCurrency);
     const [currencyRate, setCurrencyRate] = useState(1)
-    const [fees, setFees] = useState("");
-    const [note, setNote] = useState("");
-    const [date, setDate] = useState(dayjs(new Date()));
+    const [fees, setFees] = useState(transaction?.fees);
+    const [note, setNote] = useState(transaction?.description || '');
+    const [date, setDate] = useState(dayjs(transaction?.date));
 
     useEffect(() => {
-        const fetchCoins = async () => {
-            try {
-                const response = await fetch('/api/server/coins');
-                if (response.status === 200) {
-                    const data = await response.json();
-                    setCoins(data)
-                } else {
-                    console.log('Some other error');
-                }
-            } catch (error) {
-                console.log('Error while getting coins data', error);
-            }
-        }
-
         const fetchCurrencyRate = async () => {
             try {
                 const response = await fetch(`/api/server/currency/${currency?.code}`);
@@ -68,74 +42,75 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                 console.log('Error while getting coins data', error);
             }
         }
-        fetchCoins().catch(console.error)
         if (currency?.code !== 'usd') {
             fetchCurrencyRate().catch(console.error)
         }
     }, []);
 
+    useEffect(() => {
+        if (!backdropOpen) {
+            setQuantity(transaction?.amount)
+            setPrice(transaction?.costPerUnitInCurrency)
+            setFees(transaction?.fees)
+            setNote(transaction?.description)
+            setDate(dayjs(transaction?.date))
+        }
+
+    }, [backdropOpen]);
+
 
 
     useEffect(() => {
         if (numberRegex.test(quantity) && numberRegex.test(price) && asset?.code) {
-            setCreateButtonActive(true)
+            setEditButtonActive(true)
         }
         else {
-            setCreateButtonActive(false)
+            setEditButtonActive(false)
         }
         // fetchCurrencies().catch(console.error)
     }, [quantity, price]);
 
-    useEffect(() => {
-        const fetchCoinPrice = async () => {
-            try {
-                const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency.code}&ids=${asset.code}`);
-                if (response.status === 200) {
-                    const data = await response.json();
-                    console.log(data[0])
-                    setPrice(data[0]?.current_price)
-                } else {
-                    console.log('Some other error');
-                }
-            } catch (error) {
-                console.log('Error while getting coins data', error);
-            }
-        }
-        if (currency?.code && asset?.code) {
-            fetchCoinPrice().catch(console.error)
-        }
-    }, [asset]);
-
-
-    const handleTransactionCreate = async () => {
-        if (!createButtonActive) return;
-        setCreateButtonActive(false)
+    const handleTransactionEdit = async () => {
+        if (!editButtonActive) return;
+        setEditButtonActive(false)
         let transactionObj = {
-            portfolioId: portfolio.uuid,
-            coinId: asset.id,
-            date: dayjs(date).format(),
-            amount: parseFloat(quantity),
-            fees: parseFloat(fees),
-            description: note,
-            originCurrency: currency.name,
-            costPerUnitInUsd: (parseFloat(price) / currencyRate),
-            costPerUnitInCurrency: parseFloat(price),
+            portfolioId: transaction?.portfolioId,
+            id: transaction?.id,
         }
-        // console.log(transactionObj)
-        const response = await fetch('/api/server/transaction/create', {
-            method: 'POST',
+        if (dayjs(transaction?.date).format() != dayjs(date).format()) {
+            transactionObj.date = dayjs(date).format();
+        }
+        if (parseFloat(quantity) != transaction?.amount) {
+            transactionObj.amount = parseFloat(quantity);
+        }
+        if (parseFloat(fees) != transaction?.fees) {
+            transactionObj.fees = parseFloat(fees);
+        }
+        if (note != transaction?.description) {
+            transactionObj.description = note;
+        }
+        if (parseFloat(price) != transaction?.costPerUnitInCurrency) {
+            transactionObj.costPerUnitInUsd = (parseFloat(price) / currencyRate);
+            transactionObj.costPerUnitInCurrency = parseFloat(price);
+        }
+        // console.dir(transactionObj)
+        // return;
+
+        const response = await fetch('/api/server/transaction/update', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(transactionObj),
             credentials: 'include'
         });
-        if (response.status === 201) {
+        if (response.status === 200) {
+            let data = await response.json()
             setBackdropOpen(false)
             handleTransactionsChange();
         } else {
             console.log('Some other error');
-            setCreateButtonActive(true)
+            setEditButtonActive(true)
         }
     }
 
@@ -151,7 +126,7 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
             }}
             open={backdropOpen}
         >
-            <Box className={styles.createPortfolioContainer} ref={transactionCreateRef}>
+            <Box className={styles.createPortfolioContainer} ref={transactionEditRef}>
                 <Typography
                     sx={{
                         fontFamily: 'DM Sans',
@@ -163,10 +138,10 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                         paddingTop: '5px',
                         borderBottom: '2px solid rgba(255, 255, 255, 0.3)'
                     }}>
-                    Add transaction
+                    Edit transaction
                 </Typography>
                 <Box className={styles.inputsContainer}>
-                    {asset ? (
+                    {asset && (
                         <Box>
                             <TextField
                                 required
@@ -209,8 +184,6 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                             }
 
                         </Box>
-                    ) : (
-                        <SearchField searchQuery={searchQuery} setSearchQuery={setSearchQuery} dataFiltered={dataFiltered} setAsset={setAsset} />
                     )}
 
 
@@ -224,9 +197,9 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                         Cancel
                     </Box>
                     <Box
-                        onClick={handleTransactionCreate}
-                        className={`${styles.createPortfolioButton} ${!createButtonActive ? styles.disabled : ''}`}>
-                        Create
+                        onClick={handleTransactionEdit}
+                        className={`${styles.createPortfolioButton} ${!editButtonActive ? styles.disabled : ''}`}>
+                        Edit
                     </Box>
 
                 </Box>
@@ -234,4 +207,4 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
         </Backdrop>
     );
 }
-export default CreateTransaction;
+export default EditTransaction;

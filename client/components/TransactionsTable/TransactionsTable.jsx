@@ -8,9 +8,10 @@ import {
 } from '@mui/material';
 
 
-function TransactionsTable({ transactions, currency, handlePortfoliosChange }) {
+function TransactionsTable({ transactions, currency, handleTransactionsChange }) {
     const [open, setOpen] = useState(false);
     const [transactionsData, setTransactionsData] = useState(transactions)
+
 
     return (
         <Box className={styles.coinStatsContainer}>
@@ -85,7 +86,9 @@ function TransactionsTable({ transactions, currency, handlePortfoliosChange }) {
                         },
                     }}>
                         {transactionsData.map((transaction) => (
-                            <TransactionRow key={`transaction-${transaction.id}`} transactionData={transaction} currency={currency} />
+                            <TransactionRow key={`transaction-${transaction.id}`} 
+                            transactionData={transaction} currency={currency} 
+                            handleTransactionsChange={handleTransactionsChange} />
                         ))}
                     </TableBody>
                 </Table>
