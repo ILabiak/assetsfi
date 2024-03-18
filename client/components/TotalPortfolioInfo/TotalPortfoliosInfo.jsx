@@ -42,7 +42,7 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
                                 fontSize: '30px',
                                 color: 'white',
                                 textDecoration: 'none',
-                            }}>{`${totalData?.totalValue.toFixed(2)} ${totalData['Currency']?.symbol}`}</Typography>
+                            }}>{`${totalData?.totalValue.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`}</Typography>
                             {!isNaN(totalData?.totalChangePercentage) &&
                                 <Box className={styles.percentChange}>
                                     <Typography sx={{
@@ -96,13 +96,13 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
             <Box className={styles.totalPotrfolioStats}>
                 <Grid container columnSpacing={4} spacing={1}>
                     <Grid item xs={12} md={4}>
-                        <MiniStats title={'Daily Gain'} percentage={isNaN(totalData?.dailyChangePercentage) ? '' : `${totalData?.dailyChangePercentage} %`} value={`${totalData?.dailyChange.toFixed(2)} ${totalData['Currency']?.symbol}`} />
+                        <MiniStats title={'Daily Gain'} percentage={isNaN(totalData?.dailyChangePercentage) ? '' : `${totalData?.dailyChangePercentage} %`} value={`${totalData?.dailyChange.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <MiniStats title={'Total Gain'} percentage={isNaN(totalData?.totalChangePercentage) ? '' : `${totalData?.totalChangePercentage} %`} value={`${totalData?.totalChange.toFixed(2)} ${totalData['Currency']?.symbol}`} />
+                        <MiniStats title={'Total Gain'} percentage={isNaN(totalData?.totalChangePercentage) ? '' : `${totalData?.totalChangePercentage} %`} value={`${totalData?.totalChange.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <MiniStats title={'Total Invested'} percentage={''} value={`${totalData?.totalInvested.toFixed(2)} ${totalData['Currency']?.symbol}`} />
+                        <MiniStats title={'Total Invested'} percentage={''} value={`${totalData?.totalInvested.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
                     </Grid>
                 </Grid>
             </Box>

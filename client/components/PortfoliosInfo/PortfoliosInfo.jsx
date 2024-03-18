@@ -14,13 +14,15 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 function PortfoliosInfo({ user, error, isLoading }) {
     const [portfloiosData, setPortfoliosData] = useState()
+    const [totalData, setTotalData] = useState()
 
     const fetchData = async () => {
         try {
             const response = await fetch('/api/server/portfoliosdata');
             if (response.status === 200) {
                 const data = await response.json();
-                setPortfoliosData(data)
+                setPortfoliosData(data.portfolios)
+                setTotalData(data.totalData)
             } else if (response.status === 401) {
             } else {
                 console.log('Some other error');
@@ -51,7 +53,7 @@ function PortfoliosInfo({ user, error, isLoading }) {
                 portfloiosData ? (
                     portfloiosData.length > 0 ? (
                         <Box>
-                            <TotalPortfoliosInfo totalData={portfloiosData[0]} handlePortfolioChange={handlePortfoliosChange} singlePortfolio={false} />
+                            <TotalPortfoliosInfo totalData={totalData} handlePortfolioChange={handlePortfoliosChange} singlePortfolio={false} />
 
                             {/* <Box className={styles.totalPotrfolioStats}>
                                 <Grid container columnSpacing={4} spacing={1}>

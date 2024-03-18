@@ -5,7 +5,11 @@ const Transaction = require('../models').Transaction;
 const Coin = require('../models').Coin;
 const sequelize = require('sequelize');
 const { v4: uuidv4 } = require('uuid');
-const { calculatePortfolioStats, calculatePortfolioCoins } = require('./utils');
+const {
+  calculatePortfolioStats,
+  calculatePortfolioCoins,
+  calculateAllPortfolios,
+} = require('./utils');
 
 module.exports = {
   getByUUID(req, res) {
@@ -30,7 +34,7 @@ module.exports = {
       order: [[{ model: Transaction }, 'date', 'DESC']],
     }).then(async (portfolio) => {
       let portfolioData = portfolio.get({ plain: true });
-      portfolioData = await calculatePortfolioCoins(portfolioData)
+      portfolioData = await calculatePortfolioCoins(portfolioData);
       if (!portfolio) {
         return res.status(400).send({
           message: 'Portfolio Not Found',
@@ -40,52 +44,42 @@ module.exports = {
     });
   },
 
-  getUserPortfolios(req, res) {
-    return Portfolio.findAll({
-      where: {
-        userId: req.user.sub,
-      },
-      include: [
-        {
-          model: Transaction,
-          include: [
-            {
-              model: Coin,
-            },
-          ],
-        },
-        {
-          model: Currency,
-        },
-      ],
-      order: [
-        ['id', 'ASC'],
-        [{ model: Transaction }, 'date', 'DESC'],
-      ],
-    }).then(async (portfolios) => {
-      if (!portfolios) {
-        return res.status(400).send({
-          message: 'Portfolios Not Found',
-        });
+  async getUserPortfolios(req, res) {
+    try {
+      const portfolios = await Portfolio.findAll({
+        where: { userId: req.user.sub },
+        include: [
+          { model: Transaction, include: [{ model: Coin }] },
+          { model: Currency }
+        ],
+        order: [
+          ['id', 'ASC'],
+          [{ model: Transaction }, 'date', 'DESC']
+        ]
+      });
+  
+      if (!portfolios || portfolios.length === 0) {
+        return res.status(400).send({ message: 'Portfolios Not Found' });
       }
-      const results = [];
-      const rawData = portfolios.map((node) => node.get({ plain: true }));
-      try {
-        for await (let portfolio of rawData) {
-          portfolio = await calculatePortfolioStats(portfolio);
-        }
-        if(!rawData[0]?.uuid){
-          res.status(400).send({
-            status: false,
-            message: 'Some error while getting portfolios data',
-          });
-        }
-        res.status(200).send(rawData);
-      } catch (err) {
-        console.log(err);
+  
+      const portfolioData = await Promise.all(portfolios.map(async (portfolio) => {
+        const portfolioStats = await calculatePortfolioStats(portfolio.get({ plain: true }));
+        return portfolioStats;
+      }));
+  
+      const totalData = await calculateAllPortfolios(portfolioData);
+  
+      if (!portfolioData[0]?.uuid) {
+        return res.status(400).send({ status: false, message: 'Some error while getting portfolios data' });
       }
-    });
+  
+      res.status(200).send({ portfolios: portfolioData, totalData });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ message: 'Internal Server Error' });
+    }
   },
+  
 
   add(req, res) {
     if (!req.body.name || !req.body.currencyId) {
