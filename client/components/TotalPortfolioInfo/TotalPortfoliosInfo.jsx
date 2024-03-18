@@ -43,29 +43,32 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
                                 color: 'white',
                                 textDecoration: 'none',
                             }}>{`${totalData?.totalValue.toFixed(2)} ${totalData['Currency']?.symbol}`}</Typography>
-                            <Box className={styles.percentChange}>
-                                <Typography sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    fontFamily: 'DM Sans',
-                                    fontSize: '16px',
-                                    color: (parseFloat(totalData?.totalChangePercentage) > 0) ? '#35b17f' : '#E85E5E',
-                                    textDecoration: 'none',
-                                    marginLeft: '5px'
-                                }}>
-                                    {
-                                        totalData?.totalChangePercentage && ((parseFloat(totalData?.totalChangePercentage) > 0) ?
-                                            <TrendingUpIcon sx={{
-                                                color: '#35b17f',
-                                                marginRight: '5px'
-                                            }} /> :
-                                            <TrendingDownIcon sx={{
-                                                color: '#E85E5E',
-                                                marginRight: '5px'
-                                            }} />)
-                                    }
-                                    {totalData?.totalChangePercentage || ''}</Typography>
-                            </Box>
+                            {!isNaN(totalData?.totalChangePercentage) &&
+                                <Box className={styles.percentChange}>
+                                    <Typography sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        fontFamily: 'DM Sans',
+                                        fontSize: '16px',
+                                        color: (parseFloat(totalData?.totalChangePercentage) > 0) ? '#35b17f' : '#E85E5E',
+                                        textDecoration: 'none',
+                                        marginLeft: '5px'
+                                    }}>
+                                        {
+                                            totalData?.totalChangePercentage && ((parseFloat(totalData?.totalChangePercentage) > 0) ?
+                                                <TrendingUpIcon sx={{
+                                                    color: '#35b17f',
+                                                    marginRight: '5px'
+                                                }} /> :
+                                                <TrendingDownIcon sx={{
+                                                    color: '#E85E5E',
+                                                    marginRight: '5px'
+                                                }} />)
+                                        }
+                                        {totalData?.totalChangePercentage || ''}</Typography>
+                                </Box>
+                            }
+
                         </Box>
                     </Box>
                 </Box>
@@ -77,7 +80,7 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
                         marginRight: '20px'
                     }} />
                     {/* <CreatePortfolioButton handlePortfoliosChange={handlePortfoliosChange} /> */}
-                    <CreateTransactionButton currency={totalData['Currency']} portfolio={totalData} handleTransactionsChange={handlePortfolioChange}/>
+                    <CreateTransactionButton currency={totalData['Currency']} portfolio={totalData} handleTransactionsChange={handlePortfolioChange} />
                 </Box> :
                     <Box className={styles.createButtonContainer}>
                         <VisibilityIcon sx={{
@@ -93,10 +96,10 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
             <Box className={styles.totalPotrfolioStats}>
                 <Grid container columnSpacing={4} spacing={1}>
                     <Grid item xs={12} md={4}>
-                        <MiniStats title={'Daily Gain'} percentage={`${totalData?.dailyChangePercentage} %`} value={`${totalData?.dailyChange.toFixed(2)} ${totalData['Currency']?.symbol}`} />
+                        <MiniStats title={'Daily Gain'} percentage={isNaN(totalData?.dailyChangePercentage) ? '' : `${totalData?.dailyChangePercentage} %`} value={`${totalData?.dailyChange.toFixed(2)} ${totalData['Currency']?.symbol}`} />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <MiniStats title={'Total Gain'} percentage={`${totalData?.totalChangePercentage} %`} value={`${totalData?.totalChange.toFixed(2)} ${totalData['Currency']?.symbol}`} />
+                        <MiniStats title={'Total Gain'} percentage={isNaN(totalData?.totalChangePercentage) ? '' : `${totalData?.totalChangePercentage} %`} value={`${totalData?.totalChange.toFixed(2)} ${totalData['Currency']?.symbol}`} />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <MiniStats title={'Total Invested'} percentage={''} value={`${totalData?.totalInvested.toFixed(2)} ${totalData['Currency']?.symbol}`} />

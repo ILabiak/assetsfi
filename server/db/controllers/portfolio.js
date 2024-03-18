@@ -74,6 +74,12 @@ module.exports = {
         for await (let portfolio of rawData) {
           portfolio = await calculatePortfolioStats(portfolio);
         }
+        if(!rawData[0]?.uuid){
+          res.status(400).send({
+            status: false,
+            message: 'Some error while getting portfolios data',
+          });
+        }
         res.status(200).send(rawData);
       } catch (err) {
         console.log(err);
