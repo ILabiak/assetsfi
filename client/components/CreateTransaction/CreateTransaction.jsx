@@ -74,6 +74,18 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
         }
     }, []);
 
+    useEffect(() => {
+        if (!backdropOpen) {
+            setSearchQuery("")
+            setAsset()
+            setQuantity("")
+            setPrice("")
+            setFees("")
+            setNote("")
+            setDate(dayjs(new Date()))
+        }
+    }, [backdropOpen]);
+
 
 
     useEffect(() => {
