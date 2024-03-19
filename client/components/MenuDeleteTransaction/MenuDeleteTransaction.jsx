@@ -50,7 +50,7 @@ function MenuDeleteTransaction({ transaction, handleTransactionsChange }) {
             <MenuItem
                 onClick={handleOpen}
                 key={'deletePortfolio'} >
-                Delete portfolio
+                Delete transaction
             </MenuItem>
             <Backdrop
                 onClick={handleClose}
