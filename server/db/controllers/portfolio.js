@@ -50,36 +50,44 @@ module.exports = {
         where: { userId: req.user.sub },
         include: [
           { model: Transaction, include: [{ model: Coin }] },
-          { model: Currency }
+          { model: Currency },
         ],
         order: [
           ['id', 'ASC'],
-          [{ model: Transaction }, 'date', 'DESC']
-        ]
+          [{ model: Transaction }, 'date', 'DESC'],
+        ],
       });
-  
+
       if (!portfolios || portfolios.length === 0) {
-        return res.status(400).send({ message: 'Portfolios Not Found' });
+        return res.status(200).send({ portfolios: [] });
       }
-  
-      const portfolioData = await Promise.all(portfolios.map(async (portfolio) => {
-        const portfolioStats = await calculatePortfolioStats(portfolio.get({ plain: true }));
-        return portfolioStats;
-      }));
-  
+
+      const portfolioData = await Promise.all(
+        portfolios.map(async (portfolio) => {
+          const portfolioStats = await calculatePortfolioStats(
+            portfolio.get({ plain: true })
+          );
+          return portfolioStats;
+        })
+      );
+
       const totalData = await calculateAllPortfolios(portfolioData);
-  
+
       if (!portfolioData[0]?.uuid) {
-        return res.status(400).send({ status: false, message: 'Some error while getting portfolios data' });
+        return res
+          .status(400)
+          .send({
+            status: false,
+            message: 'Some error while getting portfolios data',
+          });
       }
-  
+
       res.status(200).send({ portfolios: portfolioData, totalData });
     } catch (err) {
       console.log(err);
       res.status(500).send({ message: 'Internal Server Error' });
     }
   },
-  
 
   add(req, res) {
     if (!req.body.name || !req.body.currencyId) {

@@ -51,7 +51,7 @@ function MacMockup({ user, error, isLoading }) {
                                 marginBottom: { xs: '15px', md: '0px' },
                                 width: { xs: '100%', md: '160px' },
                             }} >
-                            {user ? 'My Porfolios' : 'Login'}
+                            {user ? 'My Portfolios' : 'Login'}
                         </Button>
                         {!user && (
                             <Button className={styles.signupButton}
