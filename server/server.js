@@ -23,7 +23,8 @@ fastify.addHook('onRequest', async (req, res) => {
     if (
       req.routeOptions.url === '/currencies' ||
       req.routeOptions.url === '/coins' ||
-      req.routeOptions.url === '/currency/:currency'
+      req.routeOptions.url === '/currency/:currency'||
+      req.routeOptions.url === '/test'
     ) {
       return;
     }
@@ -40,7 +41,7 @@ fastify.get('/', async (req, res) => {
 
 fastify.get('/test', async (req, res) => {
   try {
-    res.send({ message: 'API call successful' });
+    res.status(200).send({ message: 'API call successful' });
   } catch (error) {
     console.error('Error verifying token:', error);
     res.status(401).send({ message: 'Unauthorized' });
