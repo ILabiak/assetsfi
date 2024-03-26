@@ -1,0 +1,31 @@
+.totalPortfoliosInfoContainer {
+    display: flex;
+    justify-content: space-between;
+    height: auto;
+    /* margin-top: 100px; */
+    width: auto;
+    /* border: 1px solid white; */
+    margin: 0px 30px 0;
+}
+
+
+.totalPortfoliosValueInfo {
+    /* border: 1px solid red; */
+    width: auto;
+}
+
+.createButtonContainer {
+    display: flex;
+    align-items: center;
+    /* border: 1px solid red; */
+    width: auto;
+}
+
+.totalPotrfolioStats {
+    display: flex;
+    height: auto;
+    width: auto;
+    /* margin-top: 100px; */
+    /* border: 1px solid white; */
+    margin: 0px 30px 0;
+}

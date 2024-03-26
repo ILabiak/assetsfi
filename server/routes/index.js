@@ -5,6 +5,7 @@ const {
   currency: currencyController,
   coin: coinController,
   transaction: transactionController,
+  binance: binanceController,
 } = controllers;
 
 async function routes(fastify /*, options*/) {
@@ -26,6 +27,11 @@ async function routes(fastify /*, options*/) {
   fastify.post('/transaction/create', transactionController.add);
   fastify.put('/transaction/update', transactionController.update);
   fastify.delete('/transaction/delete', transactionController.delete);
+
+    /* Binance Routes */
+    fastify.get('/binance/userdata', binanceController.getUserData);
+    fastify.post('/binance/create', binanceController.add);
+    fastify.delete('/binance/delete', binanceController.delete);
 }
 
 module.exports = routes;

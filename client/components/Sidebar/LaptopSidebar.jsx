@@ -3,6 +3,7 @@ import styles from './sidebar.module.css';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
+import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
@@ -10,12 +11,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import LogoutIcon from '@mui/icons-material/Logout';
 import WindowIcon from '@mui/icons-material/Window';
+import SvgIcon from "@mui/material/SvgIcon";
 import SwapVerticalCircleIcon from '@mui/icons-material/SwapVerticalCircle';
 import WalletIcon from '@mui/icons-material/Wallet';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 
+
+import binanceLogo from '@/public/binance.svg';
 import logo from '@/public/logo.svg';
 
 const drawerWidth = 260;
@@ -27,7 +31,16 @@ const LaptopSidebar = React.memo(() => {
 
     const sidebarPages = [{ text: 'Home', icon: <WindowIcon />, active: pathname == '/dashboard' ? true : false, href: '/dashboard' },
     // { text: 'Transactions', icon: <SwapVerticalCircleIcon />, active: pathname == '/transactions' ? true : false, href: '/transactions' },
-    { text: 'Portfolios', icon: <WalletIcon />, active: pathname == '/portfolios' ? true : false, href: '/portfolios' }]
+    { text: 'Portfolios', icon: <WalletIcon />, active: pathname == '/portfolios' ? true : false, href: '/portfolios' },
+    {
+        text: 'Binance Spot', icon: <SvgIcon>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" strokeWidth={1.5} stroke="currentColor" id="Binance"><path fill="#ffffff" d="M14.6782 20.1697L23.9997 10.8486 33.3262 20.1746 38.7501 14.7507 23.9997 0 9.25428 14.7458 14.6782 20.1697zM10.8479 23.9988L5.42408 18.575 0 23.9991 5.42381 29.4229 10.8479 23.9988zM23.9997 37.1507L14.6782 27.8296 9.24634 33.2463 23.9997 47.9993 38.7501 33.2489 38.7527 33.2459 33.3258 27.825 23.9997 37.1507zM42.5759 29.4254L48 24.0014 42.5762 18.5775 37.1521 24.0016 42.5759 29.4254z" class="color000000 svgShape"></path><path fill="#ffffff" d="M29.5036 23.9968H29.5013L29.5063 23.9995L29.5036 24.0025L23.9997 29.5064L18.5008 24.0074L18.4932 23.9995L23.9997 18.4929L29.5036 23.9968Z" class="color000000 svgShape"></path></svg>
+            {/* <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" strokeWidth={1.5} stroke="currentColor" id="binance">
+                <path fill="#000"
+                    d="M14.6782 20.1697L23.9997 10.8486 33.3262 20.1746 38.7501 14.7507 23.9997 0 9.25428 14.7458 14.6782 20.1697zM10.8479 23.9988L5.42408 18.575 0 23.9991 5.42381 29.4229 10.8479 23.9988zM23.9997 37.1507L14.6782 27.8296 9.24634 33.2463 23.9997 47.9993 38.7501 33.2489 38.7527 33.2459 33.3258 27.825 23.9997 37.1507zM42.5759 29.4254L48 24.0014 42.5762 18.5775 37.1521 24.0016 42.5759 29.4254z"></path><path fill="#000" d="M29.5036 23.9968H29.5013L29.5063 23.9995L29.5036 24.0025L23.9997 29.5064L18.5008 24.0074L18.4932 23.9995L23.9997 18.4929L29.5036 23.9968Z">
+                </path></svg> */}
+        </SvgIcon>, active: pathname == '/binance' ? true : false, href: '/binance'
+    }]
     return (
         <Drawer
             sx={{
@@ -48,15 +61,18 @@ const LaptopSidebar = React.memo(() => {
                 display: 'flex',
                 flexDirection: 'column'
             }}>
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: 'flex-start',
-                    textAlign: 'center',
-                    marginLeft: '30px',
-                    height: '100px'
-                }}>
+                <Link
+                    href={'/'}
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        justifyContent: 'flex-start',
+                        textAlign: 'center',
+                        marginLeft: '30px',
+                        height: '100px',
+                        textDecoration: 'none'
+                    }}>
                     <Image
                         priority
                         src={logo}
@@ -84,7 +100,7 @@ const LaptopSidebar = React.memo(() => {
                     >
                         AssetsFi
                     </Typography>
-                </Box>
+                </Link>
 
                 <Divider sx={{
                     alignSelf: 'center',
@@ -147,28 +163,28 @@ const LaptopSidebar = React.memo(() => {
                 }} />
                 <List>
                     <ListItem key='logout'>
-                        <ListItemButton onClick={() => { router.push('/api/auth/logout') }} className={styles.listItem} 
-                        sx={{
-                            borderRadius: '5px',
-                            "&.Mui-selected": {
-                                backgroundColor: "#0328EE"
-                            },
-                            "&.Mui-selected:hover": {
-                                backgroundColor: "#010D50"
-                            },
-                            "&.Mui-focusVisible": {
-                                backgroundColor: "#010D50"
-                            },
-                            "&:hover": {
-                                backgroundColor: "#010D50",
-                                "& svg": {
-                                    color: "white"
+                        <ListItemButton onClick={() => { router.push('/api/auth/logout') }} className={styles.listItem}
+                            sx={{
+                                borderRadius: '5px',
+                                "&.Mui-selected": {
+                                    backgroundColor: "#0328EE"
                                 },
-                                "& p": {
-                                    color: "white"
+                                "&.Mui-selected:hover": {
+                                    backgroundColor: "#010D50"
+                                },
+                                "&.Mui-focusVisible": {
+                                    backgroundColor: "#010D50"
+                                },
+                                "&:hover": {
+                                    backgroundColor: "#010D50",
+                                    "& svg": {
+                                        color: "white"
+                                    },
+                                    "& p": {
+                                        color: "white"
+                                    }
                                 }
-                            }
-                        }}>
+                            }}>
                             <ListItemIcon sx={{ color: '#AEAEAE', }}>
                                 <LogoutIcon />
                             </ListItemIcon>

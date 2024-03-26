@@ -1,0 +1,13 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #1A1A1A;
+  /* padding: 6rem; */
+  min-height: 100vh;
+}
+
+.wrap {
+  width: 100%;
+}

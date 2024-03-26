@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: 'assets.coingecko.com',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname: 's2.coinmarketcap.com',
+        pathname: '**',
+      },
     ],
   },
   reactStrictMode: false,
