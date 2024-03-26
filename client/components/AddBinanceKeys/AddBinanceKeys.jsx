@@ -32,7 +32,7 @@ const textFieldStyle = {
 
 
 
-function AddBinanceKeys() {
+function AddBinanceKeys({ handleChange }) {
     const [apiKey, setApiKey] = useState('');
     const [apiSecret, setApiSecret] = useState('');
     const [errorText, setErrorText] = useState('');
@@ -94,6 +94,7 @@ function AddBinanceKeys() {
         });
         if (response.status === 201) {
             setSuccessOpen(true)
+            handleChange()
             //handleUpdateBinanceInfo
         } else {
             let data = await response.json()

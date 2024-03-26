@@ -1,55 +1,53 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styles from './menudeleteportfolio.module.css';
-import { Typography, Box, Backdrop, TextField, MenuItem } from '@mui/material';
+import styles from './binancedeletebutton.module.css';
+import { Typography, Box, Grid, Backdrop } from '@mui/material';
+import MiniStats from '@/components/MiniStats/MiniStats';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function MenuDeletePortfolio({ portfolio, handlePortfoliosChange }) {
+function BinanceDeleteButton({ handleBinanceChange }) {
     const [backdropOpen, setBackdropOpen] = useState(false)
     const [deleteButtonActive, setDeleteButtonActive] = useState(true)
-    const portfolioDeleteRef = useRef(null);
+    const binanceDeleteRef = useRef(null);
 
     const handleClose = (event) => {
         if (
-            portfolioDeleteRef.current &&
-            !portfolioDeleteRef.current.contains(event.target)
+            binanceDeleteRef.current &&
+            !binanceDeleteRef.current.contains(event.target)
         ) {
             setBackdropOpen(false);
         }
     };
-    
     const handleOpen = () => {
         setBackdropOpen(true);
     };
 
-    const handlePortfolioDelete = async () => {
+    const handleDeleteKeys = async () => {
         setDeleteButtonActive(false)
-        // console.log('123')
-        const response = await fetch('/api/server/portfolio/delete', {
+        const response = await fetch('/api/server/binance/delete', {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ uuid: portfolio?.uuid }),
             credentials: 'include'
         });
         if (response.status === 200) {
             setBackdropOpen(false)
-            handlePortfoliosChange();
+            handleBinanceChange();
         } else {
             console.log('Some other error');
             setDeleteButtonActive(true)
         }
     }
 
-
     return (
-
-        <React.Fragment>
-            <MenuItem
+        <Box sx={{
+            display: 'flex',
+            flexDirection: 'column'
+        }}>
+            <Box className={styles.buttonContainer}>
+                <Box 
                 onClick={handleOpen}
-                key={'deletePortfolio'} >
-                Delete portfolio
-            </MenuItem>
+                className={styles.deleteBinanceButton}>
+                    Delete api keys
+                </Box>
+            </Box>
             <Backdrop
                 onClick={handleClose}
 
@@ -61,7 +59,7 @@ function MenuDeletePortfolio({ portfolio, handlePortfoliosChange }) {
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.deletePortfolioContainer} ref={portfolioDeleteRef}>
+                <Box className={styles.deletePortfolioContainer} ref={binanceDeleteRef}>
                     <Box className={styles.warningContainer}>
                         <Box className={styles.warning}>
                             <Box className={styles.deleteIcon}>
@@ -72,28 +70,18 @@ function MenuDeletePortfolio({ portfolio, handlePortfoliosChange }) {
                                 <Typography
                                     sx={{
                                         fontFamily: 'DM Sans',
-                                        // fontStyle: 'bold',
                                         fontSize: '20px',
                                         fontWeight: '1000',
-                                        // paddingLeft: '20px',
-                                        // paddingBottom: '5px',
-                                        // paddingTop: '5px',
-                                        // borderBottom: '2px solid rgba(255, 255, 255, 0.3)'
                                     }}>
-                                    Delete {portfolio.title}
+                                    Delete api keys
                                 </Typography>
                                 <Typography
                                     sx={{
                                         fontFamily: 'DM Sans',
-                                        // fontStyle: 'bold',
                                         fontSize: '14px',
                                         fontWeight: '1000',
-                                        // paddingLeft: '20px',
-                                        // paddingBottom: '5px',
-                                        // paddingTop: '5px',
-                                        // borderBottom: '2px solid rgba(255, 255, 255, 0.3)'
                                     }}>
-                                    Do you want to delete this portfolio?
+                                    Do you want to delete your api keys?
                                 </Typography>
                             </Box>
 
@@ -103,21 +91,20 @@ function MenuDeletePortfolio({ portfolio, handlePortfoliosChange }) {
 
                     <Box className={styles.buttonsContainer}>
                         <Box className={styles.cancelButton}
-                            onClick={() => setBackdropOpen(false)}
-                            sx={{
-                                // marginRight: '10px'
-                            }}>
+                            onClick={() => setBackdropOpen(false)}>
                             Cancel
                         </Box>
                         <Box
-                            onClick={handlePortfolioDelete}
-                            className={`${styles.deletePortfolioButton} ${!deleteButtonActive ? styles.disabled : ''}`}>
+                            onClick={handleDeleteKeys}
+                            className={`${styles.deleteKeysButton} ${!deleteButtonActive ? styles.disabled : ''}`}>
                             Delete
                         </Box>
                     </Box>
                 </Box>
             </Backdrop>
-        </React.Fragment>
+
+        </Box>
+
     );
 }
-export default MenuDeletePortfolio;
+export default BinanceDeleteButton;
