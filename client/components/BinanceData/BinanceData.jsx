@@ -36,7 +36,7 @@ function BinanceData() {
     }
 
     useEffect(() => {
-        // fetchData().catch(console.error)
+        fetchData().catch(console.error)
     }, []);
 
     return (
