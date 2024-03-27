@@ -11,7 +11,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
-function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio }) {
+function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio, valuesHidden, setValuesHidden }) {
 
     return (
         <Box sx={{
@@ -42,8 +42,8 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
                                 fontSize: '30px',
                                 color: 'white',
                                 textDecoration: 'none',
-                            }}>{`${totalData?.totalValue.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`}</Typography>
-                            {!isNaN(totalData?.totalChangePercentage) &&
+                            }}>{valuesHidden ? '***' : `${totalData?.totalValue.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`}</Typography>
+                            {!isNaN(totalData?.totalChangePercentage) && !valuesHidden &&
                                 <Box className={styles.percentChange}>
                                     <Typography sx={{
                                         display: 'flex',
@@ -74,20 +74,53 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
                 </Box>
 
                 {singlePortfolio ? <Box className={styles.createButtonContainer}>
-                    <VisibilityIcon sx={{
-                        color: '#AEAEAE',
-                        fontSize: '20px',
-                        marginRight: '20px'
-                    }} />
+                    {
+                        valuesHidden ? (
+                            <VisibilityOffIcon
+                                onClick={() => { setValuesHidden(false) }}
+                                sx={{
+                                    color: '#AEAEAE',
+                                    fontSize: '20px',
+                                    marginRight: '20px',
+                                    cursor: 'pointer',
+                                }} />
+                        ) : (
+                            <VisibilityIcon
+                                onClick={() => { setValuesHidden(true) }}
+                                sx={{
+                                    color: '#AEAEAE',
+                                    fontSize: '20px',
+                                    marginRight: '20px',
+                                    cursor: 'pointer',
+                                }} />
+                        )
+                    }
                     {/* <CreatePortfolioButton handlePortfoliosChange={handlePortfoliosChange} /> */}
                     <CreateTransactionButton currency={totalData['Currency']} portfolio={totalData} handleTransactionsChange={handlePortfolioChange} />
                 </Box> :
                     <Box className={styles.createButtonContainer}>
-                        <VisibilityIcon sx={{
-                            color: '#AEAEAE',
-                            fontSize: '20px',
-                            marginRight: '20px'
-                        }} />
+                        {
+                            valuesHidden ? (
+                                <VisibilityOffIcon
+                                    onClick={() => { setValuesHidden(false) }}
+                                    sx={{
+                                        color: '#AEAEAE',
+                                        fontSize: '20px',
+                                        marginRight: '20px',
+                                        cursor: 'pointer',
+                                    }} />
+                            ) : (
+                                <VisibilityIcon
+                                    onClick={() => { setValuesHidden(true) }}
+                                    sx={{
+                                        color: '#AEAEAE',
+                                        fontSize: '20px',
+                                        marginRight: '20px',
+                                        cursor: 'pointer',
+                                    }} />
+                            )
+                        }
+
                         <CreatePortfolioButton handlePortfoliosChange={handlePortfolioChange} portfolio={totalData} />
                     </Box>
                 }
@@ -96,13 +129,18 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
             <Box className={styles.totalPotrfolioStats}>
                 <Grid container columnSpacing={4} spacing={1}>
                     <Grid item xs={12} md={4}>
-                        <MiniStats title={'Daily Gain'} percentage={isNaN(totalData?.dailyChangePercentage) ? '' : `${totalData?.dailyChangePercentage} %`} value={`${totalData?.dailyChange.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
+                        <MiniStats title={'Daily Gain'}
+                            percentage={(isNaN(totalData?.dailyChangePercentage) || valuesHidden) ? '' : `${totalData?.dailyChangePercentage} %`}
+                            value={valuesHidden ? '***' : `${totalData?.dailyChange.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <MiniStats title={'Total Gain'} percentage={isNaN(totalData?.totalChangePercentage) ? '' : `${totalData?.totalChangePercentage} %`} value={`${totalData?.totalChange.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
+                        <MiniStats title={'Total Gain'}
+                            percentage={(isNaN(totalData?.totalChangePercentage) || valuesHidden) ? '' : `${totalData?.totalChangePercentage} %`}
+                            value={valuesHidden ? '***' : `${totalData?.totalChange.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <MiniStats title={'Total Invested'} percentage={''} value={`${totalData?.totalInvested.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
+                        <MiniStats title={'Total Invested'} percentage={''}
+                            value={valuesHidden ? '***' : `${totalData?.totalInvested.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
                     </Grid>
                 </Grid>
             </Box>

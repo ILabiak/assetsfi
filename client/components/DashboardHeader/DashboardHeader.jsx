@@ -42,30 +42,22 @@ function DashboardHeader({ user, error, isLoading, title }) {
         <AppBar position="fixed" sx={{
             width: { xs: '100%', md: `calc(100% - 260px)` }, 
             ml: { xs: '0', md: '260px' },
-            backgroundColor: '#1A1A1A'
-            , boxShadow: 'none'
+            height: '100px',
+            backgroundColor: '#1A1A1A',
+            boxShadow: 'none'
         }}>
             <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'></link>
-            <Container maxWidth="xl" >
+            <Container maxWidth="xl" disableGutters sx={{
+                height: '100%',
+                display:'flex',
+                alignItems: 'center',
+            }}>
 
                 {/* Laptop */}
-                <Toolbar disableGutters>
-                    <Box
-                        component="a"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            alignItems: 'center',
-                            height: '100px'
-                        }}>
-                        {/* <Image
-                            priority
-                            src={logo}
-                            alt="logo"
-                            height={70}
-                            width={70}
-                        /> */}
-                    </Box >
+                <Toolbar disableGutters sx={{
+                    marginLeft: '30px',
+                    marginRight: '30px'
+                }}>
                     <Typography
                         variant="h6"
                         noWrap
@@ -79,7 +71,7 @@ function DashboardHeader({ user, error, isLoading, title }) {
                             // letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
-                            // marginLeft: '10px',
+                            // marginLeft: '30px',
                             display: { xs: 'none', md: 'flex' }
                         }}
                     >

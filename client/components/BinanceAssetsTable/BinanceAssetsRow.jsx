@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 
 
-function BinanceAssetsRow({ asset, currency, handlePortfoliosChange }) {
+function BinanceAssetsRow({ asset, valuesHidden }) {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
@@ -37,22 +37,22 @@ function BinanceAssetsRow({ asset, currency, handlePortfoliosChange }) {
                     </Box>
                 </TableCell>
                 <TableCell >
-                    {`${asset?.totalValue} $`}
+                    {valuesHidden ? '***' :`${asset?.totalValue} $`}
                 </TableCell>
                 <TableCell >
-                    {`${parseFloat(asset?.free)} ${asset?.asset.toUpperCase()}`}
+                    {valuesHidden ? '***' :`${parseFloat(asset?.free)} ${asset?.asset.toUpperCase()}`}
                 </TableCell>
                 <TableCell >
-                    {`${asset?.price} $`}
+                    {valuesHidden ? '***' :`${asset?.price} $`}
                 </TableCell>
                 <TableCell >
                     {
                         (asset?.dailyChange != 0 || asset?.dailyChangePercentage != '0') && (
                             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
                                 <Box>
-                                    {`${asset?.dailyChange} $`}
+                                    {valuesHidden ? '***' :`${asset?.dailyChange} $`}
                                 </Box>
-                                {!isNaN(asset?.dailyChangePercentage) &&
+                                {!isNaN(asset?.dailyChangePercentage) && !valuesHidden &&
                                     <Box sx={{
                                         backgroundColor: (parseFloat(asset?.dailyChangePercentage) > 0) ? '#34B17F' : '#5D2626',
                                         borderRadius: '5px',

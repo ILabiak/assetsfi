@@ -15,6 +15,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 function PortfoliosInfo({ user, error, isLoading }) {
     const [portfloiosData, setPortfoliosData] = useState()
     const [totalData, setTotalData] = useState()
+    const [valuesHidden, setValuesHidden] = useState(false)
 
     const fetchData = async () => {
         try {
@@ -53,23 +54,18 @@ function PortfoliosInfo({ user, error, isLoading }) {
                 portfloiosData ? (
                     portfloiosData.length > 0 ? (
                         <Box>
-                            <TotalPortfoliosInfo totalData={totalData} handlePortfolioChange={handlePortfoliosChange} singlePortfolio={false} />
-
-                            {/* <Box className={styles.totalPotrfolioStats}>
-                                <Grid container columnSpacing={4} spacing={1}>
-                                    <Grid item xs={12} md={4}>
-                                        <MiniStats title={'Daily Gain'} percentage={'2.28%'} value={'332,75 $'} />
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <MiniStats title={'Total Gain'} percentage={'-68.5%'} value={'12 632,21 $'} />
-                                    </Grid>
-                                    <Grid item xs={12} md={4}>
-                                        <MiniStats title={'Total Invested'} percentage={''} value={'23 451,15 $'} />
-                                    </Grid>
-                                </Grid>
-                            </Box> */}
-
-                            <PortfoliosList portfoliosData={portfloiosData} handlePortfoliosChange={handlePortfoliosChange} />
+                            <TotalPortfoliosInfo 
+                            totalData={totalData} 
+                            handlePortfolioChange={handlePortfoliosChange} 
+                            singlePortfolio={false}
+                            valuesHidden={valuesHidden}
+                            setValuesHidden={setValuesHidden}
+                            />
+                            <PortfoliosList 
+                            portfoliosData={portfloiosData} 
+                            handlePortfoliosChange={handlePortfoliosChange}
+                            valuesHidden={valuesHidden}
+                            />
                         </Box>
                     ) : (
                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>

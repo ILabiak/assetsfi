@@ -4,18 +4,15 @@ import TotalPortfoliosInfo from '@/components/TotalPortfolioInfo/TotalPortfolios
 import CreateTransactionButton from '@/components/CreateTransactionButton/CreateTransactionButton'
 import CoinsStatsTable from '@/components/CoinsStatsTable/CoinsStatsTable';
 import TransactionsTable from '@/components/TransactionsTable/TransactionsTable';
+import PortfolioTransactionHead from '@/components/PortfolioTransactionHead/PortfolioTransactionHead'
 import { Button, Typography, Box, Grid, Tabs, Tab } from '@mui/material';
-import { useRouter } from 'next/navigation'
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CircularProgress from '@mui/material/CircularProgress';
-
 
 
 function PortfolioData({ uuid }) {
     const [tabValue, setTabValue] = useState(0)
     const [portfloioData, setPortfolioData] = useState()
+    const [valuesHidden, setValuesHidden] = useState(false)
 
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
@@ -97,30 +94,34 @@ function PortfolioData({ uuid }) {
                                 color: 'white',
                                 display: tabValue == 0 ? 'inline' : 'none'
                             }}>
-                                <TotalPortfoliosInfo totalData={portfloioData} handlePortfolioChange={handleTransactionsChange} singlePortfolio={true} />
-                                <CoinsStatsTable portfolio={portfloioData} />
+                                <TotalPortfoliosInfo
+                                    totalData={portfloioData}
+                                    handlePortfolioChange={handleTransactionsChange}
+                                    singlePortfolio={true}
+                                    valuesHidden={valuesHidden}
+                                    setValuesHidden={setValuesHidden}
+                                />
+                                <CoinsStatsTable portfolio={portfloioData} valuesHidden={valuesHidden} />
                             </Box>
 
                             <Box className={styles.transactionsContainer} sx={{
                                 color: 'white',
                                 display: tabValue == 1 ? 'inline' : 'none'
                             }}>
-                                <Box className={styles.transactionsHead}>
-                                    <Typography sx={{
-                                        fontFamily: 'DM Sans',
-                                        fontSize: '30px',
-                                        color: 'white',
-                                        // ml: '30px',
-                                        textDecoration: 'none',
-                                    }}>Transactions</Typography>
-                                    <Box className={styles.createButtonBox}>
-                                        <CreateTransactionButton currency={portfloioData['Currency']} portfolio={portfloioData} handleTransactionsChange={handleTransactionsChange} />
-                                    </Box>
-                                </Box>
-
-                                <TransactionsTable transactions={portfloioData['Transactions']}
+                                <PortfolioTransactionHead
                                     currency={portfloioData['Currency']}
-                                    handleTransactionsChange={handleTransactionsChange} />
+                                    portfolio={portfloioData}
+                                    handleTransactionsChange={handleTransactionsChange}
+                                    valuesHidden={valuesHidden}
+                                    setValuesHidden={setValuesHidden}
+                                />
+
+                                <TransactionsTable
+                                    transactions={portfloioData['Transactions']}
+                                    currency={portfloioData['Currency']}
+                                    handleTransactionsChange={handleTransactionsChange}
+                                    valuesHidden={valuesHidden}
+                                />
                             </Box>
 
                         </Box>

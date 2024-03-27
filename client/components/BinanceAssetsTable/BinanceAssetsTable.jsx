@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 
 
-function BinanceAssetsTable({ binanceAssets, handlePortfoliosChange }) {
+function BinanceAssetsTable({ binanceAssets, valuesHidden }) {
     // const [open, setOpen] = useState(false);
     // const [binanceAssetsData, setBinanceAssetsData] = useState(binanceAssets)
 
@@ -84,7 +84,11 @@ function BinanceAssetsTable({ binanceAssets, handlePortfoliosChange }) {
                         },
                     }}>
                         {binanceAssets.map((asset) => (
-                            <BinanceAssetsRow key={`asset-${asset.asset}`} asset={asset} />
+                            <BinanceAssetsRow
+                                key={`asset-${asset.asset}`}
+                                asset={asset}
+                                valuesHidden={valuesHidden}
+                            />
                         ))}
                     </TableBody>
                 </Table>

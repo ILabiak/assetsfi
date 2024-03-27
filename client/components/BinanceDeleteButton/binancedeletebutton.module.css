@@ -2,7 +2,7 @@
     width: auto;
     /* margin-left: 10px; */
     text-align: center;
-    padding: 10px;
+    padding: 5px;
     border-radius: 10px;
     background: #A32F2F;
     color: white;
@@ -21,18 +21,13 @@
     display: flex;
     justify-content: flex-end;
     align-content: center;
-    margin-top: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
 }
 
 .deletePortfolioContainer {
-    /* border: 1px solid white; */
     display: flex;
     flex-direction: column;
     width: 25%;
     min-width: 350px;
-    /* min-height: 45%; */
     height: auto;
     background-color: #1A1A1A;
     border-radius: 10px;

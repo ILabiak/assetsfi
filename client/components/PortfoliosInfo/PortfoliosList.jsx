@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 
 
-function PortfoliosList({ portfoliosData, handlePortfoliosChange }) {
+function PortfoliosList({ portfoliosData, handlePortfoliosChange, valuesHidden }) {
     const [open, setOpen] = useState(false);
 
     const [portfolios, setPortfolios] = useState(portfoliosData)
@@ -93,7 +93,12 @@ function PortfoliosList({ portfoliosData, handlePortfoliosChange }) {
                         },
                     }}>
                         {portfolios.map((el) => (
-                            <PortfolioRow key={`${el.uuid}-mainRow`} portfolioData={el} handlePortfoliosChange={handlePortfoliosChange} />
+                            <PortfolioRow 
+                            key={`${el.uuid}-mainRow`} 
+                            portfolioData={el} 
+                            handlePortfoliosChange={handlePortfoliosChange}
+                            valuesHidden={valuesHidden}
+                            />
                         ))}
                     </TableBody>
                 </Table>

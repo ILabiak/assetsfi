@@ -44,7 +44,7 @@ function formatDate(dateString) {
     return formattedDate;
 }
 
-function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
+function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
@@ -69,31 +69,31 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                 }}
             >
                 <TableCell component="th" scope="row" >
-                    <Link 
-                    href={`/portfolio/${portfolio.uuid}`}
-                    sx={{
-                        padding: '5px',
-                        color: 'white',
-                        width: 'auto',
-                        textDecoration: 'none',
-                        "&:hover": {
-                            cursor: 'pointer',
-                            backgroundColor:'#34B17F',
-                            borderRadius: '5px',
-                        }
-                    }}>
+                    <Link
+                        href={`/portfolio/${portfolio.uuid}`}
+                        sx={{
+                            padding: '5px',
+                            color: 'white',
+                            width: 'auto',
+                            textDecoration: 'none',
+                            "&:hover": {
+                                cursor: 'pointer',
+                                backgroundColor: '#34B17F',
+                                borderRadius: '5px',
+                            }
+                        }}>
                         {portfolio.title}
                     </Link>
 
                 </TableCell>
-                <TableCell align="right">{`${portfolio?.totalValue.toFixed(2)} ${portfolio['Currency']?.symbol}`}
+                <TableCell align="right">{valuesHidden ? '***' : `${portfolio?.totalValue.toFixed(2)} ${portfolio['Currency']?.symbol}`}
                 </TableCell>
                 <TableCell align="right">
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
-                            {`${portfolio?.dailyChange.toFixed(2)} ${portfolio['Currency']?.symbol}`}
+                            {valuesHidden ? '***' : `${portfolio?.dailyChange.toFixed(2)} ${portfolio['Currency']?.symbol}`}
                         </Box>
-                        {!isNaN(portfolio?.dailyChangePercentage) &&
+                        {!isNaN(portfolio?.dailyChangePercentage) && !valuesHidden &&
                             <Box sx={{
                                 backgroundColor: (parseFloat(portfolio?.dailyChangePercentage) > 0) ? '#34B17F' : '#5D2626',
                                 borderRadius: '5px',
@@ -107,9 +107,11 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                 <TableCell align="right">
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
-                            {portfolio?.totalChange.toFixed(2)} {portfolio['Currency']?.symbol}
+                            {
+                                valuesHidden ? '***' : `${portfolio?.totalChange.toFixed(2)} ${portfolio['Currency']?.symbol}`
+                            }
                         </Box>
-                        {!isNaN(portfolio?.totalChangePercentage) &&
+                        {!isNaN(portfolio?.totalChangePercentage) && !valuesHidden &&
                             <Box sx={{
                                 backgroundColor: (parseFloat(portfolio?.totalChangePercentage) > 0) ? '#34B17F' : '#5D2626',
                                 borderRadius: '5px',
@@ -121,7 +123,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                     </Box>
 
                 </TableCell>
-                <TableCell align="right">{portfolio?.totalInvested.toFixed(2)} {portfolio['Currency']?.symbol}</TableCell>
+                <TableCell align="right">{valuesHidden ? '***' : `${portfolio?.totalInvested.toFixed(2)} ${portfolio['Currency']?.symbol}`}</TableCell>
                 <TableCell align="right">
                     <IconButton
                         aria-label="expand row"
@@ -225,13 +227,10 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
                                                         display: 'flex',
                                                         flexDirection: 'row',
                                                         alignItems: 'center'
-                                                        // fontSize: '18px',
-                                                        // backgroundColor: (el.amount > 0) ? '#2F4020' : '#5D2626'
                                                     }}>
                                                         <Image alt='coinImg' width={30} height={30} src={el['Coin']?.image}>
                                                         </Image>
                                                         <Box sx={{
-                                                            // backgroundColor: '#2F4020'
                                                             display: 'flex',
                                                             flexDirection: 'column',
                                                             marginLeft: '10px'
@@ -253,19 +252,28 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange }) {
 
 
                                                 </TableCell>
-                                                <TableCell
-                                                >
+
+                                                <TableCell>
                                                     <Box sx={{
                                                         color: (el.amount > 0) ? '#34B17F' : '#E85E5E'
                                                     }}>
-                                                        {el.amount > 0 ? '+' : ''}{el.amount} {el['Coin']?.symbol.toUpperCase()}
+                                                        {valuesHidden || el.amount === undefined || el.amount === null ? '***' : (el.amount > 0 ? '+' : '') + el.amount + ' ' + (el['Coin']?.symbol?.toUpperCase() ?? '***')}
                                                     </Box>
                                                 </TableCell>
-                                                <TableCell align="right">{el.fees} {portfolio['Currency']?.symbol}</TableCell>
-                                                <TableCell align="right">{el.costPerUnitInCurrency} {portfolio['Currency']?.symbol}</TableCell>
-                                                <TableCell align="right">
-                                                    {(el.amount * el.costPerUnitInCurrency).toFixed(2)} {portfolio['Currency']?.symbol}
+
+                                                <TableCell align="right">{valuesHidden ? '***' :
+                                                    `${el.fees} ${portfolio['Currency']?.symbol}`}
                                                 </TableCell>
+
+                                                <TableCell align="right">{valuesHidden ? '***' :
+                                                    `${el.costPerUnitInCurrency} ${portfolio['Currency']?.symbol}`}
+                                                </TableCell>
+
+                                                <TableCell align="right">
+                                                    {valuesHidden ? '***' :
+                                                        `${(el.amount * el.costPerUnitInCurrency).toFixed(2)} ${portfolio['Currency']?.symbol}`}
+                                                </TableCell>
+
                                             </TableRow>
                                         ))
                                     }

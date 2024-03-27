@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 
 
-function CoinsStatsTable({ portfolio, handlePortfoliosChange }) {
+function CoinsStatsTable({ portfolio, handlePortfoliosChange, valuesHidden }) {
     const [open, setOpen] = useState(false);
     const [portfolioData, setPortfolioData] = useState(portfolio)
 
@@ -87,7 +87,12 @@ function CoinsStatsTable({ portfolio, handlePortfoliosChange }) {
                         },
                     }}>
                         {portfolioData.coins.map((coin) => (
-                            <CoinsStatsRow key={`coin-${coin.id}`} coinData={coin} currency={portfolioData['Currency']} />
+                            <CoinsStatsRow 
+                            key={`coin-${coin.id}`} 
+                            coinData={coin} 
+                            currency={portfolioData['Currency']}
+                            valuesHidden={valuesHidden}
+                            />
                         ))}
                     </TableBody>
                 </Table>

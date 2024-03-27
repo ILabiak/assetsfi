@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';;
 
 
-function CoinsStatsRow({ coinData, currency, handlePortfoliosChange }) {
+function CoinsStatsRow({ coinData, currency, handlePortfoliosChange, valuesHidden }) {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
@@ -48,20 +48,20 @@ function CoinsStatsRow({ coinData, currency, handlePortfoliosChange }) {
 
                 </TableCell>
                 <TableCell align="right">
-                    {`${coin?.totalValue.toFixed(2)} ${currency?.symbol}`}
+                    {valuesHidden ? '***' : `${coin?.totalValue.toFixed(2)} ${currency?.symbol}`}
                 </TableCell>
                 <TableCell align="right">
-                    {`${parseFloat(coin?.amount.toFixed(5))} ${coin?.symbol.toUpperCase()}`}
+                    {valuesHidden ? '***' : `${parseFloat(coin?.amount.toFixed(5))} ${coin?.symbol.toUpperCase()}`}
                 </TableCell>
                 <TableCell align="right">
-                    {`${coin?.price.toFixed(2)} ${currency?.symbol}`}
+                    {valuesHidden ? '***' : `${coin?.price.toFixed(2)} ${currency?.symbol}`}
                 </TableCell>
                 <TableCell align="right">
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
-                            {`${coin?.dailyChange.toFixed(2)} ${currency?.symbol}`}
+                            {valuesHidden ? '***' : `${coin?.dailyChange.toFixed(2)} ${currency?.symbol}`}
                         </Box>
-                        {!isNaN(coin?.dailyChangePercentage) &&
+                        {!isNaN(coin?.dailyChangePercentage) && !valuesHidden &&
                             <Box sx={{
                                 backgroundColor: (parseFloat(coin?.dailyChangePercentage) > 0) ? '#34B17F' : '#5D2626',
                                 borderRadius: '5px',
@@ -75,9 +75,9 @@ function CoinsStatsRow({ coinData, currency, handlePortfoliosChange }) {
                 <TableCell align="right">
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
-                            {coin?.totalChange.toFixed(2)} {currency?.symbol}
+                            {valuesHidden ? '***' : `${coin?.totalChange.toFixed(2)} ${currency?.symbol}`}
                         </Box>
-                        {!isNaN(coin?.totalChangePercentage) &&
+                        {!isNaN(coin?.totalChangePercentage) && !valuesHidden &&
                             <Box sx={{
                                 backgroundColor: (parseFloat(coin?.totalChangePercentage) > 0) ? '#34B17F' : '#5D2626',
                                 borderRadius: '5px',
@@ -89,7 +89,7 @@ function CoinsStatsRow({ coinData, currency, handlePortfoliosChange }) {
                     </Box>
 
                 </TableCell>
-                <TableCell align="right">{coin?.totalInvested.toFixed(2)} {currency?.symbol}</TableCell>
+                <TableCell align="right">{valuesHidden ? '***' : `${coin?.totalInvested.toFixed(2)} ${currency?.symbol}`}</TableCell>
                 {/* <TableCell align="right">
                     <IconButton
                         aria-label="more"

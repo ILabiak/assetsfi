@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 
 
-function TransactionsTable({ transactions, currency, handleTransactionsChange }) {
+function TransactionsTable({ transactions, currency, handleTransactionsChange, valuesHidden }) {
     const [open, setOpen] = useState(false);
     const [transactionsData, setTransactionsData] = useState(transactions)
 
@@ -86,9 +86,13 @@ function TransactionsTable({ transactions, currency, handleTransactionsChange })
                         },
                     }}>
                         {transactionsData.map((transaction) => (
-                            <TransactionRow key={`transaction-${transaction.id}`} 
-                            transactionData={transaction} currency={currency} 
-                            handleTransactionsChange={handleTransactionsChange} />
+                            <TransactionRow
+                                key={`transaction-${transaction.id}`}
+                                transactionData={transaction}
+                                currency={currency}
+                                handleTransactionsChange={handleTransactionsChange}
+                                valuesHidden={valuesHidden}
+                            />
                         ))}
                     </TableBody>
                 </Table>

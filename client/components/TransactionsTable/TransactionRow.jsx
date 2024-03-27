@@ -35,7 +35,7 @@ function formatDate(dateString) {
 }
 
 
-function TransactionRow({ transactionData, currency, handleTransactionsChange }) {
+function TransactionRow({ transactionData, currency, handleTransactionsChange, valuesHidden }) {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
@@ -48,12 +48,6 @@ function TransactionRow({ transactionData, currency, handleTransactionsChange })
     const handleMenuClose = () => {
         setAnchorEl(null);
     };
-
-    // const handleTransactionsChange = (data) => {
-    //     if(data?.id && data?.amount){
-    //         setTransaction(data)
-    //     }
-    // }
 
     return (
         <Fragment>
@@ -70,13 +64,10 @@ function TransactionRow({ transactionData, currency, handleTransactionsChange })
                         display: 'flex',
                         flexDirection: 'row',
                         alignItems: 'center'
-                        // fontSize: '18px',
-                        // backgroundColor: (transaction.amount > 0) ? '#2F4020' : '#5D2626'
                     }}>
                         <Image alt='coinImg' width={30} height={30} src={transaction['Coin']?.image}>
                         </Image>
                         <Box sx={{
-                            // backgroundColor: '#2F4020'
                             display: 'flex',
                             flexDirection: 'column',
                             marginLeft: '10px'
@@ -98,18 +89,26 @@ function TransactionRow({ transactionData, currency, handleTransactionsChange })
 
 
                 </TableCell>
-                <TableCell
-                >
+                <TableCell>
                     <Box sx={{
                         color: (transaction.amount > 0) ? '#34B17F' : '#E85E5E'
                     }}>
-                        {transaction.amount > 0 ? '+' : ''}{transaction.amount} {transaction['Coin']?.symbol.toUpperCase()}
+                        {valuesHidden || transaction.amount === undefined || transaction.amount === null ? '***' : (transaction.amount > 0 ? '+' : '') + transaction.amount + ' ' + (transaction['Coin']?.symbol?.toUpperCase() ?? '***')}
                     </Box>
                 </TableCell>
-                <TableCell align="right">{transaction.fees} {currency?.symbol}</TableCell>
-                <TableCell align="right">{transaction.costPerUnitInCurrency} {currency?.symbol}</TableCell>
+
+                <TableCell align="right">{valuesHidden ? '***' :
+                    `${transaction.fees} ${currency?.symbol}`}
+                </TableCell
+                >
+                <TableCell align="right">{valuesHidden ? '***' :
+                    `${transaction.costPerUnitInCurrency} ${currency?.symbol}`}
+                </TableCell>
+
                 <TableCell align="right">
-                    {(transaction.amount * transaction.costPerUnitInCurrency).toFixed(2)} {currency?.symbol}
+                    {valuesHidden ? '***' :
+                        `${(transaction.amount * transaction.costPerUnitInCurrency).toFixed(2)} ${currency?.symbol}`}
+
                 </TableCell>
                 <TableCell align="right">
                     <IconButton
