@@ -12,6 +12,10 @@ const nextConfig = {
         hostname: 's2.coinmarketcap.com',
         pathname: '**',
       },
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
   },
   reactStrictMode: false,

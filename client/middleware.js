@@ -12,7 +12,13 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
   );
   // console.log(`${process.env.API_LINK}/${path}${req.nextUrl.search}`)
   const user = await getSession(req, res);
-  // console.log(user)
+  if (path.includes('metadata')) {
+    //add user metadata to request body
+    res.cookies.set('name', user?.user?.name);
+    res.cookies.set('nickname', user?.user?.nickname);
+    res.cookies.set('picture', user?.user?.picture);
+  }
+  // console.log(user);
   res.headers.set('Authorization', `Bearer ${user?.accessToken}`);
 
   return res;

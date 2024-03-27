@@ -46,6 +46,7 @@ module.exports = {
 
   async getUserPortfolios(req, res) {
     try {
+      // console.log(req.cookies)
       const portfolios = await Portfolio.findAll({
         where: { userId: req.user.sub },
         include: [
@@ -94,12 +95,6 @@ module.exports = {
       res.status(400).send({
         status: false,
         message: 'Not enough data to create portfolio',
-      });
-    }
-    if (!req.user.sub) {
-      res.status(400).send({
-        status: false,
-        message: 'User not authorised',
       });
     }
     return Portfolio.create({

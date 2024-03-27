@@ -12,12 +12,6 @@ module.exports = {
         message: 'Not enough data to create transaction',
       });
     }
-    if (!req.user.sub) {
-      res.status(400).send({
-        status: false,
-        message: 'User not authorised',
-      });
-    }
     return Portfolio.findOne({
       where: {
         userId: req.user.sub,
@@ -51,12 +45,6 @@ module.exports = {
       res.status(400).send({
         status: false,
         message: 'Not enough data to edit transaction',
-      });
-    }
-    if (!req.user.sub) {
-      res.status(400).send({
-        status: false,
-        message: 'User not authorised',
       });
     }
     return Portfolio.findOne({
@@ -112,12 +100,6 @@ module.exports = {
       res.status(400).send({
         status: false,
         message: 'Not enough data to delete transaction',
-      });
-    }
-    if (!req.user.sub) {
-      res.status(400).send({
-        status: false,
-        message: 'User not authorised',
       });
     }
     return Portfolio.findOne({

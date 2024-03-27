@@ -82,7 +82,6 @@ const LaptopSidebar = React.memo(() => {
                         variant="h6"
                         noWrap
                         component="a"
-                        href=""
                         sx={{
                             mr: 2,
                             fontFamily: 'DM Sans',

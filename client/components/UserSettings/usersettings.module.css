@@ -1,0 +1,80 @@
+.main {
+    display: flex;
+    height: auto;
+    justify-content: center;
+}
+
+.userSettingsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 50%;
+    color: white;
+    /* border: 1px solid white; */
+    background-color: black;
+    /* height: 300px; */
+    border-radius: 10px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+}
+
+.userImageWrap {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.userImage {
+    height: 100px;
+    border-radius: 100px;
+    border: 2px solid ;
+    overflow: hidden;
+}
+
+.fieldsContainer {
+    margin-top: 50px;
+    width: 90%;
+    /* border: 1px solid; */
+}
+
+.editButton {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    /* width: 30px; */
+    height: 30px;
+    padding: 10px;
+    /* margin-left: 20px; */
+    border-radius: 5px;
+    border: 1px solid;
+    background: #35b17f;
+    color: white;
+    cursor: pointer;
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.createPortfolioButton {
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: #35b17f;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: 'DM Sans';
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.editButton:hover {
+    color: black;
+    background: #6CCC97;
+}
+
+.disabled{
+    opacity: .5;
+}

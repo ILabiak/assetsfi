@@ -7,12 +7,6 @@ const NodeRSA = require('node-rsa');
 
 module.exports = {
   getUserData(req, res) {
-    if (!req.user.sub) {
-      res.status(400).send({
-        status: false,
-        message: 'User not authorised',
-      });
-    }
     return Binance.findOne({
       where: {
         userId: req.user.sub,
@@ -43,12 +37,6 @@ module.exports = {
       res.status(400).send({
         status: false,
         message: 'Not enough data to add binance api keys',
-      });
-    }
-    if (!req.user.sub) {
-      res.status(400).send({
-        status: false,
-        message: 'User not authorised',
       });
     }
     let privateKey = Buffer.from(
@@ -88,12 +76,6 @@ module.exports = {
   update(req, res) {},
 
   delete(req, res) {
-    if (!req.user.sub) {
-      res.status(400).send({
-        status: false,
-        message: 'User not authorised',
-      });
-    }
     return Binance.findOne({
       where: {
         userId: req.user.sub,

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect, use } from 'react';
 import styles from './header.module.css';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -23,8 +23,9 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function Header({ user, error, isLoading }) {
     const router = useRouter()
 
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [userData, setUserData] = useState();
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -40,6 +41,25 @@ function Header({ user, error, isLoading }) {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const fetchUserMetadata = async () => {
+        try {
+            const response = await fetch(`/api/server/user/metadata`);
+            if (response.status === 200) {
+                const data = await response.json();
+                setUserData(data)
+            } else {
+                setUserData({})
+                console.log('Some other error');
+            }
+        } catch (error) {
+            console.log('Error while getting user metadatadata', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchUserMetadata().catch(console.error)
+    }, []);
 
     return (
         <AppBar position="static" sx={{
@@ -196,10 +216,10 @@ function Header({ user, error, isLoading }) {
                     </Box>
 
                     <div>
-                        {!isLoading ? (
+                        {(!isLoading && userData) ? (
                             <div>
                                 {
-                                    !user?.email ? (
+                                    !userData?.name ? (
                                         <Box sx={{ display: 'flex', flexGrow: 0, flexDirection: 'row', }}>
                                             <Button className={styles.loginButton} href='/api/auth/login'
                                                 sx={{
@@ -233,7 +253,7 @@ function Header({ user, error, isLoading }) {
                                                 p: 0,
                                                 border: '2px solid white'
                                             }}>
-                                                <Avatar alt={user?.email} src={user?.picture} />
+                                                <Avatar alt={userData?.nickname} src={userData?.picture} />
                                             </IconButton>
                                             {/* </Tooltip> */}
                                             <Menu
@@ -263,7 +283,7 @@ function Header({ user, error, isLoading }) {
                                                 onClose={handleCloseUserMenu}
                                             >
                                                 <MenuItem key='usermail'>
-                                                    <Typography textAlign="center">{user?.email}</Typography>
+                                                    <Typography textAlign="center">{userData?.nickname}</Typography>
                                                 </MenuItem>
                                                 <MenuItem key='dashboard' onClick={() => router.push('/dashboard')} >
                                                     <Typography textAlign="center">Dashboard</Typography>
