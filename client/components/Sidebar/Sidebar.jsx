@@ -6,7 +6,7 @@ const Sidebar = React.memo(() => {
     return (
         <div>
             <LaptopSidebar/>
-            <MobileSidebar/>
+            {/* <MobileSidebar/> */}
         </div>
     );
 })

@@ -32,18 +32,19 @@ const textFieldStyle = {
 
 }
 
-const usernameRegex = /^[A-Za-z][A-Za-z0-9_.]{5,20}$/;
+const nameRegex = /^[\p{L}\d\s\p{P}]{4,25}$/u;
 
-function EditUsername({ user, setUserData }) {
-    const [username, setUsername] = useState(user?.nickname);
+function EditName({ user, setUserData }) {
+    const [name, setName] = useState(user?.name);
     const [editButtonActive, setEditButtonActive] = useState(false);
     const [errorText, setErrorText] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
     const [successOpen, setSuccessOpen] = useState(false);
 
-    const handleUsernameChange = (value) => {
-        setUsername(value)
-        if (value != user?.nickname && usernameRegex.test(value)) {
+    const handleNameChange = (value) => {
+        setName(value)
+        // console.log(nameRegex.test(value))
+        if (value != user?.name && nameRegex.test(value)) {
             setEditButtonActive(true)
         } else {
             setEditButtonActive(false)
@@ -66,12 +67,12 @@ function EditUsername({ user, setUserData }) {
 
     const handleEditClick = async () => {
         if (!editButtonActive) {
-            // console.log('button inactive')
+            console.log('button inactive')
             return;
         }
         const updateData = {}
-        if (username != user?.nickname && usernameRegex.test(username)) {
-            updateData.nickname = username
+        if (name != user?.name && nameRegex.test(name)) {
+            updateData.name = name
         }
         setEditButtonActive(false)
         const response = await fetch('/api/server/user/update', {
@@ -99,7 +100,7 @@ function EditUsername({ user, setUserData }) {
         <Box>
 
 
-            <Typography className={styles.textFieldTitle}>Username</Typography>
+            <Typography className={styles.textFieldTitle}>Name</Typography>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -108,10 +109,10 @@ function EditUsername({ user, setUserData }) {
             }}>
                 <TextField
                     required
-                    id="outlined-username-disabled"
-                    value={username}
+                    id="outlined-name-disabled"
+                    value={name}
                     onChange={(e) => {
-                        handleUsernameChange(e.target.value);
+                        handleNameChange(e.target.value);
                     }}
                     fullWidth
                     sx={textFieldStyle}
@@ -152,4 +153,4 @@ function EditUsername({ user, setUserData }) {
         </Box >
     );
 }
-export default EditUsername;
+export default EditName;

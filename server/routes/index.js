@@ -36,6 +36,8 @@ async function routes(fastify /*, options*/) {
 
   /* User Routes */
   fastify.get('/user/metadata', userController.getUserUserMetadata);
+  fastify.put('/user/update', userController.update);
+  fastify.put('/user/changepassword', userController.changePassword);
 }
 
 module.exports = routes;

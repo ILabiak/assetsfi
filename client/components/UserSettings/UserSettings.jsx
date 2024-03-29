@@ -2,7 +2,8 @@ import React, { useState, useEffect, use } from 'react';
 import styles from './usersettings.module.css';
 import { Typography, Box, TextField } from '@mui/material';
 import EditUsername from './EditUsername';
-import CircularProgress from '@mui/material/CircularProgress';
+import EditName from './EditName';
+import ChangePassword from './ChangePassword';
 import Image from 'next/image';
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -34,8 +35,30 @@ const textFieldStyle = {
 }
 
 function UserSettings({ user }) {
-    const [username, setUsername] = useState(user?.nickname)
-    const [name, setName] = useState(user?.name)
+    const [userData, setUserData] = useState();
+    const [username, setUsername] = useState('')
+    const [name, setName] = useState('')
+
+    const fetchUserMetadata = async () => {
+        try {
+            const response = await fetch(`/api/server/user/metadata`);
+            if (response.status === 200) {
+                const data = await response.json();
+                setUserData(data)
+                setName(data?.name)
+                setUsername(data?.nickname)
+            } else {
+                setUserData({})
+                console.log('Some other error');
+            }
+        } catch (error) {
+            console.log('Error while getting user metadatadata', error);
+        }
+    }
+
+    useEffect(() => {
+        fetchUserMetadata().catch(console.error)
+    }, []);
 
     return (
         <Box component='main' className={styles.main} sx={{
@@ -45,10 +68,10 @@ function UserSettings({ user }) {
             mt: { xs: '0px', md: '100px' } // header hight
         }}>
             {
-                user && (
+                userData?.name && (
                     <Box sx={{
                         width: '100%',
-                        display:'flex',
+                        display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center'
                     }}>
@@ -56,7 +79,7 @@ function UserSettings({ user }) {
                             {/* {user.nickname} */}
                             <Box className={styles.userImageWrap}>
                                 <Box className={styles.userImage}>
-                                    <Image src={user?.picture} width={100} height={100} ></Image>
+                                    <Image priority src={userData?.picture} alt='userpicture' width={100} height={100} ></Image>
                                 </Box>
                             </Box>
 
@@ -65,37 +88,46 @@ function UserSettings({ user }) {
                                     marginTop: '10px',
                                     fontSize: '16px'
                                 }}>
-                                {user?.name}
+                                {userData?.name}
                             </Typography>
                         </Box>
                         <Box className={styles.userSettingsContainer}>
                             <Box className={styles.fieldsContainer}>
 
-                            <EditUsername user={user}/>
+                                <EditUsername user={userData} setUserData={setUserData} />
 
-                                <Typography className={styles.textFieldTitle}>Name</Typography>
-                                <Box sx={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                    marginBottom: '20px',
-                                }}>
-                                    <TextField
-                                        required
-                                        id="outlined-disabled"
-                                        value={name}
-                                        // onChange={(e) => {
-                                        //     handleApiSecretChange(e.target.value);
-                                        // }}
-                                        fullWidth
-                                        sx={textFieldStyle}
-                                    />
-                                    <Box className={styles.editButton}>
-                                        <EditIcon fontSize='small' /> Edit
-                                    </Box>
-                                </Box>
+                                <EditName user={userData} setUserData={setUserData} />
 
                             </Box>
+                        </Box>
+
+                        <Box className={styles.userSettingsContainer}>
+                            <Typography sx={{
+                                fontFamily: 'DM Sans',
+                                fontSize: '20px',
+                                mt: '20px'
+                            }}>
+                                Change password
+                            </Typography>
+                            {
+                                !user.sub.includes('google-oauth2') ? (
+                                    <Box className={styles.fieldsContainer}>
+                                        <ChangePassword user={user} setUserData={setUserData} />
+                                    </Box>
+                                ) : (
+                                    <Box>
+                                        <Typography sx={{
+                                            textAlign: 'center',
+                                            fontFamily: 'DM Sans',
+                                            fontSize: '16px',
+                                            mt: '20px'
+                                        }}>
+                                            You can't change password because you're authorised via Google
+                                        </Typography>
+                                    </Box>
+                                )
+                            }
+
                         </Box>
                     </Box>
 

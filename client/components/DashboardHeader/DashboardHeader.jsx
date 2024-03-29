@@ -8,14 +8,15 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
+import Link from '@mui/material/Link';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useRouter } from 'next/navigation'
 
-import Image from 'next/image';
-import logo from '@/public/logo.svg';
+import SettingsIcon from '@mui/icons-material/Settings';
+
 
 function DashboardHeader({ user, error, isLoading, title }) {
     const router = useRouter()
@@ -40,7 +41,7 @@ function DashboardHeader({ user, error, isLoading, title }) {
 
     return (
         <AppBar position="fixed" sx={{
-            width: { xs: '100%', md: `calc(100% - 260px)` }, 
+            width: { xs: '100%', md: `calc(100% - 260px)` },
             ml: { xs: '0', md: '260px' },
             height: '100px',
             backgroundColor: '#1A1A1A',
@@ -49,34 +50,47 @@ function DashboardHeader({ user, error, isLoading, title }) {
             <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'></link>
             <Container maxWidth="xl" disableGutters sx={{
                 height: '100%',
-                display:'flex',
+                display: 'flex',
                 alignItems: 'center',
             }}>
 
                 {/* Laptop */}
                 <Toolbar disableGutters sx={{
+                    width: '100%',
                     marginLeft: '30px',
                     marginRight: '30px'
                 }}>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href=""
-                        sx={{
-                            mr: 2,
-                            fontFamily: 'DM Sans',
-                            fontWeight: 1000,
-                            fontSize: '30px',
-                            // letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                            // marginLeft: '30px',
-                            display: { xs: 'none', md: 'flex' }
-                        }}
-                    >
-                        {title}
-                    </Typography>
+                    <Box className={styles.headerItems}>
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href=""
+                            sx={{
+                                mr: 2,
+                                fontFamily: 'DM Sans',
+                                fontWeight: 1000,
+                                fontSize: '30px',
+                                // letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
+                                // marginLeft: '30px',
+                                display: { xs: 'none', md: 'flex' }
+                            }}
+                        >
+                            {title}
+                        </Typography>
+
+                        <Link 
+                        href={'/settings'}
+                        color={'#fff'} 
+                        className={styles.settingsIcon}
+                        >
+                            <SettingsIcon fontSize='large' />
+                        </Link>
+                    </Box>
+
+
 
 
                     {/* Phone */}

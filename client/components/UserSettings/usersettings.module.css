@@ -10,6 +10,7 @@
     justify-content: flex-start;
     align-items: center;
     width: 50%;
+    min-width: 350px;
     color: white;
     /* border: 1px solid white; */
     background-color: black;
@@ -17,7 +18,7 @@
     border-radius: 10px;
     margin-left: 30px;
     margin-right: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     padding-bottom: 20px;
 }
 
@@ -36,7 +37,7 @@
 }
 
 .fieldsContainer {
-    margin-top: 50px;
+    margin-top: 20px;
     width: 90%;
     /* border: 1px solid; */
 }
@@ -77,4 +78,10 @@
 
 .disabled{
     opacity: .5;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
 }
