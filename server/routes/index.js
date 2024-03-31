@@ -7,6 +7,7 @@ const {
   transaction: transactionController,
   binance: binanceController,
   user: userController,
+  donations: donationsController,
 } = controllers;
 
 async function routes(fastify /*, options*/) {
@@ -38,6 +39,9 @@ async function routes(fastify /*, options*/) {
   fastify.get('/user/metadata', userController.getUserUserMetadata);
   fastify.put('/user/update', userController.update);
   fastify.put('/user/changepassword', userController.changePassword);
+
+  /* Donations Routes */
+  fastify.get('/foundations', donationsController.getFoundationsWallets);
 }
 
 module.exports = routes;

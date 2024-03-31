@@ -1,0 +1,89 @@
+.main {
+    height: auto;
+}
+
+.tabsContainer {
+    margin: 0px 30px 0;
+}
+
+.tabContainer {
+    width: auto;
+    height: auto;
+    margin: 20px 30px 0;
+}
+
+.foundationsContainer {
+    display: flex;
+    height: auto;
+    width: auto;
+    /* border: 1px solid white; */
+    margin-left: 30px;
+    /* margin-right: 30px; */
+}
+
+.foundation {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: black;
+    border-radius: 10px;
+    /* height: 500px; */
+}
+
+.foundationInfo {
+    margin: 20px 20px;
+    display: flex;
+    /* height: 100px; */
+    width: auto;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    /* border: 1px solid white; */
+}
+
+.imageWrap {
+    /* height: 90px; */
+    /* width: 90px; */
+    display: flex;
+    border-radius: 10px;
+    /* border: 2px solid #0228EE; */
+}
+
+.foundationWallets {
+    display: flex;
+    height: auto;
+    width: auto;
+    flex-direction: column;
+    /* border: 1px solid white; */
+    margin: 10px 30px 0;
+}
+
+.addresses {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.copyButton {
+    /* background-color: blue; */
+    /* border-radius: 100px; */
+    color: #A3A3A3;
+}
+
+.copyButton:hover {
+    color: white;
+}
+
+.copyButtonContainer {
+    color: #A3A3A3;
+    cursor: pointer;
+}
+
+.copyButtonContainer:hover {
+    color: white;
+}
+
+.walletWrap {
+    margin-bottom: 20px;
+}

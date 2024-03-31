@@ -9,6 +9,7 @@ import WindowIcon from '@mui/icons-material/Window';
 import SvgIcon from "@mui/material/SvgIcon";
 import SwapVerticalCircleIcon from '@mui/icons-material/SwapVerticalCircle';
 import WalletIcon from '@mui/icons-material/Wallet';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation'
 
@@ -24,6 +25,7 @@ const LaptopSidebar = React.memo(() => {
 
     const sidebarPages = [{ text: 'Home', icon: <WindowIcon />, active: pathname == '/dashboard' ? true : false, href: '/dashboard' },
     { text: 'Portfolios', icon: <WalletIcon />, active: pathname == '/portfolios' ? true : false, href: '/portfolios' },
+    { text: 'Donations', icon: <VolunteerActivismIcon />, active: pathname == '/donations' ? true : false, href: '/donations' },
     {
         text: 'Binance Spot', icon: <SvgIcon sx={{
             color: pathname == '/binance' ? 'white' : '#AEAEAE',
@@ -38,7 +40,7 @@ const LaptopSidebar = React.memo(() => {
                 <path fill="#ffffff" d="M29.5036 23.9968H29.5013L29.5063 23.9995L29.5036 24.0025L23.9997 29.5064L18.5008 24.0074L18.4932 23.9995L23.9997 18.4929L29.5036 23.9968Z" className="color000000 svgShape"></path>
             </svg>
         </SvgIcon>, active: pathname == '/binance' ? true : false, href: '/binance'
-    }]
+    },]
     return (
         <Drawer
             sx={{

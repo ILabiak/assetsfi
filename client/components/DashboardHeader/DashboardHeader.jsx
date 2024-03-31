@@ -48,7 +48,8 @@ function DashboardHeader({ user, error, isLoading, title }) {
             boxShadow: 'none'
         }}>
             <link href='https://fonts.googleapis.com/css?family=DM Sans' rel='stylesheet'></link>
-            <Container maxWidth="xl" disableGutters sx={{
+            <Container maxWidth={false} disableGutters sx={{
+                width: '100%',
                 height: '100%',
                 display: 'flex',
                 alignItems: 'center',
