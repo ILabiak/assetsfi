@@ -36,9 +36,15 @@
     /* height: 100px; */
     width: auto;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     /* border: 1px solid white; */
+}
+
+.foundationName {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .imageWrap {
@@ -55,7 +61,16 @@
     width: auto;
     flex-direction: column;
     /* border: 1px solid white; */
-    margin: 10px 30px 0;
+    margin: 10px 20px 0;
+}
+
+.linkIcon {
+    height: 100%;
+    margin-right: 10px;
+    display: flex;
+    justify-content: flex-start;
+    color: #A3A3A3;
+    cursor: pointer;
 }
 
 .addresses {
