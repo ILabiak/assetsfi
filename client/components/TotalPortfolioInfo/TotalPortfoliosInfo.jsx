@@ -73,7 +73,8 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
                     </Box>
                 </Box>
 
-                {singlePortfolio ? <Box className={styles.createButtonContainer}>
+                {singlePortfolio ? 
+                <Box className={styles.createButtonContainer}>
                     {
                         valuesHidden ? (
                             <VisibilityOffIcon

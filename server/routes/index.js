@@ -42,6 +42,11 @@ async function routes(fastify /*, options*/) {
 
   /* Donations Routes */
   fastify.get('/foundations', donationsController.getFoundationsWallets);
+  fastify.get('/foundationslist', donationsController.getFoundations);
+  fastify.get('/donations', donationsController.getUserDonations);
+  fastify.post('/donations/create', donationsController.add);
+  fastify.delete('/donations/delete', donationsController.delete);
+  fastify.put('/donations/update', donationsController.update);
 }
 
 module.exports = routes;

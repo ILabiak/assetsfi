@@ -1,13 +1,14 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './donationsinfo.module.css';
 import Foundations from './Foundations';
+import MyDonations from './MyDonations';
 import { Button, Typography, Box, Grid, Tabs, Tab } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-function Donations({ uuid }) {
-    const [tabValue, setTabValue] = useState(0)
-    const [portfloioData, setPortfolioData] = useState()
+function Donations() {
+    const [tabValue, setTabValue] = useState(1)
+
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
     };
@@ -27,7 +28,6 @@ function Donations({ uuid }) {
                         onChange={handleChange}
                         indicatorColor="secondary"
                         textColor="inherit"
-                        // variant="fullWidth"
                         aria-label="full width tabs example"
                         sx={{
                             color: 'white',
@@ -40,7 +40,6 @@ function Donations({ uuid }) {
                                 padding: '0px 10px',
                                 '&.Mui-selected': {
                                     border: '2px solid #0228EE',
-                                    // borderBottom: '2px solid '
                                 },
                             }
                         }}
@@ -67,7 +66,7 @@ function Donations({ uuid }) {
                     color: 'white',
                     display: tabValue == 1 ? 'inline' : 'none'
                 }}>
-                    <Box>321</Box>
+                    <MyDonations />
                 </Box>
 
             </Box>
