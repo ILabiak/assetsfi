@@ -83,6 +83,7 @@ module.exports = {
         userId: req.user.sub,
         id: req.body.id,
       },
+      include: [{ model: Currency }],
     })
       .then(async (donation) => {
         if (!donation) {
@@ -91,10 +92,10 @@ module.exports = {
           });
         }
         let currencyRate, amountInUsd;
-        if (req.body.currency || req.body.amount) {
-          if (req.body.currency.code != 'usd') {
-            currencyRate = await getCurrencyRate(req.body.currency.code, 'usd');
-            // console.log(currencyRate)
+        if (req.body?.currency || req.body.amount) {
+          let currency = req.body?.currency || donation['Currency'];
+          if (currency != 'usd') {
+            currencyRate = await getCurrencyRate(currency.code, 'usd');
           } else {
             currencyRate = 1;
           }
