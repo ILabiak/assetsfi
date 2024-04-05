@@ -64,7 +64,7 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange }) {
                         flexDirection: 'row',
                         alignItems: 'center'
                     }}>
-                        <Image alt='coinImg' width={50} height={50} src={donation['Foundation']?.logoUrl || 'https://svgshare.com/i/14xY.svg'}>
+                        <Image alt='foundationImg' width={50} height={50} src={donation['Foundation']?.logoUrl || 'https://svgshare.com/i/14xY.svg'}>
                         </Image>
                         <Box sx={{
                             display: 'flex',

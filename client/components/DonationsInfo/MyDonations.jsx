@@ -47,7 +47,7 @@ function MyDonations() {
         <Box className={styles.myDonationsContainer}>
             {myDonationsData ? (
                 <Box className={styles.myDonationsData} >
-                    <DonationStats handleDonationsChange={handleDonationsChange} />
+                    <DonationStats handleDonationsChange={handleDonationsChange} donations={myDonationsData} />
                     <DonationsTable
                         donations={myDonationsData.donations}
                         handleDonationsChange={handleDonationsChange}

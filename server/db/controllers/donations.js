@@ -1,5 +1,5 @@
 'use strict';
-const { parseFoundationAddresses } = require('./donationUtils');
+const { parseFoundationAddresses, calculateDonationsStats } = require('./donationUtils');
 const { getCurrencyRate } = require('./utils');
 const Donation = require('../models').Donation;
 const Foundation = require('../models').Foundation;
@@ -25,7 +25,12 @@ module.exports = {
           message: 'Donations Not Found',
         });
       }
-      res.status(200).send({ donations: donations });
+      let donationsData = [];
+      donations.map(el => {
+        donationsData.push(el.get({ plain: true }))
+      })
+      const result = calculateDonationsStats(donationsData)
+      res.status(200).send(result);
     });
   },
 

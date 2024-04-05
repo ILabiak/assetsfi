@@ -115,11 +115,13 @@
     width: 100%;
 }
 
-.statsContainer {
+.addButtonContainer { 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 100%;
+    margin-bottom: 5px;
+    margin-top: 15px;
     /* border: 1px solid white; */
 }
 
@@ -128,6 +130,7 @@
     flex-direction: column;
     width: 100%;
 }
+
 
 .createButton {
     text-align: center;
@@ -241,4 +244,38 @@ background-color: #024D41;
 
 .searchImg {
     margin-left: 10px;
+}
+
+.miniStats {
+    /* border: 2px solid #AEAEAE; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    height: 100px;
+    width: auto;
+    background-color: black;
+}
+
+.upperText {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+}
+
+.lowerText {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 90%;
+}
+
+.statsContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
 }
