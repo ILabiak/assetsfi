@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import EditDonation from './EditDonation'
 import { Typography, Box, Backdrop, TextField, MenuItem } from '@mui/material';
 
-function MenuChangeDonation({ donation, handleDonationsChange }) {
+function MenuChangeDonation({ donation, handleDonationsChange, foundations, currencies }) {
     const [backdropOpen, setBackdropOpen] = useState(false)
     const donationEditRef = useRef(null);
 
@@ -32,9 +32,14 @@ function MenuChangeDonation({ donation, handleDonationsChange }) {
                 key={'editDonation'} >
                 Edit donation
             </MenuItem>
-            <EditDonation donationEditRef={donationEditRef} handleClose={handleClose}
-            backdropOpen={backdropOpen} setBackdropOpen={setBackdropOpen}  
-            donation={donation} handleDonationsChange={handleDonationsChange} />
+            {foundations && currencies && (
+                <EditDonation donationEditRef={donationEditRef} handleClose={handleClose}
+                    backdropOpen={backdropOpen} setBackdropOpen={setBackdropOpen}
+                    donation={donation} handleDonationsChange={handleDonationsChange}
+                    foundations={foundations} currencies={currencies}
+                />
+            )}
+
         </React.Fragment>
     );
 }

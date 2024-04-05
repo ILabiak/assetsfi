@@ -34,12 +34,10 @@ function formatDate(dateString) {
 };
 
 
-function DonationRow({ donation, valuesHidden, handleDonationsChange }) {
+function DonationRow({ donation, valuesHidden, handleDonationsChange, foundations, currencies }) {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
-
-    // const [donation, setTransaction] = useState(donationData)
 
     const handleMenuClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -143,8 +141,16 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange }) {
                         open={menuOpen}
                         onClose={handleMenuClose}
                     >
-                        <MenuDeleteDonation donation={donation} handleDonationsChange={handleDonationsChange} />
-                        <MenuChangeDonation donation={donation} handleDonationsChange={handleDonationsChange} />
+                        <MenuDeleteDonation
+                            donation={donation}
+                            handleDonationsChange={handleDonationsChange}
+                        />
+                        <MenuChangeDonation
+                            donation={donation}
+                            handleDonationsChange={handleDonationsChange}
+                            foundations={foundations}
+                            currencies={currencies}
+                        />
                     </Menu>
                 </TableCell>
             </TableRow>

@@ -5,7 +5,7 @@ import CreateTransaction from '@/components/CreateTransaction/CreateTransaction'
 import AddDonation from './AddDonation';
 
 
-function AddDonationButton({ handleDonationsChange }) {
+function AddDonationButton({ handleDonationsChange, foundations, currencies }) {
     const [backdropOpen, setBackdropOpen] = useState(false)
     const donationCreateRef = useRef(null);
 
@@ -37,17 +37,16 @@ function AddDonationButton({ handleDonationsChange }) {
                 }} className={styles.createButton}>
                 Add donation
             </Box>
-            <AddDonation
-                donationCreateRef={donationCreateRef}
-                handleOpen={handleOpen} handleClose={handleClose}
-                backdropOpen={backdropOpen} setBackdropOpen={setBackdropOpen}
-                handleDonationsChange={handleDonationsChange}
-            />
-            {/* <CreateTransaction currency={123} portfolio={123}
-                handleDonationsChange={handleDonationsChange}
-                transactionCreateRef={transactionCreateRef}
-                handleOpen={handleOpen} handleClose={handleClose}
-                backdropOpen={backdropOpen} setBackdropOpen={setBackdropOpen} /> */}
+            {foundations && currencies && (
+                <AddDonation
+                    donationCreateRef={donationCreateRef}
+                    handleOpen={handleOpen} handleClose={handleClose}
+                    backdropOpen={backdropOpen} setBackdropOpen={setBackdropOpen}
+                    handleDonationsChange={handleDonationsChange}
+                    foundations={foundations}
+                    currencies={currencies}
+                />
+            )}
         </React.Fragment>
     );
 }

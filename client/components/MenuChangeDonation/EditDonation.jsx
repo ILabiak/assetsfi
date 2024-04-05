@@ -7,57 +7,15 @@ import DateField from '../InputFields/DateField';
 import styles from './editdonation.module.css';
 import { Typography, Box, Backdrop, TextField } from '@mui/material';
 
-
 const numberRegex = /^[-+]?\d+(\.\d{0,5})?$/;
 
-function EditDonation({ donationEditRef, handleClose, backdropOpen, setBackdropOpen, donation, handleDonationsChange }) {
+function EditDonation({ donationEditRef, handleClose, backdropOpen, setBackdropOpen, donation, handleDonationsChange, foundations, currencies }) {
     const [editButtonActive, setEditButtonActive] = useState(false)
-    const [foundations, setFoundations] = useState()
-    const [foundation, setFoundation] = useState()
-    const [currencies, setCurrencies] = useState();
-    const [currency, setCurrency] = useState();
+    const [foundation, setFoundation] = useState(foundations[0])
+    const [currency, setCurrency] = useState(currencies[0]);
     const [amount, setAmount] = useState("");
     const [note, setNote] = useState("");
     const [date, setDate] = useState(dayjs(new Date()));
-
-    useEffect(() => {
-        const fetchCurrencies = async () => {
-            try {
-                const response = await fetch('/api/server/currencies');
-                if (response.status === 200) {
-                    const data = await response.json();
-                    setCurrencies(data)
-                    let index = data.findIndex((el) => donation.currencyId == el.id)
-                    setCurrency(data[index])
-                } else {
-                    console.log('Some other error');
-                }
-            } catch (error) {
-                console.log('Error while getting currencies data', error);
-            }
-        }
-
-        const fetchFoundations = async () => {
-            try {
-                const response = await fetch(`/api/server/foundationslist`);
-                if (response.status === 200) {
-                    const data = await response.json();
-                    data.unshift({ "id": null, "name": "Other", "logoUrl": "https://svgshare.com/i/14xY.svg" })
-                    let index = data.findIndex((el) => donation.foundationId == el.id)
-                    setFoundation(data[index])
-                    setFoundations(data)
-
-                } else if (response.status === 401) {
-                } else {
-                    console.log('Some other error');
-                }
-            } catch (error) {
-                console.log('Error while getting foundations data', error);
-            }
-        }
-        fetchCurrencies().catch(console.error)
-        fetchFoundations().catch(console.error)
-    }, []);
 
     useEffect(() => {
         if (!backdropOpen) {

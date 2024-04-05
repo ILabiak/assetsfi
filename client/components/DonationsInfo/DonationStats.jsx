@@ -4,7 +4,7 @@ import { Typography, Box, Grid } from '@mui/material';
 import AddDonationButton from './AddDonationButton';
 import Image from 'next/image'
 
-function DonationStats({ handleDonationsChange, donations }) {
+function DonationStats({ handleDonationsChange, donations, foundations, currencies }) {
     return (
         <>
             <Box className={styles.statsContainer}>
@@ -27,7 +27,11 @@ function DonationStats({ handleDonationsChange, donations }) {
             </Box>
             <Box className={styles.addButtonContainer}>
                 <Box>
-                    <AddDonationButton handleDonationsChange={handleDonationsChange} />
+                    <AddDonationButton 
+                    handleDonationsChange={handleDonationsChange} 
+                    foundations={foundations}
+                    currencies={currencies}
+                    />
                 </Box>
             </Box>
         </>

@@ -7,54 +7,15 @@ import DateField from '../InputFields/DateField';
 import styles from './donationsinfo.module.css';
 import { Typography, Box, Backdrop, TextField } from '@mui/material';
 
-
 const numberRegex = /^[-+]?\d+(\.\d{0,5})?$/;
 
-function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen, setBackdropOpen, handleDonationsChange }) {
-    const [foundations, setFoundations] = useState()
-    const [foundation, setFoundation] = useState()
+function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen, setBackdropOpen, handleDonationsChange, foundations, currencies }) {
+    const [foundation, setFoundation] = useState(foundations[0])
     const [createButtonActive, setCreateButtonActive] = useState(false)
-    const [currencies, setCurrencies] = useState();
-    const [currency, setCurrency] = useState();
+    const [currency, setCurrency] = useState(currencies[0]);
     const [amount, setAmount] = useState("");
     const [note, setNote] = useState("");
     const [date, setDate] = useState(dayjs(new Date()));
-
-    useEffect(() => {
-        const fetchCurrencies = async () => {
-            try {
-                const response = await fetch('/api/server/currencies');
-                if (response.status === 200) {
-                    const data = await response.json();
-                    setCurrencies(data)
-                    setCurrency(data[0])
-                } else {
-                    console.log('Some other error');
-                }
-            } catch (error) {
-                console.log('Error while getting currencies data', error);
-            }
-        }
-
-        const fetchFoundations = async () => {
-            try {
-                const response = await fetch(`/api/server/foundationslist`);
-                if (response.status === 200) {
-                    const data = await response.json();
-                    data.unshift({ "id": null, "name": "Other", "logoUrl": "https://svgshare.com/i/14xY.svg" })
-                    setFoundations(data)
-                    setFoundation(data[0])
-                } else if (response.status === 401) {
-                } else {
-                    console.log('Some other error');
-                }
-            } catch (error) {
-                console.log('Error while getting foundations data', error);
-            }
-        }
-        fetchCurrencies().catch(console.error)
-        fetchFoundations().catch(console.error)
-    }, []);
 
     useEffect(() => {
         if (!backdropOpen) {
@@ -130,33 +91,6 @@ function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen,
                 </Typography>
                 <Box className={styles.inputsContainer}>
                     <Box>
-                        {/* <TextField
-                            required
-                            disabled
-                            id="outlined-required"
-                            label="Asset"
-                            value={asset.name}
-                            fullWidth
-                            sx={{
-                                marginBottom: '20px',
-                                '&:hover fieldset': {
-                                    border: '1px solid',
-                                    borderColor: 'white'
-                                },
-                                '& label.Mui-disabled': {
-                                    color: '#AEAEAE',
-                                },
-                                input: {
-                                    backgroundColor: '#313337',
-                                    borderRadius: '5px',
-                                    color: '#E8E9EB',
-                                    fontSize: '16px',
-                                },
-                                "& .MuiInputBase-input.Mui-disabled": {
-                                    WebkitTextFillColor: "#AEAEAE",
-                                }
-                            }}
-                        /> */}
                         {foundations && currencies && (
                             <Box>
                                 <SelectorField selectorData={foundations}
@@ -178,10 +112,7 @@ function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen,
                                 <DateField date={date} setDate={setDate} />
                             </Box>
                         )}
-
-
                     </Box>
-
 
                 </Box>
                 <Box className={styles.buttonsContainer}>
