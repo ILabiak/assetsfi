@@ -52,6 +52,7 @@ function Donations() {
                     >
                         <Tab label="Foundations" tabIndex={0} />
                         <Tab label="My donations" tabIndex={1} />
+                        <Tab label="Donations Tracker" tabIndex={2} />
                     </Tabs>
                 </Box>
 

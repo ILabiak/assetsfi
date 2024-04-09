@@ -5,6 +5,9 @@ import {
 } from '@auth0/nextjs-auth0/edge';
 
 export default withMiddlewareAuthRequired(async function middleware(req) {
+  if (!req.nextUrl.pathname.includes('/api/server/')) {
+    return;
+  }
   const path = req.nextUrl.pathname.replace('/api/server/', '');
   const res = NextResponse.rewrite(
     `${process.env.API_LINK}/${path}${req.nextUrl.search}`,
@@ -18,5 +21,13 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
 });
 
 export const config = {
-  matcher: '/api/server/:path*',
+  matcher: [
+    '/api/server/:path*',
+    '/donations',
+    '/dashboard',
+    '/portfolios',
+    '/settings',
+    '/binance',
+    '/portfolio/:path*',
+  ],
 };

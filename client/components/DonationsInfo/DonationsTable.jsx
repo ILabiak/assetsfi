@@ -80,8 +80,9 @@ function DonationsTable({ donations, handleDonationsChange, foundations, currenc
                             borderBottomRightRadius: "10px",
                         },
                     }}>
-                        {donations.map((donation) => (
+                        {donations.map((donation, index) => (
                             <DonationRow
+                                key={`donation-${index}`}
                                 donation={donation}
                                 handleDonationsChange={handleDonationsChange}
                                 foundations={foundations}
