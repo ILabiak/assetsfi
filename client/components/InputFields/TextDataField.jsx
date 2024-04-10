@@ -1,25 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { TextField } from '@mui/material';
 
-const amountRegex = /^[-+]?\d+(\.\d{0,5})?$/;
+const textRegex = /^.{0,70}$/;
 
+function TextDataField({ text, setText, title }) {
 
-function AmountField({ amount, setAmount, currency, title }) {
-
-    const handleAmountChange = (value) => {
-        if (amountRegex.test(value) || value == '' || value == '-') {
-            setAmount(value)
+    const handleNoteChange = (value) => {
+        if (textRegex.test(value) || value == '') {
+            setText(value)
         }
     }
 
     return (
         <TextField
+            id="outlined"
+            label={title}
             required
-            id="outlined-required"
-            label={`${title} (${currency.symbol})`}
-            value={amount}
+            value={text}
             onChange={(e) => {
-                handleAmountChange(e.target.value);
+                handleNoteChange(e.target.value);
             }}
             fullWidth
             sx={{
@@ -56,4 +55,4 @@ function AmountField({ amount, setAmount, currency, title }) {
         />
     );
 }
-export default AmountField;
+export default TextDataField;

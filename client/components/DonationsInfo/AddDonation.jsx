@@ -107,7 +107,7 @@ function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen,
                                     helperText={'Select currency'}
                                 />
 
-                                <AmountField amount={amount} setAmount={setAmount} currency={currency} />
+                                <AmountField amount={amount} setAmount={setAmount} currency={currency} title={'Amount'} />
                                 <NoteField note={note} setNote={setNote} />
                                 <DateField date={date} setDate={setDate} />
                             </Box>

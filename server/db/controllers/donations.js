@@ -1,9 +1,15 @@
 'use strict';
-const { parseFoundationAddresses, calculateDonationsStats } = require('./donationUtils');
+const {
+  parseFoundationAddresses,
+  calculateDonationsStats,
+  checkWalletAddress,
+} = require('./donationUtils');
 const { getCurrencyRate } = require('./utils');
 const Donation = require('../models').Donation;
 const Foundation = require('../models').Foundation;
 const Currency = require('../models').Currency;
+const SupportedNetwork = require('../models').SupportedNetwork;
+const TrackedAddress = require('../models').TrackedAddress;
 
 module.exports = {
   async getFoundationsWallets(req, res) {
@@ -26,10 +32,10 @@ module.exports = {
         });
       }
       let donationsData = [];
-      donations.map(el => {
-        donationsData.push(el.get({ plain: true }))
-      })
-      const result = calculateDonationsStats(donationsData)
+      donations.map((el) => {
+        donationsData.push(el.get({ plain: true }));
+      });
+      const result = calculateDonationsStats(donationsData);
       res.status(200).send(result);
     });
   },
@@ -42,6 +48,32 @@ module.exports = {
         });
       }
       res.status(200).send(foundations);
+    });
+  },
+
+  getSupportedNetworks(req, res) {
+    return SupportedNetwork.findAll().then(async (networks) => {
+      if (!networks) {
+        return res.status(400).send({
+          message: 'Networks Not Found',
+        });
+      }
+      res.status(200).send(networks);
+    });
+  },
+
+  getTrackedAddresses(req, res) {
+    return TrackedAddress.findAll({
+      where: { userId: req.user.sub },
+      include: [{ model: Currency }, { model: SupportedNetwork }],
+      order: [['createdAt', 'DESC']],
+    }).then(async (donations) => {
+      if (!donations) {
+        return res.status(400).send({
+          message: 'Addresses Not Found',
+        });
+      }
+      res.status(200).send(donations);
     });
   },
 
@@ -73,6 +105,36 @@ module.exports = {
       amountInUsd: parseFloat((req.body.amount / currencyRate).toFixed(5)),
     })
       .then((donation) => res.status(201).send(donation))
+      .catch((error) => res.status(400).send(error));
+  },
+
+  async addTrackingAddress(req, res) {
+    if (!req.body.currencyId || !req.body.address || !req.body.network?.code) {
+      res.status(400).send({
+        status: false,
+        message: 'Not enough data to add tracking address',
+      });
+    }
+    const checkAddress = await checkWalletAddress(
+      req.body.network.code,
+      req.body.address
+    );
+    if (!checkAddress) {
+      res.status(400).send({
+        status: false,
+        message: 'Address is not valid',
+      });
+    }
+    return TrackedAddress.create({
+      userId: req.user.sub,
+      networkId: req.body.network.id,
+      address: req.body.address,
+      targetAmount: req.body.target
+        ? parseFloat(req.body.target.toFixed(5))
+        : null,
+      currencyId: req.body.currencyId,
+    })
+      .then((address) => res.status(201).send(address))
       .catch((error) => res.status(400).send(error));
   },
 

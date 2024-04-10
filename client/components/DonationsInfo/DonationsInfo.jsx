@@ -2,12 +2,13 @@ import React, { useState, useEffect, use } from 'react';
 import styles from './donationsinfo.module.css';
 import Foundations from './Foundations';
 import MyDonations from './MyDonations';
+import Tracker from './Tracker';
 import { Button, Typography, Box, Grid, Tabs, Tab } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
 function Donations() {
-    const [tabValue, setTabValue] = useState(1)
+    const [tabValue, setTabValue] = useState(2)
 
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
@@ -68,6 +69,13 @@ function Donations() {
                     display: tabValue == 1 ? 'inline' : 'none'
                 }}>
                     <MyDonations />
+                </Box>
+
+                <Box className={styles.tabContainer} sx={{
+                    color: 'white',
+                    display: tabValue == 2 ? 'inline' : 'none'
+                }}>
+                    <Tracker />
                 </Box>
 
             </Box>
