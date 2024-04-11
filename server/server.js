@@ -28,8 +28,9 @@ fastify.addHook('onRequest', async (req, res) => {
     ) {
       return;
     }
-    req.headers['authorization'] = req.headers['x-authorization'];
-    console.log(req.headers);
+    if (!req.headers['authorization'] && req.headers['x-authorization']) {
+      req.headers['authorization'] = req.headers['x-authorization'];
+    }
     await req.jwtVerify();
   } catch (err) {
     res.send(err);
