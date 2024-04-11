@@ -16,7 +16,7 @@ export default withMiddlewareAuthRequired(async function middleware(req) {
   const user = await getSession(req, res);
 
   // res.headers.set('Authorization', `Bearer ${user?.accessToken}`);
-  res.headers.set('x_authorization', `Bearer ${user?.accessToken}`);
+  res.headers.set('auth0_token', `Bearer ${user?.accessToken}`);
 
   return res;
 });
