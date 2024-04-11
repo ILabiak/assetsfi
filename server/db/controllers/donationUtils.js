@@ -781,17 +781,17 @@ const getAddressData = async (networkCode, address) => {
 };
 
 (async () => {
-  console.time('Execution time:');
-  // console.log(await parseFoundationAddresses());
-  // // calculateDonationsStats(testData);
-  console.log(
-    // await getAddressData('tron', 'TKAoHbqcc3qnDdvfobYFRZ9daBU6yAsEFW')
-    await getAddressData(
-      'ethereum',
-      '0x551896dc6A14041c10B9896457088306CE7269aA'
-    )
-  );
-  console.timeEnd('Execution time:');
+  // console.time('Execution time:');
+  // // console.log(await parseFoundationAddresses());
+  // // // calculateDonationsStats(testData);
+  // console.log(
+  //   // await getAddressData('tron', 'TKAoHbqcc3qnDdvfobYFRZ9daBU6yAsEFW')
+  //   await getAddressData(
+  //     'ethereum',
+  //     '0x551896dc6A14041c10B9896457088306CE7269aA'
+  //   )
+  // );
+  // console.timeEnd('Execution time:');
 })();
 
 module.exports = {

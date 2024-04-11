@@ -23,7 +23,7 @@ fastify.addHook('onRequest', async (req, res) => {
     if (
       req.routeOptions.url === '/currencies' ||
       req.routeOptions.url === '/coins' ||
-      req.routeOptions.url === '/currency/:currency'||
+      req.routeOptions.url === '/currency/:currency' ||
       req.routeOptions.url === '/test'
     ) {
       return;
@@ -49,9 +49,20 @@ fastify.get('/test', async (req, res) => {
 });
 
 // Run the server!
-fastify.listen({ host: process.env.HOST, port: process.env.PORT }, (err) => {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
-  }
-});
+// fastify.listen({ host: process.env.HOST, port: process.env.PORT }, (err) => {
+//   if (err) {
+//     fastify.log.error(err);
+//     process.exit(1);
+//   }
+// });
+
+if (require.main === module) {
+  fastify.listen({ host: process.env.HOST, port: process.env.PORT }, (err) => {
+    if (err) {
+      fastify.log.error(err);
+      process.exit(1);
+    }
+  });
+} else {
+  module.exports = fastify;
+}
