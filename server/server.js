@@ -28,6 +28,8 @@ fastify.addHook('onRequest', async (req, res) => {
     ) {
       return;
     }
+    req.headers['authorization'] = req.headers['x-authorization'];
+    console.log(req.headers);
     await req.jwtVerify();
   } catch (err) {
     res.send(err);
@@ -49,20 +51,9 @@ fastify.get('/test', async (req, res) => {
 });
 
 // Run the server!
-// fastify.listen({ host: process.env.HOST, port: process.env.PORT }, (err) => {
-//   if (err) {
-//     fastify.log.error(err);
-//     process.exit(1);
-//   }
-// });
-
-if (require.main === module) {
-  fastify.listen({ host: process.env.HOST, port: process.env.PORT }, (err) => {
-    if (err) {
-      fastify.log.error(err);
-      process.exit(1);
-    }
-  });
-} else {
-  module.exports = fastify;
-}
+fastify.listen({ host: process.env.HOST, port: process.env.PORT }, (err) => {
+  if (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+});
