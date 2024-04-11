@@ -44,7 +44,7 @@ async function routes(fastify /*, options*/) {
   fastify.get('/foundations', donationsController.getFoundationsWallets);
   fastify.get('/foundationslist', donationsController.getFoundations);
   fastify.get('/networks', donationsController.getSupportedNetworks);
-  fastify.get('/tracking/list', donationsController.getTrackedAddresses);
+  fastify.get('/tracking/list', donationsController.getTrackingAddresses);
   fastify.post('/tracking/create', donationsController.addTrackingAddress);
   fastify.get('/donations', donationsController.getUserDonations);
   fastify.post('/donations/create', donationsController.add);

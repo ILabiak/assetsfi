@@ -3,6 +3,8 @@ const {
   parseFoundationAddresses,
   calculateDonationsStats,
   checkWalletAddress,
+  getAddressData,
+  getTokensMetadata,
 } = require('./donationUtils');
 const { getCurrencyRate } = require('./utils');
 const Donation = require('../models').Donation;
@@ -59,21 +61,6 @@ module.exports = {
         });
       }
       res.status(200).send(networks);
-    });
-  },
-
-  getTrackedAddresses(req, res) {
-    return TrackedAddress.findAll({
-      where: { userId: req.user.sub },
-      include: [{ model: Currency }, { model: SupportedNetwork }],
-      order: [['createdAt', 'DESC']],
-    }).then(async (donations) => {
-      if (!donations) {
-        return res.status(400).send({
-          message: 'Addresses Not Found',
-        });
-      }
-      res.status(200).send(donations);
     });
   },
 
@@ -136,6 +123,37 @@ module.exports = {
     })
       .then((address) => res.status(201).send(address))
       .catch((error) => res.status(400).send(error));
+  },
+
+  async getTrackingAddresses(req, res) {
+    try {
+      const addresses = await TrackedAddress.findAll({
+        where: { userId: req.user.sub },
+        include: [{ model: SupportedNetwork }, { model: Currency }],
+        order: [['updatedAt', 'DESC']],
+      });
+
+      if (!addresses || addresses.length === 0) {
+        return res.status(200).send({ addresses: [] });
+      }
+
+      const addressesData = await Promise.all(
+        addresses.map(async (address) => {
+          let data = address.get({ plain: true });
+          const addressStats = await getAddressData(data);
+          return addressStats;
+        })
+      );
+
+      const metadata = await getTokensMetadata(addressesData)
+      console.log(metadata)
+
+      // console.log(JSON.stringify(addressesData, null, 2));
+      return res.status(200).send({ addresses: addressesData, metadata: metadata });
+    } catch (err) {
+      console.log(err);
+      res.status(500).send({ message: 'Internal Server Error' });
+    }
   },
 
   update(req, res) {

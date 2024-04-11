@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         unique: true,
       },
+      logoUrl: {
+        type: DataTypes.TEXT,
+      },
     },
     {
       sequelize,

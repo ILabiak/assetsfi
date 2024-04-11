@@ -242,6 +242,7 @@ const calculateAllPortfolios = async (portfoliosArr) => {
 };
 
 const getCurrencyRate = async (symbol, base) => {
+  if(symbol == base) return 1;
   let requestUrl = `https://api.currencybeacon.com/v1/latest?base=${base}&symbols=${symbol}&api_key=${process.env.BEACON_API}`;
   const response = await fetch(requestUrl);
   let responseJSON = await response.json();
