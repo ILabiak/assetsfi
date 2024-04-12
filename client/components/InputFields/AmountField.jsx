@@ -15,7 +15,7 @@ function AmountField({ amount, setAmount, currency, title }) {
     return (
         <TextField
             required
-            id="outlined-required"
+            // id="outlined-required"
             label={`${title} (${currency?.symbol})`}
             value={amount}
             onChange={(e) => {

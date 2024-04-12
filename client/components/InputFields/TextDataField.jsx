@@ -13,7 +13,7 @@ function TextDataField({ text, setText, title, required }) {
 
     return (
         <TextField
-            id="outlined"
+            // id="outlined"
             label={title}
             required={required}
             value={text}

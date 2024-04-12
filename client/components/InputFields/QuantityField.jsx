@@ -17,7 +17,7 @@ function QuantityField({ quantity, setQuantity }) {
     return (
         <TextField
             required
-            id="outlined-required"
+            // id="outlined-required"
             label="Quantity"
             value={quantity}
             onChange={(e) => {

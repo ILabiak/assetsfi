@@ -17,8 +17,6 @@ function TotalPriceField({ price, quantity, fees, currency }) {
 
     return (
         <TextField
-            disabled
-            id="outlined-required"
             label={`Total price (${currency})`}
             value={calculatePrice()}
             fullWidth
@@ -28,7 +26,10 @@ function TotalPriceField({ price, quantity, fees, currency }) {
                     border: '1px solid',
                     borderColor: 'white'
                 },
-                '& label.Mui-disabled': {
+                '& label': {
+                    color: '#AEAEAE',
+                },
+                '& label.Mui-focused': {
                     color: '#AEAEAE',
                 },
                 input: {
@@ -37,9 +38,20 @@ function TotalPriceField({ price, quantity, fees, currency }) {
                     color: '#E8E9EB',
                     fontSize: '16px',
                 },
-                "& .MuiInputBase-input.Mui-disabled": {
+                "& .MuiInputBase-input": {
                     WebkitTextFillColor: "#AEAEAE",
-                }
+                },
+                '& .MuiOutlinedInput-root': {
+                    '&.Mui-focused fieldset': {
+                        border: '0',
+                    },
+                    '&.Mui-focused:hover fieldset': {
+                        border: '0',
+                    },
+                    '&:hover fieldset': {
+                        border: '0',
+                    },
+                },
             }}
         />
     );

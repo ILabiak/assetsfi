@@ -13,7 +13,7 @@ function NoteField({ note, setNote }) {
 
     return (
         <TextField
-            id="outlined"
+            // id="outlined"
             label="Note"
             value={note}
             onChange={(e) => {

@@ -14,7 +14,7 @@ function FeesField({ fees, setFees, currency }) {
 
     return (
         <TextField
-            id="outlined-required"
+            // id="outlined-required"
             label={`Fees (${currency})`}
             value={fees}
             onChange={(e) => {

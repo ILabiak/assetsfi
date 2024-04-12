@@ -9,7 +9,7 @@ function SelectorField({ selectorData, currentValue, setValue, label, helperText
         <Box>
 
             <TextField
-                id="outlined-select-currency-native"
+                // id="outlined-select-currency-native"
                 select
                 // label={label}
                 // value={currentValue}

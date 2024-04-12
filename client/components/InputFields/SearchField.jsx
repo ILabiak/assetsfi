@@ -24,7 +24,7 @@ function SearchField({ searchQuery, setSearchQuery, dataFiltered, setAsset }) {
 
             <TextField
                 required
-                id="outlined-required"
+                // id="outlined-required"
                 label="Asset"
                 value={searchQuery}
                 onChange={(e) => {

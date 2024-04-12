@@ -15,7 +15,7 @@ function PriceField({ price, setPrice, currency }) {
     return (
         <TextField
             required
-            id="outlined-required"
+            // id="outlined-required"
             label={`Price (${currency})`}
             value={price}
             onChange={(e) => {

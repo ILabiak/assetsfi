@@ -182,8 +182,8 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                         <Box>
                             <TextField
                                 required
-                                disabled
-                                id="outlined-required"
+                                // disabled
+                                // id="outlined-required"
                                 label="Asset"
                                 value={asset.name}
                                 fullWidth
@@ -193,7 +193,10 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                                         border: '1px solid',
                                         borderColor: 'white'
                                     },
-                                    '& label.Mui-disabled': {
+                                    '& label': {
+                                        color: '#AEAEAE',
+                                    },
+                                    '& label.Mui-focused': {
                                         color: '#AEAEAE',
                                     },
                                     input: {
@@ -202,9 +205,20 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                                         color: '#E8E9EB',
                                         fontSize: '16px',
                                     },
-                                    "& .MuiInputBase-input.Mui-disabled": {
+                                    "& .MuiInputBase-input": {
                                         WebkitTextFillColor: "#AEAEAE",
-                                    }
+                                    },
+                                    '& .MuiOutlinedInput-root': {
+                                        '&.Mui-focused fieldset': {
+                                            border: '0',
+                                        },
+                                        '&.Mui-focused:hover fieldset': {
+                                            border: '0',
+                                        },
+                                        '&:hover fieldset': {
+                                            border: '0',
+                                        },
+                                    },
                                 }}
                             />
                             {
