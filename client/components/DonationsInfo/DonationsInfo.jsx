@@ -8,11 +8,30 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 
 function Donations() {
-    const [tabValue, setTabValue] = useState(2)
+    const [tabValue, setTabValue] = useState(0)
+    const [currencies, setCurrencies] = useState();
 
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
     };
+
+    useEffect(() => {
+
+        const fetchCurrencies = async () => {
+            try {
+                const response = await fetch('/api/server/currencies');
+                if (response.status === 200) {
+                    const data = await response.json();
+                    setCurrencies(data)
+                } else {
+                    console.log('Some other error');
+                }
+            } catch (error) {
+                console.log('Error while getting currencies data', error);
+            }
+        }
+        fetchCurrencies().catch(console.error)
+    }, []);
 
 
     return (
@@ -51,8 +70,8 @@ function Donations() {
 
                         }}
                     >
-                        <Tab label="Foundations" tabIndex={0} />
-                        <Tab label="My donations" tabIndex={1} />
+                        <Tab label="My donations" tabIndex={0} />
+                        <Tab label="Foundations" tabIndex={1} />
                         <Tab label="Donations Tracker" tabIndex={2} />
                     </Tabs>
                 </Box>
@@ -61,21 +80,21 @@ function Donations() {
                     color: 'white',
                     display: tabValue == 0 ? 'inline' : 'none'
                 }}>
-                    <Foundations />
+                    <MyDonations currencies={currencies} />
                 </Box>
 
                 <Box className={styles.tabContainer} sx={{
                     color: 'white',
                     display: tabValue == 1 ? 'inline' : 'none'
                 }}>
-                    <MyDonations />
+                    <Foundations />
                 </Box>
 
                 <Box className={styles.tabContainer} sx={{
                     color: 'white',
                     display: tabValue == 2 ? 'inline' : 'none'
                 }}>
-                    <Tracker />
+                    <Tracker currencies={currencies} />
                 </Box>
 
             </Box>

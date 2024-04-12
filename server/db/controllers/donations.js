@@ -146,15 +146,72 @@ module.exports = {
         })
       );
 
-      const metadata = await getTokensMetadata(addressesData)
-      console.log(metadata)
+      const metadata = await getTokensMetadata(addressesData);
 
-      // console.log(JSON.stringify(addressesData, null, 2));
-      return res.status(200).send({ addresses: addressesData, metadata: metadata });
+      return res
+        .status(200)
+        .send({ addresses: addressesData, metadata: metadata });
     } catch (err) {
       console.log(err);
       res.status(500).send({ message: 'Internal Server Error' });
     }
+  },
+
+  async updateTrackingAddress(req, res) {
+    if (!req.body.id) {
+      res.status(400).send({
+        status: false,
+        message: 'Not enough data to edit tracking address',
+      });
+    }
+    return TrackedAddress.findOne({
+      where: {
+        userId: req.user.sub,
+        id: req.body.id,
+      },
+      include: [{ model: SupportedNetwork }, { model: Currency }],
+    }).then(async (address) => {
+      if (!address) {
+        return res.status(404).send({
+          message: 'Address Not Found',
+        });
+      }
+      let updateObj = {
+        name: address.name,
+        networkId: req.body.network?.id || address.networkId,
+        targetAmount: req.body.target
+          ? parseFloat(req.body.target.toFixed(5))
+          : address.targetAmount,
+        currencyId: req.body.currency?.id || address.currencyId,
+      };
+
+      if (req.body.name != undefined && typeof req.body.name == 'string') {
+        updateObj.name = req.body.name;
+      }
+
+      if (req.body.address || req.body.network) {
+        let addressToCheck = req.body.address || address.address;
+        let network = req.body.network || address[SupportedNetwork];
+
+        let checkAddress = await checkWalletAddress(
+          network.code,
+          addressToCheck
+        );
+        if (!checkAddress) {
+          return res.status(400).send({
+            status: false,
+            message: 'Either selected network or address is not valid',
+          });
+        }
+        updateObj.address = addressToCheck;
+        updateObj.networkId = network.id;
+      }
+
+      return address
+        .update(updateObj)
+        .then(() => res.status(200).send(address))
+        .catch((error) => res.status(400).send(error));
+    });
   },
 
   update(req, res) {
@@ -233,6 +290,31 @@ module.exports = {
             res
               .status(200)
               .send({ message: 'Donation was successfully deleted!' })
+          )
+          .catch((error) => res.status(400).send(error));
+      })
+      .catch((error) => res.status(400).send(error));
+  },
+
+  deleteTrackingAddress(req, res) {
+    return TrackedAddress.findOne({
+      where: {
+        userId: req.user.sub,
+        id: req.body.id,
+      },
+    })
+      .then((address) => {
+        if (!address) {
+          return res.status(400).send({
+            message: 'Address Not Found',
+          });
+        }
+        return address
+          .destroy()
+          .then(() =>
+            res
+              .status(200)
+              .send({ message: 'Tracking address was successfully deleted!' })
           )
           .catch((error) => res.status(400).send(error));
       })

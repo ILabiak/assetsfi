@@ -6,10 +6,10 @@ import DonationsTable from './DonationsTable';
 import DonationStats from './DonationStats';
 
 
-function MyDonations() {
+function MyDonations({currencies}) {
     const [myDonationsData, setMyDonationsData] = useState()
     const [foundations, setFoundations] = useState()
-    const [currencies, setCurrencies] = useState();
+
     const [successOpen, setSuccessOpen] = useState(false);
 
 
@@ -38,20 +38,6 @@ function MyDonations() {
 
     useEffect(() => {
 
-        const fetchCurrencies = async () => {
-            try {
-                const response = await fetch('/api/server/currencies');
-                if (response.status === 200) {
-                    const data = await response.json();
-                    setCurrencies(data)
-                } else {
-                    console.log('Some other error');
-                }
-            } catch (error) {
-                console.log('Error while getting currencies data', error);
-            }
-        }
-
         const fetchFoundations = async () => {
             try {
                 const response = await fetch(`/api/server/foundationslist`);
@@ -69,7 +55,6 @@ function MyDonations() {
         }
 
         fetchData().catch(console.error)
-        fetchCurrencies().catch(console.error)
         fetchFoundations().catch(console.error)
     }, []);
 

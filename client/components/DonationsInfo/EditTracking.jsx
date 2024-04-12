@@ -8,32 +8,34 @@ import { Typography, Box, Backdrop, Snackbar, Alert } from '@mui/material';
 
 const numberRegex = /^[-+]?\d+(\.\d{0,5})?$/;
 
-function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen, setBackdropOpen, handleTrackingsChange, networks, currencies }) {
-    const [createButtonActive, setCreateButtonActive] = useState(false)
-    const [network, setNetwork] = useState(networks[0])
-    const [currency, setCurrency] = useState(currencies[0]);
-    const [address, setAddress] = useState("");
-    const [name, setName] = useState("");
-    const [amount, setAmount] = useState("");
+function EditTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen, setBackdropOpen, handleTrackingsChange, networks, currencies, addressData }) {
+    const [createButtonActive, setEditButtonActive] = useState(false)
+    const [network, setNetwork] = useState(addressData['SupportedNetwork'])
+    const [currency, setCurrency] = useState(addressData['Currency']);
+    const [address, setAddress] = useState(addressData.address);
+    const [name, setName] = useState(addressData?.name || "");
+    const [amount, setAmount] = useState(addressData.targetAmount ? `${addressData.targetAmount}` : "");
     const [errorText, setErrorText] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
     const [successOpen, setSuccessOpen] = useState(false);
 
     useEffect(() => {
         if (!backdropOpen) {
-            setAmount("")
-            setAddress("")
-            setName("")
+            setAmount(addressData.targetAmount ? `${addressData.targetAmount}` : "")
+            setAddress(addressData.address)
+            setName(addressData?.name || "")
+            setCurrency(addressData['Currency'])
+            setNetwork(addressData['SupportedNetwork'])
         }
     }, [backdropOpen]);
 
 
     useEffect(() => {
         if (currency?.id && network?.id && address.length > 10) {
-            setCreateButtonActive(true)
+            setEditButtonActive(true)
         }
         else {
-            setCreateButtonActive(false)
+            setEditButtonActive(false)
         }
     }, [address]);
 
@@ -51,36 +53,46 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
         setSuccessOpen(false);
     };
 
-    const handleAddTracking = async () => {
+    const handleEditTracking = async () => {
         if (!createButtonActive) return;
-        setCreateButtonActive(false)
+        setEditButtonActive(false)
         let trackingObj = {
-            address: address,
-            currencyId: currency.id,
-            network: network,
-            target: parseFloat(amount),
+            id: addressData?.id
         }
-        if(name.length > 0 && name.length < 50){
+        if (name != addressData.name && name.length < 50) {
             trackingObj.name = name
         }
-        const response = await fetch('/api/server/tracking/create', {
-            method: 'POST',
+        if (addressData.targetAmount != parseFloat(amount)) {
+            trackingObj.target = parseFloat(amount)
+        }
+        if (addressData.address != address) {
+            trackingObj.address = address
+        }
+        if (addressData.currencyId != currency.id) {
+            trackingObj.currency = currency
+        }
+        if (addressData.networkId != network.id) {
+            trackingObj.network = network
+        }
+        const response = await fetch('/api/server/tracking/update', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(trackingObj),
             credentials: 'include'
         });
-        if (response.status === 201) {
+        if (response.status === 200) {
             setBackdropOpen(false)
             setSuccessOpen(true)
             handleTrackingsChange();
+            setEditButtonActive(true)
         } else {
             let result = await response.json()
             setErrorText(result.message)
             setErrorOpen(true)
             // console.log('Some other error');
-            setCreateButtonActive(true)
+            setEditButtonActive(true)
         }
     }
 
@@ -108,7 +120,7 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
                             paddingTop: '5px',
                             borderBottom: '2px solid rgba(255, 255, 255, 0.3)'
                         }}>
-                        Add address tracking
+                        Edit address tracking
                     </Typography>
                     <Box className={styles.inputsContainer}>
                         <Box>
@@ -161,16 +173,16 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
                             Cancel
                         </Box>
                         <Box
-                            onClick={handleAddTracking}
+                            onClick={handleEditTracking}
                             className={`${styles.addDonationButton} ${!createButtonActive ? styles.disabled : ''}`}>
-                            Create
+                            Edit
                         </Box>
 
                     </Box>
                 </Box>
             </Backdrop>
             <Snackbar open={errorOpen}
-                autoHideDuration={3000}
+                autoHideDuration={1500}
                 onClose={handleErrorClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
                 <Alert
@@ -183,7 +195,7 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
                 </Alert>
             </Snackbar>
             <Snackbar open={successOpen}
-                autoHideDuration={3000}
+                autoHideDuration={1500}
                 onClose={handleSuccessClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
                 <Alert
@@ -192,10 +204,10 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
                     variant="filled"
                     sx={{ width: '100%' }}
                 >
-                    Address was successfully added
+                    Address was successfully edited
                 </Alert>
             </Snackbar>
         </>
     );
 }
-export default AddTracking;
+export default EditTracking;

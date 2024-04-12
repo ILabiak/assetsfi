@@ -46,6 +46,8 @@ async function routes(fastify /*, options*/) {
   fastify.get('/networks', donationsController.getSupportedNetworks);
   fastify.get('/tracking/list', donationsController.getTrackingAddresses);
   fastify.post('/tracking/create', donationsController.addTrackingAddress);
+  fastify.put('/tracking/update', donationsController.updateTrackingAddress);
+  fastify.delete('/tracking/delete', donationsController.deleteTrackingAddress);
   fastify.get('/donations', donationsController.getUserDonations);
   fastify.post('/donations/create', donationsController.add);
   fastify.delete('/donations/delete', donationsController.delete);
