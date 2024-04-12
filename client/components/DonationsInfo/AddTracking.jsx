@@ -13,6 +13,7 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
     const [network, setNetwork] = useState(networks[0])
     const [currency, setCurrency] = useState(currencies[0]);
     const [address, setAddress] = useState("");
+    const [name, setName] = useState("");
     const [amount, setAmount] = useState("");
     const [errorText, setErrorText] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
@@ -22,6 +23,7 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
         if (!backdropOpen) {
             setAmount("")
             setAddress("")
+            setName("")
         }
     }, [backdropOpen]);
 
@@ -57,6 +59,9 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
             currencyId: currency.id,
             network: network,
             target: parseFloat(amount),
+        }
+        if(name.length > 0 && name.length < 50){
+            trackingObj.name = name
         }
         const response = await fetch('/api/server/tracking/create', {
             method: 'POST',
@@ -125,14 +130,21 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
                                         helperText={'Select currency'}
                                     />
 
-                                    <AmountField
-                                        amount={amount} setAmount={setAmount}
-                                        currency={currency} title={'Fundraising target'}
+                                    <TextDataField
+                                        text={name} setText={setName}
+                                        title={'Name'} required={false}
                                     />
+                                    {currency && (
+                                        <AmountField
+                                            amount={amount} setAmount={setAmount}
+                                            currency={currency} title={'Fundraising target'}
+                                        />
+                                    )}
+
 
                                     <TextDataField
                                         text={address} setText={setAddress}
-                                        title={'Wallet address'}
+                                        title={'Wallet address'} required={true}
                                     />
 
                                 </Box>

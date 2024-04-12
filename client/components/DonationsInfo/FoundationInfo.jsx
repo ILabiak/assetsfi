@@ -10,8 +10,7 @@ import Image from 'next/image';
 function FoundationInfo({ foundation, copyData }) {
 
     return (
-        <Box key={foundation.orgName}>
-            <Box className={styles.foundation}>
+            <Box className={styles.foundation} key={foundation.orgName}>
                 <Box className={styles.foundationInfo}>
                     <Box className={styles.foundationName}>
                         <Box className={styles.imageWrap}>
@@ -71,7 +70,6 @@ function FoundationInfo({ foundation, copyData }) {
                     ))}
                 </Box>
             </Box>
-        </Box>
     );
 }
 export default FoundationInfo;

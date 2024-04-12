@@ -1,1 +1,4 @@
 server/db/controllers/foundations-data.json
+
+# Local Netlify folder
+.netlify

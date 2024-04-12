@@ -22,6 +22,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      name: {
+        type: DataTypes.TEXT,
+      },
       networkId: {
         type: DataTypes.INTEGER,
         allowNull: false,

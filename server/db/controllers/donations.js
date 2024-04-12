@@ -114,6 +114,7 @@ module.exports = {
     }
     return TrackedAddress.create({
       userId: req.user.sub,
+      name: req.body?.name || null,
       networkId: req.body.network.id,
       address: req.body.address,
       targetAmount: req.body.target

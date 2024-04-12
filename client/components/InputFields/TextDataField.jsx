@@ -3,7 +3,7 @@ import { TextField } from '@mui/material';
 
 const textRegex = /^.{0,70}$/;
 
-function TextDataField({ text, setText, title }) {
+function TextDataField({ text, setText, title, required }) {
 
     const handleNoteChange = (value) => {
         if (textRegex.test(value) || value == '') {
@@ -15,7 +15,7 @@ function TextDataField({ text, setText, title }) {
         <TextField
             id="outlined"
             label={title}
-            required
+            required={required}
             value={text}
             onChange={(e) => {
                 handleNoteChange(e.target.value);

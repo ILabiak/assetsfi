@@ -47,7 +47,10 @@ function Foundations() {
     return (
         <Box className={styles.foundationsContainer}>
             {foundationsData ? (
-                <Masonry columns={2} spacing={4} >
+                <Box sx={{ marginRight: -4}}>
+                <Masonry columns={2} spacing={4} sx={{
+                    // width: "auto"
+                }} >
                     {
                         foundationsData.data.map((el, index) => (
                             <FoundationInfo
@@ -57,6 +60,8 @@ function Foundations() {
                         ))
                     }
                 </Masonry>
+                </Box>
+
             ) : (
                 <Box sx={{
                     display: 'flex',

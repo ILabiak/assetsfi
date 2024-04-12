@@ -7,7 +7,7 @@ const amountRegex = /^[-+]?\d+(\.\d{0,5})?$/;
 function AmountField({ amount, setAmount, currency, title }) {
 
     const handleAmountChange = (value) => {
-        if (amountRegex.test(value) || value == '' || value == '-') {
+        if (value === '' || amountRegex.test(value)) {
             setAmount(value)
         }
     }
@@ -16,7 +16,7 @@ function AmountField({ amount, setAmount, currency, title }) {
         <TextField
             required
             id="outlined-required"
-            label={`${title} (${currency.symbol})`}
+            label={`${title} (${currency?.symbol})`}
             value={amount}
             onChange={(e) => {
                 handleAmountChange(e.target.value);
