@@ -40,7 +40,7 @@ function BinanceAssetsRow({ asset, valuesHidden }) {
                     {valuesHidden ? '***' :`${asset?.totalValue} $`}
                 </TableCell>
                 <TableCell >
-                    {valuesHidden ? '***' :`${parseFloat(asset?.free)} ${asset?.asset.toUpperCase()}`}
+                    {valuesHidden ? '***' :`${asset?.tokens} ${asset?.asset.toUpperCase()}`}
                 </TableCell>
                 <TableCell >
                     {valuesHidden ? '***' :`${asset?.price} $`}

@@ -51,12 +51,15 @@ const getUserInformation = async (apiKey, apiSecret) => {
     const mappedChanges = Object.assign({}, ...mapped);
 
     for (let el of assets) {
+      // console.log(el);
       let key = `${el.asset}USDT`;
       el.name = metadataRes.data[el.asset][0].name;
       el.logo = metadataRes.data[el.asset][0].logo;
 
       if (el.asset == 'USDT') {
-        el.totalValue = parseFloat(el.free);
+        let tokens = parseFloat(el.free) + parseFloat(el.locked);
+        el.totalValue = tokens;
+        el.tokens = parseFloat(tokens.toFixed(8));
         el.dailyChange = 0;
         el.dailyChangePercentage = 0;
         el.price = 1;
@@ -69,11 +72,13 @@ const getUserInformation = async (apiKey, apiSecret) => {
       }
       el.price = mappedChanges[key].lastPrice.replace(/\.?0+$/, '');
 
-      let totalValue = parseFloat(el.price) * parseFloat(el.free);
+      let tokens = parseFloat(el.free) + parseFloat(el.locked);
+      let totalValue = parseFloat(el.price) * tokens;
       let dailyPrice = mappedChanges[key].openPrice.replace(/\.?0+$/, '');
       let dailyValue = parseFloat(dailyPrice) * parseFloat(el.free);
       let dailyChange = totalValue - dailyValue;
 
+      el.tokens = parseFloat(tokens.toFixed(8));
       el.totalValue = totalValue.toFixed(2);
       el.dailyChange = dailyChange.toFixed(2);
       el.dailyChangePercentage = parseFloat(
@@ -115,21 +120,25 @@ const updateMarketPairs = async (apiKey, apiSecret) => {
   fs.writeFileSync('pairs.json', JSON.stringify(pairs));
 };
 
-// (async () => {
-//   console.time('Execution');
-//   // const client = new Spot(
-//   //   process.env.BINANCE_API_KEY,
-//   //   process.env.BINANCE_API_SECRET
-//   // );
-//   await getUserInformation(
-//     process.env.BINANCE_API_KEY,
-//     process.env.BINANCE_API_SECRET
-//   );
+(async () => {
+  console.time('Execution');
+  // const client = new Spot(
+  //   process.env.BINANCE_API_KEY,
+  //   process.env.BINANCE_API_SECRET
+  // );
+  // console.log(
+  //   await getUserInformation(
+  //     process.env.BINANCE_API_KEY,
+  //     process.env.BINANCE_API_SECRET
+  //   )
+  // );
+  // await updateMarketPairs(process.env.BINANCE_API_KEY,
+  //      process.env.BINANCE_API_SECRET)
 
-//   console.timeEnd('Execution');
+  // console.timeEnd('Execution');
 
-//   //   let assetTransactions = await client.myTrades('ALTUSDT');
-// })();
+  //   let assetTransactions = await client.myTrades('ALTUSDT');
+})();
 
 module.exports = {
   getUserInformation,
