@@ -1,27 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import styles from './binanceassetstable.module.css';
-import BinanceAssetsRow from './BinanceAssetsRow'
-// import PortfolioRow from './PortfolioRow';
+import OrderRow from './OrderRow';
 import {
     Typography, Box, Table, TableCell, TableContainer,
     TableHead, TableRow, TableBody, Collapse
 } from '@mui/material';
 
 
-function BinanceAssetsTable({ binanceAssets, valuesHidden, handleChange }) {
-    // const [open, setOpen] = useState(false);
-    // const [binanceAssetsData, setBinanceAssetsData] = useState(binanceAssets)
+function OrdersTable({ orders, handleOrdersChanged }) {
 
     return (
-        <Box className={styles.coinStatsContainer}>
+        <Box className={styles.ordersTableContainer}>
             <TableContainer sx={{
-                borderRadius: '5px'
+                height: orders.length > 3 ? '0px' : 'auto',
+                flexGrow: orders.length > 3 ? 1 : 0,
+                overflow: 'auto',
+                borderRadius: '5px',
             }}>
                 <Table stickyHeader sx={{
+                    flexGrow: 1,
                     minWidth: 650,
+                    height: '100%',
                     borderCollapse: "separate",
                     borderSpacing: "0px 10px",
-                }} aria-label="binanceAssets table">
+                }} aria-label="orders table">
                     <TableHead sx={{
                         '& th': {
                             borderBottom: 'none',
@@ -47,15 +49,18 @@ function BinanceAssetsTable({ binanceAssets, valuesHidden, handleChange }) {
                             },
 
                         }}>
-                            <TableCell>Name</TableCell>
-                            <TableCell >Total value</TableCell>
-                            <TableCell >Amount</TableCell>
+                            <TableCell>Symbol</TableCell>
+                            <TableCell >Type</TableCell>
+                            <TableCell >Direction</TableCell>
                             <TableCell >Price</TableCell>
-                            <TableCell align="right" >24H change</TableCell>
+                            <TableCell >Quantity</TableCell>
+                            <TableCell >Time</TableCell>
+                            <TableCell align="right" >Status</TableCell>
                             <TableCell align="right" ></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody sx={{
+                        // overflow: 'scroll',
                         borderRadius: '10px',
                         '& th': {
                             borderBottom: 'none',
@@ -84,12 +89,11 @@ function BinanceAssetsTable({ binanceAssets, valuesHidden, handleChange }) {
                             borderBottomRightRadius: "10px",
                         },
                     }}>
-                        {binanceAssets.map((asset) => (
-                            <BinanceAssetsRow
-                                key={`asset-${asset.asset}`}
-                                asset={asset}
-                                valuesHidden={valuesHidden}
-                                handleChange={handleChange}
+                        {orders.map((order) => (
+                            <OrderRow
+                                key={`order-${order.orderId}`}
+                                order={order}
+                                handleOrdersChanged={handleOrdersChanged}
                             />
                         ))}
                     </TableBody>
@@ -99,4 +103,4 @@ function BinanceAssetsTable({ binanceAssets, valuesHidden, handleChange }) {
     );
 }
 
-export default BinanceAssetsTable;
+export default OrdersTable;

@@ -1,18 +1,35 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './binancedata.module.css';
-import { Button, Typography, Box, Grid, Tabs, Tab } from '@mui/material';
+import { Button, Typography, Box, Snackbar, Alert } from '@mui/material';
 import AddBinanceKeys from '@/components/AddBinanceKeys/AddBinanceKeys'
 import BinanceAssetsInfo from '@/components/BinanceAssetsInfo/BinanceAssetsInfo'
-import { useRouter } from 'next/navigation'
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import CircularProgress from '@mui/material/CircularProgress';
+import SnackbarContext from './SnackbarsContext';
 
 
 
 function BinanceData() {
     const [binanceData, setBinanceData] = useState()
+
+    const [errorText, setErrorText] = useState('');
+    const [successText, setSuccessText] = useState('');
+    const [errorOpen, setErrorOpen] = useState(false);
+    const [successOpen, setSuccessOpen] = useState(false);
+
+    const handleErrorClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setErrorOpen(false);
+    };
+
+    const handleSuccessClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSuccessOpen(false);
+    };
+
 
     const fetchData = async () => {
         try {
@@ -40,31 +57,64 @@ function BinanceData() {
     }, []);
 
     return (
-        <Box component='main' className={styles.main} sx={{
-            width: { xs: '100%', md: `calc(100% - 260px)` },
-            ml: { xs: '0', md: '260px' }, // sidebar width
-            minHeight: { xs: `100vh`, md: `calc(100vh - 100px)` },
-            mt: { xs: '0px', md: '100px' } // header hight
+        <SnackbarContext.Provider value={{
+            setErrorText,
+            setErrorOpen,
+            setSuccessOpen,
+            setSuccessText
         }}>
+            <Box component='main' className={styles.main} sx={{
+                width: { xs: '100%', md: `calc(100% - 260px)` },
+                ml: { xs: '0', md: '260px' }, // sidebar width
+                minHeight: { xs: `100vh`, md: `calc(100vh - 100px)` },
+                mt: { xs: '0px', md: '100px' } // header hight
+            }}>
 
-            {
-                binanceData ? (
-                    binanceData.totalValue ? (
-                        <BinanceAssetsInfo assetsInfo={binanceData} handleChange={handleChange} />
-                    ) : (
-                        <AddBinanceKeys handleChange={handleChange} />
-                    )
+                {
+                    binanceData ? (
+                        binanceData.totalValue ? (
+                            <BinanceAssetsInfo assetsInfo={binanceData} handleChange={handleChange} />
+                        ) : (
+                            <AddBinanceKeys handleChange={handleChange} />
+                        )
 
-                )
-                    : (
-                        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 200px)' }}>
-                            <CircularProgress size={70} sx={{
-                                color: '#0228EE',
-                            }} />
-                        </Box>
                     )
-            }
-        </Box >
+                        : (
+                            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 'calc(100vh - 200px)' }}>
+                                <CircularProgress size={70} sx={{
+                                    color: '#0228EE',
+                                }} />
+                            </Box>
+                        )
+                }
+                <Snackbar open={errorOpen}
+                    autoHideDuration={2000}
+                    onClose={handleErrorClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+                    <Alert
+                        onClose={handleErrorClose}
+                        severity="error"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        Error: {errorText}
+                    </Alert>
+                </Snackbar>
+                <Snackbar open={successOpen}
+                    autoHideDuration={2000}
+                    onClose={handleSuccessClose}
+                    anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
+                    <Alert
+                        onClose={handleSuccessClose}
+                        severity="success"
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        {successText}
+                    </Alert>
+                </Snackbar>
+            </Box >
+        </SnackbarContext.Provider>
     );
 }
 export default BinanceData;

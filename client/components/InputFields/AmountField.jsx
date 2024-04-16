@@ -16,8 +16,9 @@ function AmountField({ amount, setAmount, currency, title }) {
         <TextField
             required
             // id="outlined-required"
-            label={`${title} (${currency?.symbol})`}
+            label={`${title} ${currency ? `(${currency?.symbol})` : ''}`}
             value={amount}
+            autoComplete='off'
             onChange={(e) => {
                 handleAmountChange(e.target.value);
             }}

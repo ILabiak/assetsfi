@@ -17,3 +17,209 @@
     /* justify-content: center; */
 }
 
+.assetChartContainer {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    min-width: 300px;
+    background-color: black;
+    height: 98%;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.assetTitle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    width: auto;
+    /* border: 1px solid white; */
+}
+
+.iconWrap {
+    display: flex;
+    justify-content: flex-start;
+    /* border: 1px solid white; */
+    height: 100%;
+}
+
+.closeBackdropIcon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #A32F2F;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    border-radius: 100px;
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.closeBackdropIcon:hover {
+    color: black;
+    background: #E19D9C;
+}
+
+.assetInfo {
+    display: flex;
+    flex-direction: row;
+}
+
+.chartInfo {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    height: 55%;
+    min-height: 55%;
+    /* border: 1px solid white; */
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.chart {
+    border: 1px solid #252930;
+    min-width: 70%;
+    min-height: 100%;
+    width: 70%;
+    height: 100%;
+}
+
+.tradeContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* border: 1px solid white; */
+}
+
+.tradingTools {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* border: 2px solid blue; */
+    margin-left: 30px;
+    height: 100%;
+}
+
+.tradeBuySellButtons {
+    display: flex;
+    height: 35px;
+    width: 100%;
+    /* margin-top: 10px; */
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+.buyButton {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #34B17F;
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.buyButton:hover {
+    color: black;
+    background: #6CCC97;
+}
+
+.sellButton {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #A32F2F;
+    transition: color 0.8s ease, background 0.8s ease;
+}
+
+.sellButton:hover {
+    color: black;
+    background: #E19D9C;
+}
+
+.disabled {
+    background-color: #25282C;
+}
+
+.disabled:hover {
+    background-color: #25282C;
+    color: white;
+}
+
+.orderTypes {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.orderInputs {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    margin-top: 20px;
+    /* border: 1px solid white; */
+}
+
+.submitOrderContainer {
+    display: flex;
+    height: 35px;
+    width: 100%;
+}
+
+.ordersContainer {
+    /* border: 1px solid white; */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100%;
+    margin: 20px;
+    background-color: #161A1E;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.ordersTitle {
+    width: 100%;
+    /* margin-bottom: 10px; */
+}
+
+.ordersTable {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.ordersTableContainer {
+    display: flex;
+    box-sizing: border-box;
+    height: auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0 10px;
+    /* background-color: black; */
+    border-radius: 5px;
+    /* border: 2px solid #AEAEAE; */
+}
+
+.noPermissionContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30px;
+    height: 100%;
+}
+
+.noPermissionInfo {
+    width: 100%;
+    height: 100%;
+    background-color: #161A1E;
+    border-radius: 5px;
+}

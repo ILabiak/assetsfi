@@ -7,8 +7,6 @@ function TotalPriceField({ price, quantity, fees, currency }) {
         let calculated = parseFloat(price) * parseFloat(Math.abs(quantity))
         if (parseFloat(fees) > 0) {
             calculated += parseFloat(fees)
-
-
         }
         calculated = calculated.toFixed(5).replace(/\.?0*$/, '')
 

@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       userId: {
         type: DataTypes.TEXT,
         allowNull: false,
+        unique: true
       },
       apiKey: {
         type: DataTypes.TEXT,
@@ -22,6 +23,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       apiSecret: {
         type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      isTestnet: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
       }
     },

@@ -32,7 +32,11 @@ async function routes(fastify /*, options*/) {
 
   /* Binance Routes */
   fastify.get('/binance/userdata', binanceController.getUserData);
+  fastify.get('/binance/trading/permissions', binanceController.checkTradingPermissions);
+  fastify.get('/binance/userorders/:symbol', binanceController.getUserOrders);
   fastify.post('/binance/create', binanceController.add);
+  fastify.post('/binance/order/new', binanceController.createOrder);
+  fastify.post('/binance/order/cancel', binanceController.cancelOrder);
   fastify.delete('/binance/delete', binanceController.delete);
 
   /* User Routes */

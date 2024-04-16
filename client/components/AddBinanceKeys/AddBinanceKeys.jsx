@@ -1,6 +1,6 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './addbinancekeys.module.css';
-import { Button, Typography, Box, TextField, Snackbar, Alert } from '@mui/material';
+import { Button, Typography, Box, TextField, Snackbar, Alert, Checkbox, FormControlLabel } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import NodeRSA from 'node-rsa';
 
@@ -38,6 +38,11 @@ function AddBinanceKeys({ handleChange }) {
     const [errorText, setErrorText] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
     const [successOpen, setSuccessOpen] = useState(false);
+    const [isTestnet, setIsTestnet] = useState(false);
+
+    const handleCheckboxChange = (event) => {
+        setIsTestnet(event.target.checked);
+    };
 
 
     const handleErrorClose = (event, reason) => {
@@ -81,7 +86,8 @@ function AddBinanceKeys({ handleChange }) {
 
         let reqBody = {
             apiKey: encryptedApiKey,
-            apiSecret: encryptedApiSecret
+            apiSecret: encryptedApiSecret,
+            isTestnet: isTestnet
         }
 
         const response = await fetch('/api/server/binance/create', {
@@ -139,6 +145,24 @@ function AddBinanceKeys({ handleChange }) {
                         fullWidth
                         sx={textFieldStyle}
                     />
+                    <FormControlLabel sx={{
+                        color: '#AEAEAE',
+                        mb: '20px'
+                    }} control={
+                        <Checkbox
+                            checked={isTestnet}
+                            onChange={handleCheckboxChange}
+                            inputProps={{ 'aria-label': 'controlled' }}
+                            sx={{
+                                color: 'white',
+                                '&.Mui-checked': {
+                                    color: '#0228EE'
+                                }
+
+                            }}
+                        />
+                    } label="Testnet" />
+
                     <Box className={styles.buttonContainer}>
                         <Box
                             onClick={handleAddBinanceKeys}
@@ -149,7 +173,7 @@ function AddBinanceKeys({ handleChange }) {
                 </Box>
             </Box>
             <Snackbar open={errorOpen}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={handleErrorClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
                 <Alert
@@ -162,7 +186,7 @@ function AddBinanceKeys({ handleChange }) {
                 </Alert>
             </Snackbar>
             <Snackbar open={successOpen}
-                autoHideDuration={6000}
+                autoHideDuration={2000}
                 onClose={handleSuccessClose}
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}>
                 <Alert

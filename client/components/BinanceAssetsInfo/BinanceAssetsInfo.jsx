@@ -25,6 +25,7 @@ function BinanceAssetsInfo({ assetsInfo, handleChange }) {
                 <BinanceAssetsTable
                     binanceAssets={assetsInfo?.assets}
                     valuesHidden={valuesHidden}
+                    handleChange={handleChange}
                 />
             </Box>
 
