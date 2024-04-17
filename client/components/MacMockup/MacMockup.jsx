@@ -67,8 +67,6 @@ function MacMockup({ user, error, isLoading }) {
                                 SIGN UP
                             </Button>
                         )}
-
-
                     </Box>
                 </Box>
             </Box>

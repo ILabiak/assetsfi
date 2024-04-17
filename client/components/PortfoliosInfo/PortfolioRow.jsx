@@ -219,7 +219,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
 
                                 }}>
                                     {
-                                        portfolio['Transactions'] && portfolio['Transactions'].map((el, index) =>
+                                        portfolio['Transactions'] && portfolio['Transactions'].slice(0, 5).map((el, index) =>
                                         (
                                             <TableRow key={`${index}`}>
                                                 <TableCell component="th" scope="row">
@@ -277,6 +277,36 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
                                             </TableRow>
                                         ))
                                     }
+
+                                    <TableRow key={`viewall`}>
+                                        <TableCell component="th" scope="row">
+                                        </TableCell>
+
+                                        <TableCell>
+                                        </TableCell>
+
+                                        <TableCell align="right">
+                                        </TableCell>
+
+                                        <TableCell align="right">
+                                        </TableCell>
+
+                                        <TableCell align="right" >
+                                            <Box className={styles.buttonCellWrap}>
+                                                <Link 
+                                                href={`/portfolio/${portfolio.uuid}`}
+                                                className={styles.viewAllButton} 
+                                                sx={{
+                                                    color: 'white',
+                                                    textDecoration: 'none',
+                                                }}>
+                                                    View All
+                                                </Link>
+                                            </Box>
+
+                                        </TableCell>
+
+                                    </TableRow>
 
                                 </TableBody>
                             </Table>

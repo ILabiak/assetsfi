@@ -282,11 +282,11 @@ function Header({ user, error, isLoading }) {
                                                 open={Boolean(anchorElUser)}
                                                 onClose={handleCloseUserMenu}
                                             >
-                                                <MenuItem key='usermail'>
+                                                <MenuItem key='usermail' onClick={() => router.push('/settings')}>
                                                     <Typography textAlign="center">{userData?.nickname}</Typography>
                                                 </MenuItem>
-                                                <MenuItem key='dashboard' onClick={() => router.push('/dashboard')} >
-                                                    <Typography textAlign="center">Dashboard</Typography>
+                                                <MenuItem key='dashboard' onClick={() => router.push('/portfolios')} >
+                                                    <Typography textAlign="center">Portfolios</Typography>
                                                 </MenuItem>
                                                 <MenuItem key='logout' onClick={() => router.push('/api/auth/logout')}>
                                                     <Typography textAlign="center">Log out</Typography>

@@ -4,13 +4,19 @@ import BinanceAssetsRow from './BinanceAssetsRow'
 // import PortfolioRow from './PortfolioRow';
 import {
     Typography, Box, Table, TableCell, TableContainer,
-    TableHead, TableRow, TableBody, Collapse
+    TableHead, TableRow, TableBody, TablePagination, TableFooter
 } from '@mui/material';
+import TablePaginationActions from '@/components/TablePaginationActions/TablePaginationActions'
 
 
 function BinanceAssetsTable({ binanceAssets, valuesHidden, handleChange }) {
-    // const [open, setOpen] = useState(false);
-    // const [binanceAssetsData, setBinanceAssetsData] = useState(binanceAssets)
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
 
     return (
         <Box className={styles.coinStatsContainer}>
@@ -84,7 +90,7 @@ function BinanceAssetsTable({ binanceAssets, valuesHidden, handleChange }) {
                             borderBottomRightRadius: "10px",
                         },
                     }}>
-                        {binanceAssets.map((asset) => (
+                        {binanceAssets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((asset) => (
                             <BinanceAssetsRow
                                 key={`asset-${asset.asset}`}
                                 asset={asset}
@@ -93,6 +99,44 @@ function BinanceAssetsTable({ binanceAssets, valuesHidden, handleChange }) {
                             />
                         ))}
                     </TableBody>
+                    {
+                        binanceAssets.length > rowsPerPage && (
+                            <TableFooter>
+                                <TableRow sx={{
+                                    borderBottom: 'none',
+                                }}>
+                                    <TablePagination
+                                        showFirstButton
+                                        showLastButton
+                                        sx={{
+                                            width: '100%',
+                                            borderBottom: 'none',
+                                            '.MuiTablePagination-toolbar': {
+                                                backgroundColor: 'black',
+                                                paddingRight: '30px',
+                                                paddingLeft: '30px',
+                                                color: 'white',
+                                                // height: '35px',
+                                                borderRadius: '10px',
+
+                                            },
+                                            "& .MuiTablePagination-spacer": {
+                                                display: "inline",
+                                                color: 'white',
+                                            },
+                                        }}
+                                        rowsPerPageOptions={[5]}
+                                        colSpan={6}
+                                        count={binanceAssets.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onPageChange={handleChangePage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        )
+                    }
                 </Table>
             </TableContainer>
         </Box>

@@ -2,12 +2,20 @@ import React, { useState, useEffect, use } from 'react';
 import styles from './donationsinfo.module.css';
 import {
     Button, Typography, Box, Table, TableCell, TableContainer,
-    TableHead, TableRow, TableBody, Alert
+    TableHead, TableRow, TableBody, TableFooter, TablePagination,
 } from '@mui/material';
 import DonationRow from './DonationRow';
+import TablePaginationActions from '@/components/TablePaginationActions/TablePaginationActions'
 
 
 function DonationsTable({ donations, handleDonationsChange, foundations, currencies }) {
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
 
     return (
         <Box className={styles.tableContainer} >
@@ -80,7 +88,7 @@ function DonationsTable({ donations, handleDonationsChange, foundations, currenc
                             borderBottomRightRadius: "10px",
                         },
                     }}>
-                        {donations.map((donation, index) => (
+                        {donations.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((donation, index) => (
                             <DonationRow
                                 key={`donation-${index}`}
                                 donation={donation}
@@ -90,6 +98,43 @@ function DonationsTable({ donations, handleDonationsChange, foundations, currenc
                             />
                         ))}
                     </TableBody>
+                    {
+                        donations.length > rowsPerPage && (
+                            <TableFooter>
+                                <TableRow sx={{
+                                    borderBottom: 'none',
+                                }}>
+                                    <TablePagination
+                                        showFirstButton
+                                        showLastButton
+                                        sx={{
+                                            width: '100%',
+                                            borderBottom: 'none',
+                                            '.MuiTablePagination-toolbar': {
+                                                backgroundColor: 'black',
+                                                paddingRight: '30px',
+                                                paddingLeft: '30px',
+                                                color: 'white',
+                                                borderRadius: '10px',
+
+                                            },
+                                            "& .MuiTablePagination-spacer": {
+                                                display: "inline",
+                                                color: 'white',
+                                            },
+                                        }}
+                                        rowsPerPageOptions={[5]}
+                                        colSpan={6}
+                                        count={donations.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onPageChange={handleChangePage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        )
+                    }
                 </Table>
             </TableContainer>
         </Box>

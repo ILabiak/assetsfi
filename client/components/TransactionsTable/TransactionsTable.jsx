@@ -1,16 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import styles from './transactiontable.module.css';
 import TransactionRow from './TransactionRow'
-// import PortfolioRow from './PortfolioRow';
 import {
     Typography, Box, Table, TableCell, TableContainer,
-    TableHead, TableRow, TableBody, Collapse
+    TableHead, TableRow, TableBody, TableFooter, TablePagination,
 } from '@mui/material';
+import TablePaginationActions from '@/components/TablePaginationActions/TablePaginationActions'
+
+
 
 
 function TransactionsTable({ transactions, currency, handleTransactionsChange, valuesHidden }) {
     const [open, setOpen] = useState(false);
     const [transactionsData, setTransactionsData] = useState(transactions)
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
 
 
     return (
@@ -85,7 +93,7 @@ function TransactionsTable({ transactions, currency, handleTransactionsChange, v
                             borderBottomRightRadius: "10px",
                         },
                     }}>
-                        {transactionsData.map((transaction) => (
+                        {transactionsData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((transaction) => (
                             <TransactionRow
                                 key={`transaction-${transaction.id}`}
                                 transactionData={transaction}
@@ -95,6 +103,44 @@ function TransactionsTable({ transactions, currency, handleTransactionsChange, v
                             />
                         ))}
                     </TableBody>
+                    {
+                        transactionsData.length > rowsPerPage && (
+                            <TableFooter>
+                                <TableRow sx={{
+                                    borderBottom: 'none',
+                                }}>
+                                    <TablePagination
+                                        showFirstButton
+                                        showLastButton
+                                        sx={{
+                                            width: '100%',
+                                            borderBottom: 'none',
+                                            '.MuiTablePagination-toolbar': {
+                                                backgroundColor: 'black',
+                                                paddingRight: '30px',
+                                                paddingLeft: '30px',
+                                                color: 'white',
+                                                // height: '35px',
+                                                borderRadius: '10px',
+
+                                            },
+                                            "& .MuiTablePagination-spacer": {
+                                                display: "inline",
+                                                color: 'white',
+                                            },
+                                        }}
+                                        rowsPerPageOptions={[5]}
+                                        colSpan={6}
+                                        count={transactionsData.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onPageChange={handleChangePage}
+                                        ActionsComponent={TablePaginationActions}
+                                    />
+                                </TableRow>
+                            </TableFooter>
+                        )
+                    }
                 </Table>
             </TableContainer>
         </Box>

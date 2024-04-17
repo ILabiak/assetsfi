@@ -3,7 +3,7 @@ import styles from './portfoliosinfo.module.css';
 import PortfolioRow from './PortfolioRow';
 import {
     Typography, Box, Table, TableCell, TableContainer,
-    TableHead, TableRow, TableBody, Collapse
+    TableHead, TableRow, TableBody, Link
 } from '@mui/material';
 
 
@@ -14,14 +14,47 @@ function PortfoliosList({ portfoliosData, handlePortfoliosChange, valuesHidden }
 
     return (
         <Box className={styles.portfoliosListContainer}>
-            <Typography sx={{
-                fontFamily: 'DM Sans',
-                fontSize: '16px',
-                color: '#AEAEAE',
-                textDecoration: 'none',
-            }}>
-                My Portfolios
-            </Typography>
+            <Box className={styles.portfoliosListTitle}>
+                <Typography sx={{
+                    fontFamily: 'DM Sans',
+                    fontSize: '16px',
+                    color: '#AEAEAE',
+                    textDecoration: 'none',
+                }}>
+                    My Portfolios
+                </Typography>
+
+                <Box className={styles.coingeckoText}>
+                    <Typography
+                        sx={{
+                            fontFamily: 'DM Sans',
+                            fontSize: '12px',
+                            color: '#AEAEAE',
+                            textDecoration: 'none',
+                        }}>
+                        Coin price data from&nbsp;
+                    </Typography>
+                    <Link 
+                    href={'https://www.coingecko.com/'}
+                    target="_blank"
+                    sx={{
+                        textDecoration: 'none',
+                        cursor: 'pointer'
+                    }}>
+                        <Typography
+                            sx={{
+                                fontFamily: 'DM Sans',
+                                fontSize: '12px',
+                                textDecoration: 'none',
+                                color: '#0228EE'
+                            }}>
+                            CoinGecko
+                        </Typography>
+                    </Link>
+                </Box>
+
+            </Box>
+
             <TableContainer sx={{
                 borderRadius: '5px'
             }}>
@@ -93,11 +126,11 @@ function PortfoliosList({ portfoliosData, handlePortfoliosChange, valuesHidden }
                         },
                     }}>
                         {portfolios.map((el) => (
-                            <PortfolioRow 
-                            key={`${el.uuid}-mainRow`} 
-                            portfolioData={el} 
-                            handlePortfoliosChange={handlePortfoliosChange}
-                            valuesHidden={valuesHidden}
+                            <PortfolioRow
+                                key={`${el.uuid}-mainRow`}
+                                portfolioData={el}
+                                handlePortfoliosChange={handlePortfoliosChange}
+                                valuesHidden={valuesHidden}
                             />
                         ))}
                     </TableBody>
