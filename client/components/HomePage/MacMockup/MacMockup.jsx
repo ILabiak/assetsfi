@@ -1,14 +1,12 @@
 import * as React from 'react';
 import styles from './macmockup.module.css';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { Box, Button, Typography } from '@mui/material';
+
 import Image from 'next/image';
 import macMockup from '@/public/macbookMock.svg';
 import macMockupMini from '@/public/macbookMockMini.svg';
-import Typography from '@mui/material/Typography';
 
-function MacMockup({ user, error, isLoading }) {
-
+function MacMockup({ user }) {
 
     return (
         <Box className={styles.main} sx={{
@@ -74,16 +72,13 @@ function MacMockup({ user, error, isLoading }) {
             <Box className={styles.laptopWrap} sx={{
                 display: { xs: 'none', md: 'flex' },
             }}>
-                <Image className={`${styles.laptop} ${styles.animate}`} src={macMockup}
-                />
+                <Image className={`${styles.laptop} ${styles.animate}`} src={macMockup} />
             </Box>
-
 
             <Box className={styles.laptopMiniWrap} sx={{
                 display: { xs: 'flex', md: 'none' },
             }}>
-                <Image className={`${styles.laptopMini}`} src={macMockupMini}
-                />
+                <Image className={`${styles.laptopMini}`} src={macMockupMini} />
             </Box>
 
         </Box >

@@ -3,11 +3,11 @@ import React, { useState, } from 'react';
 
 import styles from "./page.module.css";
 import Head from 'next/head';
-import Header from '@/components/Header/Header';
-import Footer from '@/components/Footer/Footer';
-import MacMockup from '@/components/MacMockup/MacMockup';
+import Header from '@/components/HomePage/Header/Header';
+import Footer from '@/components/HomePage/Footer/Footer';
+import MacMockup from '@/components/HomePage/MacMockup/MacMockup';
 import BackDrop from '@/components/BackDrop/BackDrop';
-import MainFeatures from '@/components/MainFeatures/MainFeatures';
+import MainFeatures from '@/components/HomePage/MainFeatures/MainFeatures';
 import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function Home() {

@@ -1,26 +1,23 @@
 import * as React from 'react';
 import styles from './sidebar.module.css';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './SidebarTheme';
 import {
     Box, Drawer, List, ListItem, ListItemButton, ListItemIcon,
     Link, Typography, Divider
 } from '@mui/material';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation'
+
 import LogoutIcon from '@mui/icons-material/Logout';
-import WindowIcon from '@mui/icons-material/Window';
 import SvgIcon from "@mui/material/SvgIcon";
-import SwapVerticalCircleIcon from '@mui/icons-material/SwapVerticalCircle';
 import WalletIcon from '@mui/icons-material/Wallet';
 import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
-import Image from 'next/image';
-import { useRouter, usePathname } from 'next/navigation'
-
-
 import logo from '@/public/logo.svg';
 
 const drawerWidth = 260;
 
-
 const LaptopSidebar = React.memo(() => {
-    const router = useRouter();
     const pathname = usePathname()
 
     const sidebarPages = [
@@ -43,178 +40,97 @@ const LaptopSidebar = React.memo(() => {
             </SvgIcon>, active: pathname == '/binance' ? true : false, href: '/binance'
         },]
     return (
-        <Drawer
-            sx={{
-                display: { xs: 'none', md: 'flex' },
-                width: drawerWidth,
-                flexShrink: 0,
-                '& .MuiDrawer-paper': {
+        <ThemeProvider theme={theme}>
+            <Drawer
+                sx={{
+                    display: { xs: 'none', md: 'flex' },
                     width: drawerWidth,
-                    boxSizing: 'border-box',
-                    backgroundColor: 'black',
-                    justifyContent: 'space-between'
-                },
-            }}
-            variant="permanent"
-            anchor="left"
-        >
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column'
-            }}>
-                <Link
-                    href={'/'}
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'flex-start',
-                        textAlign: 'center',
-                        marginLeft: '30px',
-                        height: '100px',
-                        textDecoration: 'none'
-                    }}>
-                    <Image
-                        priority
-                        src={logo}
-                        alt="logo"
-                        height={50}
-                        width={50}
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: drawerWidth,
+                    },
+                }}
+                variant="permanent"
+                anchor="left"
+            >
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Link href={'/'} variant='logo' >
+                        <Image
+                            priority
+                            src={logo}
+                            alt="logo"
+                            height={50}
+                            width={50}
+                        />
+                        <Typography variant='logo1' noWrap >
+                            AssetsFi
+                        </Typography>
+                    </Link>
+
+                    <Divider
                     />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        sx={{
-                            mr: 2,
-                            fontFamily: 'DM Sans',
-                            fontWeight: 1000,
-                            fontSize: '16px',
-                            letterSpacing: '.3rem',
-                            color: 'white',
-                            textDecoration: 'none',
-                            textAlign: 'center',
-                            marginLeft: '10px',
-                            display: { xs: 'none', md: 'flex' }
-                        }}
-                    >
-                        AssetsFi
-                    </Typography>
-                </Link>
+                    <List>
+                        {sidebarPages.map((item, index) => (
+                            <ListItem key={item.text} >
+                                <Link
+                                    variant='default'
+                                    href={item.href}>
+                                    <ListItemButton className={styles.listItem} selected={item.active}>
+                                        <ListItemIcon sx={{
+                                            color: item.active ? 'white' : '#AEAEAE',
+                                        }}>
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <Typography sx={{
+                                            fontSize: '20px',
+                                            fontFamily: 'DM Sans',
+                                            color: item.active ? 'white' : '#AEAEAE',
+                                        }}>
+                                            {item.text}
+                                        </Typography>
+                                    </ListItemButton>
+                                </Link>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
 
-                <Divider sx={{
-                    alignSelf: 'center',
-                    backgroundColor: '#AEAEAE',
-                    width: '80%'
-                }} />
-                <List>
-                    {sidebarPages.map((item, index) => (
-                        <ListItem key={item.text} >
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Divider sx={{
+                        alignSelf: 'center',
+                        backgroundColor: '#AEAEAE',
+                        width: '80%'
+                    }} />
+                    <List>
+                        <ListItem key='logout'>
                             <Link
-                                sx={{
-                                    textDecoration: 'none',
-                                    display: 'flex',
-                                    width: '100%'
-                                }}
-                                href={item.href}>
-                                <ListItemButton className={styles.listItem} selected={item.active}
-                                    sx={{
-                                        borderRadius: '5px',
-                                        "&.Mui-selected": {
-                                            backgroundColor: "#0328EE"
-                                        },
-                                        "&.Mui-selected:hover": {
-                                            backgroundColor: "#010D50"
-                                        },
-                                        "&.Mui-focusVisible": {
-                                            backgroundColor: "#010D50"
-                                        },
-                                        "&:hover": {
-                                            backgroundColor: "#010D50",
-                                            "& svg": {
-                                                color: "white"
-                                            },
-                                            "& p": {
-                                                color: "white"
-                                            }
-                                        }
-
-                                    }}>
-                                    <ListItemIcon sx={{
-                                        color: item.active ? 'white' : '#AEAEAE',
-                                    }}>
-                                        {item.icon}
+                                variant='default'
+                                href={'/api/auth/logout'}
+                            >
+                                <ListItemButton className={styles.listItem}>
+                                    <ListItemIcon sx={{ color: '#AEAEAE', }}>
+                                        <LogoutIcon />
                                     </ListItemIcon>
                                     <Typography sx={{
                                         fontSize: '20px',
                                         fontFamily: 'DM Sans',
-                                        color: item.active ? 'white' : '#AEAEAE',
+                                        color: '#AEAEAE'
                                     }}>
-                                        {item.text}
+                                        Log Out
                                     </Typography>
                                 </ListItemButton>
                             </Link>
                         </ListItem>
-                    ))}
-                </List>
-            </Box>
-
-            <Box sx={{
-                display: 'flex',
-                flexDirection: 'column'
-            }}>
-                <Divider sx={{
-                    alignSelf: 'center',
-                    backgroundColor: '#AEAEAE',
-                    width: '80%'
-                }} />
-                <List>
-                    <ListItem key='logout'>
-                        <Link
-                            sx={{
-                                textDecoration: 'none',
-                                display: 'flex',
-                                width: '100%'
-                            }}
-                            href={'/api/auth/logout'}>
-                            <ListItemButton className={styles.listItem}
-                                sx={{
-                                    borderRadius: '5px',
-                                    "&.Mui-selected": {
-                                        backgroundColor: "#0328EE"
-                                    },
-                                    "&.Mui-selected:hover": {
-                                        backgroundColor: "#010D50"
-                                    },
-                                    "&.Mui-focusVisible": {
-                                        backgroundColor: "#010D50"
-                                    },
-                                    "&:hover": {
-                                        backgroundColor: "#010D50",
-                                        "& svg": {
-                                            color: "white"
-                                        },
-                                        "& p": {
-                                            color: "white"
-                                        }
-                                    }
-                                }}>
-                                <ListItemIcon sx={{ color: '#AEAEAE', }}>
-                                    <LogoutIcon />
-                                </ListItemIcon>
-                                <Typography sx={{
-                                    fontSize: '20px',
-                                    fontFamily: 'DM Sans',
-                                    color: '#AEAEAE'
-                                }}>
-                                    Log Out
-                                </Typography>
-                            </ListItemButton>
-                        </Link>
-                    </ListItem>
-                </List>
-            </Box>
-
-        </Drawer>
+                    </List>
+                </Box>
+            </Drawer>
+        </ThemeProvider>
     );
 })
 

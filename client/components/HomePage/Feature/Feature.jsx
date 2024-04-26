@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styles from './feature.module.css';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { Box, Typography } from '@mui/material';
 
 import Image from 'next/image';
 

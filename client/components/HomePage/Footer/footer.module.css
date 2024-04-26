@@ -13,3 +13,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.paper {
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    background-color: #010725;
+    height: 132px;
+}

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./page.module.css";
 import Head from 'next/head';
-import DashboardHeader from '@/components/DashboardHeader/DashboardHeader';
+import DashboardHeader from '@/components/Header/Header';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import UserSettings from '@/components/UserSettings/UserSettings'
 import { useUser } from '@auth0/nextjs-auth0/client';

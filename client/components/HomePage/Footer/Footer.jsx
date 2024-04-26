@@ -1,8 +1,6 @@
 import * as React from 'react';
 import styles from './footer.module.css';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import { Box, Paper, Typography } from '@mui/material';
 import Image from 'next/image';
 import logo from '@/public/logo.svg';
 
@@ -10,15 +8,8 @@ import logo from '@/public/logo.svg';
 function Footer() {
 
     return (
-        <Paper sx={{
+        <Paper className={styles.paper} sx={{
             position: 'default',
-            bottom: 0,
-            width: '100%',
-            display: 'flex',
-            alignContent: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#010725',
-            height: '132px'
         }} component="footer" square variant="outlined">
             <Box className={styles.footerContainter} sx={{
                 marginLeft: { xs: '10px', md: '100px' },

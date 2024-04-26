@@ -1,13 +1,12 @@
 import * as React from 'react';
 import styles from './mainfeatures.module.css';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Feature from '@/components/Feature/Feature';
+import { Box, Typography, Grid } from '@mui/material';
+import Feature from '@/components/HomePage/Feature/Feature';
 
-import featureIcon from '@/public/featureicon.svg';
-
-import Image from 'next/image';
+import securityIcon from '@/public/secure.svg'
+import freeIcon from '@/public/free.svg'
+import exchangeIcon from '@/public/exchange.svg'
+import walletIcon from '@/public/wallet.svg'
 
 
 function MainFeatures() {
@@ -31,20 +30,20 @@ function MainFeatures() {
                     </Typography>
                     <Grid container spacing={5} columnSpacing={5}>
                         <Grid item xs={12} md={6}>
-                            <Feature icon={featureIcon} title={'OPEN SOURCE'} 
-                            text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc.'}></Feature>
+                            <Feature icon={freeIcon} title={'FREE TO USE'}
+                                text={'We provide free access to all our features. We don\'t demand any fees for using our website.'}></Feature>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                        <Feature icon={featureIcon} title={'FREE TO USE'} 
-                            text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc.'}></Feature>
+                            <Feature icon={exchangeIcon} title={'EXCHANGE INTEGRATION'}
+                                text={'You can trade your cryptocurrencies directly on our website using Binance API. More exchanges coming soon...'}></Feature>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                        <Feature icon={featureIcon} title={'100+ ASSETS SUPPORTED'} 
-                            text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc.'}></Feature>
+                            <Feature icon={walletIcon} title={'100+ ASSETS SUPPORTED'}
+                                text={'We support all popular cryptocurrencies and provide up to date statistics.'}></Feature>
                         </Grid>
                         <Grid item xs={12} md={6}>
-                        <Feature icon={featureIcon} title={'TRANSPARENT'} 
-                            text={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Et nibh urna in proin dui purus bibendum cras. Morbi cursus nunc.'}></Feature>
+                            <Feature icon={securityIcon} title={'SECURE'}
+                                text={'We encrypt all your data and private API keys so your funds and data are always safe and only you can access them'}></Feature>
                         </Grid>
                     </Grid>
                 </Box>

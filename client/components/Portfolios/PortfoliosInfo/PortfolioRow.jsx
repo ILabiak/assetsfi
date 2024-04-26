@@ -1,10 +1,10 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Image from 'next/image'
 import styles from './portfoliosinfo.module.css';
-import MiniStats from '../MiniStats/MiniStats';
-import TotalPortfoliosInfo from '../TotalPortfolioInfo/TotalPortfoliosInfo';
-import MenuDeletePortfolio from '@/components/MenuDeletePortfolio/MenuDeletePortfolio'
-import MenuChangePortfolio from '@/components/MenuChangePortfolio/MenuChangePortfolio'
+import MiniStats from '../../MiniStats/MiniStats';
+import TotalPortfoliosInfo from '../../TotalPortfolioInfo/TotalPortfoliosInfo';
+import MenuDeletePortfolio from '@/components/Portfolios/MenuDeletePortfolio/MenuDeletePortfolio'
+import MenuChangePortfolio from '@/components/Portfolios/MenuChangePortfolio/MenuChangePortfolio'
 import {
     Typography, Box, Link, Table, TableCell, TableContainer,
     TableHead, TableRow, TableBody, Collapse

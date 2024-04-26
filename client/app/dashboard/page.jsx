@@ -2,9 +2,9 @@
 import React, { useState, } from 'react';
 import styles from "./page.module.css";
 import Head from 'next/head';
-import DashboardHeader from '@/components/DashboardHeader/DashboardHeader';
+import DashboardHeader from '@/components/Header/Header';
 import DashboardInfo from '@/components/DashboardInfo/DashboardInfo';
-import Footer from '@/components/Footer/Footer';
+import Footer from '@/components/HomePage/Footer/Footer';
 import BackDrop from '@/components/BackDrop/BackDrop';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import { useUser } from '@auth0/nextjs-auth0/client';
