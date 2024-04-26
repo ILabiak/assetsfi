@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './createportfoliobutton.module.css';
 import { Typography, Box, Backdrop, TextField } from '@mui/material';
+import inputStyles from '@/components/themesMUI/InputStyles';
 
 function CreatePortfolioButton({ isLarge, handlePortfoliosChange }) {
     const [currencies, setCurrencies] = useState();
@@ -52,8 +53,7 @@ function CreatePortfolioButton({ isLarge, handlePortfoliosChange }) {
     const handlePortfolioCreate = async () => {
         if (!createButtonActive) return;
         setCreateButtonActive(false)
-        console.log({ name, currencyId })
-        // console.log('123')
+        // console.log({ name, currencyId })
         const response = await fetch('/api/server/portfolio/create', {
             method: 'POST',
             headers: {
@@ -116,37 +116,7 @@ function CreatePortfolioButton({ isLarge, handlePortfoliosChange }) {
                                 handleNameChange(e.target.value);
                             }}
                             fullWidth
-                            sx={{
-                                marginBottom: '20px',
-                                '&:hover fieldset': {
-                                    border: '1px solid',
-                                    borderColor: 'white'
-                                },
-                                '& label': {
-                                    color: '#AEAEAE',
-                                },
-                                '& label.Mui-focused': {
-                                    color: '#AEAEAE',
-                                },
-                                input: {
-                                    backgroundColor: '#313337',
-                                    borderRadius: '5px',
-                                    color: '#E8E9EB',
-                                    fontSize: '16px',
-                                },
-                                '& .MuiOutlinedInput-root': {
-                                    '&.Mui-focused fieldset': {
-                                        borderColor: 'white',
-                                    },
-                                    '&.Mui-focused:hover fieldset': {
-                                        borderColor: 'white',
-                                    },
-                                    '&:hover fieldset': {
-                                        borderColor: 'white',
-                                    },
-                                },
-
-                            }}
+                            sx={inputStyles.nameInput}
                         />
                         {currencies && <TextField
                             id="outlined-select-currency-native"
@@ -162,31 +132,7 @@ function CreatePortfolioButton({ isLarge, handlePortfoliosChange }) {
                                 native: true,
                             }}
                             helperText="Please select portfolio currency"
-                            sx={{
-                                '&:hover fieldset': {
-                                    border: '1px solid',
-                                    borderColor: 'white'
-                                },
-                                '& label': {
-                                    color: '#AEAEAE',
-                                },
-                                '& label.Mui-focused': {
-                                    color: '#AEAEAE',
-                                },
-                                '& .MuiOutlinedInput-root': {
-                                    '&.Mui-focused fieldset': {
-                                        color: 'white',
-                                        borderColor: 'white',
-                                    },
-                                    '&:hover fieldset': {
-                                        borderColor: 'white',
-                                    },
-                                },
-                                '.MuiInputBase-input': { color: '#E8E9EB', backgroundColor: '#313337' },
-                                '.MuiFormHelperText-root': {
-                                    color: '#AEAEAE'
-                                }
-                            }}
+                            sx={inputStyles.currencyInput}
                         >
                             {currencies.map((option) => (
                                 <option key={option.id} value={option.id}>

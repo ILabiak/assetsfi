@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Image from 'next/image'
 import styles from './coinsstatstable.module.css';
-import TotalPortfoliosInfo from '../TotalPortfolioInfo/TotalPortfoliosInfo';
+import TotalPortfoliosInfo from '../../TotalPortfolioInfo/TotalPortfoliosInfo';
 import MenuDeletePortfolio from '@/components/Portfolios/MenuDeletePortfolio/MenuDeletePortfolio'
 import MenuChangePortfolio from '@/components/Portfolios/MenuChangePortfolio/MenuChangePortfolio'
 import {

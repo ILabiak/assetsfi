@@ -1,10 +1,9 @@
-import React, { useState, useEffect, use } from 'react';
+import React from 'react';
 import styles from './donationsinfo.module.css';
-import { Button, Typography, Box, IconButton, CircularProgress, Tab } from '@mui/material';
+import { Typography, Box, IconButton, CircularProgress } from '@mui/material';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import Image from 'next/image';
 import EditTrackingButton from './EditTrackingButton';
-import DeleteTrackingButton from './DeleteTrackingButton';
 import DeleteTracking from './DeleteTracking';
 
 
@@ -37,7 +36,6 @@ function AddressInfo({ addressData, copyData, metadata, handleTrackingsChange, n
                                     handleTrackingsChange={handleTrackingsChange}
                                     addressData={addressData}
                                 />
-                                {/* <Box>456</Box> */}
                             </Box>
                         </Box>
 
@@ -45,7 +43,6 @@ function AddressInfo({ addressData, copyData, metadata, handleTrackingsChange, n
                             {
                                 addressData?.name && (
                                     <Typography sx={{
-                                        // fontFamily: 'Roboto',
                                         fontSize: '20px',
                                         fontWeight: '600'
                                     }}>
@@ -133,7 +130,6 @@ function AddressInfo({ addressData, copyData, metadata, handleTrackingsChange, n
                             </Box>
                         )}
                     </Box>
-
                 </Box>
             )}
         </>

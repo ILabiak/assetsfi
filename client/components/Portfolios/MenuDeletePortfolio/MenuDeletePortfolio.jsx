@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './menudeleteportfolio.module.css';
-import { Typography, Box, Backdrop, TextField, MenuItem } from '@mui/material';
+import { Typography, Box, Backdrop, MenuItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 function MenuDeletePortfolio({ portfolio, handlePortfoliosChange }) {
@@ -16,14 +16,13 @@ function MenuDeletePortfolio({ portfolio, handlePortfoliosChange }) {
             setBackdropOpen(false);
         }
     };
-    
+
     const handleOpen = () => {
         setBackdropOpen(true);
     };
 
     const handlePortfolioDelete = async () => {
         setDeleteButtonActive(false)
-        // console.log('123')
         const response = await fetch('/api/server/portfolio/delete', {
             method: 'DELETE',
             headers: {
@@ -72,41 +71,27 @@ function MenuDeletePortfolio({ portfolio, handlePortfoliosChange }) {
                                 <Typography
                                     sx={{
                                         fontFamily: 'DM Sans',
-                                        // fontStyle: 'bold',
                                         fontSize: '20px',
                                         fontWeight: '1000',
-                                        // paddingLeft: '20px',
-                                        // paddingBottom: '5px',
-                                        // paddingTop: '5px',
-                                        // borderBottom: '2px solid rgba(255, 255, 255, 0.3)'
                                     }}>
                                     Delete {portfolio.title}
                                 </Typography>
                                 <Typography
                                     sx={{
                                         fontFamily: 'DM Sans',
-                                        // fontStyle: 'bold',
                                         fontSize: '14px',
                                         fontWeight: '1000',
-                                        // paddingLeft: '20px',
-                                        // paddingBottom: '5px',
-                                        // paddingTop: '5px',
-                                        // borderBottom: '2px solid rgba(255, 255, 255, 0.3)'
                                     }}>
                                     Do you want to delete this portfolio?
                                 </Typography>
                             </Box>
-
                         </Box>
-
                     </Box>
 
                     <Box className={styles.buttonsContainer}>
                         <Box className={styles.cancelButton}
                             onClick={() => setBackdropOpen(false)}
-                            sx={{
-                                // marginRight: '10px'
-                            }}>
+                        >
                             Cancel
                         </Box>
                         <Box

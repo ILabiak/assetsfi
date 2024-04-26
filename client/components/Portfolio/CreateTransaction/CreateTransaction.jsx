@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import SearchField from '../InputFields/SearchField'
-import QuantityField from '../InputFields/QuantityField'
-import PriceField from '../InputFields/PriceField'
-import FeesField from '../InputFields/FeesField'
-import TotalPriceField from '../InputFields/TotalPriceField'
-import NoteField from '../InputFields/NoteField'
-import DateField from '../InputFields/DateField';
+import SearchField from '../../InputFields/SearchField'
+import QuantityField from '../../InputFields/QuantityField'
+import PriceField from '../../InputFields/PriceField'
+import FeesField from '../../InputFields/FeesField'
+import TotalPriceField from '../../InputFields/TotalPriceField'
+import NoteField from '../../InputFields/NoteField'
+import DateField from '../../InputFields/DateField';
 import styles from './createtransaction.module.css';
 import { Typography, Box, Backdrop, TextField } from '@mui/material';
+import inputStyles from '@/components/themesMUI/InputStyles';
 
 const filterData = (query, data) => {
     if (!query) {
@@ -28,8 +29,6 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
     const [searchQuery, setSearchQuery] = useState("");
     const dataFiltered = filterData(searchQuery, coins);
     const [createButtonActive, setCreateButtonActive] = useState(false)
-    const [name, setName] = useState("");
-    const [currencyId, setCurrencyId] = useState(currency?.id);
     const [asset, setAsset] = useState();
     const [quantity, setQuantity] = useState("");
     const [price, setPrice] = useState("");
@@ -86,8 +85,6 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
         }
     }, [backdropOpen]);
 
-
-
     useEffect(() => {
         if (numberRegex.test(quantity) && numberRegex.test(price) && asset?.code) {
             setCreateButtonActive(true)
@@ -95,7 +92,6 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
         else {
             setCreateButtonActive(false)
         }
-        // fetchCurrencies().catch(console.error)
     }, [quantity, price]);
 
     useEffect(() => {
@@ -133,7 +129,6 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
             costPerUnitInUsd: (parseFloat(price) / currencyRate),
             costPerUnitInCurrency: parseFloat(price),
         }
-        // console.log(transactionObj)
         const response = await fetch('/api/server/transaction/create', {
             method: 'POST',
             headers: {
@@ -167,7 +162,6 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                 <Typography
                     sx={{
                         fontFamily: 'DM Sans',
-                        // fontStyle: 'bold',
                         fontSize: '30px',
                         fontWeight: '1000',
                         paddingLeft: '20px',
@@ -182,44 +176,10 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                         <Box>
                             <TextField
                                 required
-                                // disabled
-                                // id="outlined-required"
                                 label="Asset"
                                 value={asset.name}
                                 fullWidth
-                                sx={{
-                                    marginBottom: '20px',
-                                    '&:hover fieldset': {
-                                        border: '1px solid',
-                                        borderColor: 'white'
-                                    },
-                                    '& label': {
-                                        color: '#AEAEAE',
-                                    },
-                                    '& label.Mui-focused': {
-                                        color: '#AEAEAE',
-                                    },
-                                    input: {
-                                        backgroundColor: '#313337',
-                                        borderRadius: '5px',
-                                        color: '#E8E9EB',
-                                        fontSize: '16px',
-                                    },
-                                    "& .MuiInputBase-input": {
-                                        WebkitTextFillColor: "#AEAEAE",
-                                    },
-                                    '& .MuiOutlinedInput-root': {
-                                        '&.Mui-focused fieldset': {
-                                            border: '0',
-                                        },
-                                        '&.Mui-focused:hover fieldset': {
-                                            border: '0',
-                                        },
-                                        '&:hover fieldset': {
-                                            border: '0',
-                                        },
-                                    },
-                                }}
+                                sx={inputStyles.assetInput}
                             />
                             {
                                 asset?.code && (
@@ -233,12 +193,10 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
                                     </Box>
                                 )
                             }
-
                         </Box>
                     ) : (
                         <SearchField searchQuery={searchQuery} setSearchQuery={setSearchQuery} dataFiltered={dataFiltered} setAsset={setAsset} />
                     )}
-
 
                 </Box>
                 <Box className={styles.buttonsContainer}>

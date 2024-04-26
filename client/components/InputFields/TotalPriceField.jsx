@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { TextField, } from '@mui/material';
+import inputStyles from '@/components/themesMUI/InputStyles';
 
 function TotalPriceField({ price, quantity, fees, currency }) {
 
@@ -9,7 +10,6 @@ function TotalPriceField({ price, quantity, fees, currency }) {
             calculated += parseFloat(fees)
         }
         calculated = calculated.toFixed(5).replace(/\.?0*$/, '')
-
         return !isNaN(calculated) ? calculated : '0';
     }
 
@@ -18,39 +18,7 @@ function TotalPriceField({ price, quantity, fees, currency }) {
             label={`Total price (${currency})`}
             value={calculatePrice()}
             fullWidth
-            sx={{
-                marginBottom: '20px',
-                '&:hover fieldset': {
-                    border: '1px solid',
-                    borderColor: 'white'
-                },
-                '& label': {
-                    color: '#AEAEAE',
-                },
-                '& label.Mui-focused': {
-                    color: '#AEAEAE',
-                },
-                input: {
-                    backgroundColor: '#313337',
-                    borderRadius: '5px',
-                    color: '#E8E9EB',
-                    fontSize: '16px',
-                },
-                "& .MuiInputBase-input": {
-                    WebkitTextFillColor: "#AEAEAE",
-                },
-                '& .MuiOutlinedInput-root': {
-                    '&.Mui-focused fieldset': {
-                        border: '0',
-                    },
-                    '&.Mui-focused:hover fieldset': {
-                        border: '0',
-                    },
-                    '&:hover fieldset': {
-                        border: '0',
-                    },
-                },
-            }}
+            sx={inputStyles.totalPriceInput}
         />
     );
 }

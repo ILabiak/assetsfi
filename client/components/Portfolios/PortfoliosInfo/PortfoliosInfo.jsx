@@ -1,18 +1,13 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './portfoliosinfo.module.css';
 import TotalPortfoliosInfo from '@/components/TotalPortfolioInfo/TotalPortfoliosInfo';
 import CreatePortfolioButton from '@/components/CreatePortfolioButton/CreatePortfolioButton';
 import PortfoliosList from './PortfoliosList';
-import { Button, Typography, Box, Grid } from '@mui/material';
-import { useRouter } from 'next/navigation'
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import { Typography, Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
-
-function PortfoliosInfo({ user, error, isLoading }) {
+function PortfoliosInfo() {
     const [portfloiosData, setPortfoliosData] = useState()
     const [totalData, setTotalData] = useState()
     const [valuesHidden, setValuesHidden] = useState(false)
@@ -54,17 +49,17 @@ function PortfoliosInfo({ user, error, isLoading }) {
                 portfloiosData ? (
                     portfloiosData.length > 0 ? (
                         <Box>
-                            <TotalPortfoliosInfo 
-                            totalData={totalData} 
-                            handlePortfolioChange={handlePortfoliosChange} 
-                            singlePortfolio={false}
-                            valuesHidden={valuesHidden}
-                            setValuesHidden={setValuesHidden}
+                            <TotalPortfoliosInfo
+                                totalData={totalData}
+                                handlePortfolioChange={handlePortfoliosChange}
+                                singlePortfolio={false}
+                                valuesHidden={valuesHidden}
+                                setValuesHidden={setValuesHidden}
                             />
-                            <PortfoliosList 
-                            portfoliosData={portfloiosData} 
-                            handlePortfoliosChange={handlePortfoliosChange}
-                            valuesHidden={valuesHidden}
+                            <PortfoliosList
+                                portfoliosData={portfloiosData}
+                                handlePortfoliosChange={handlePortfoliosChange}
+                                valuesHidden={valuesHidden}
                             />
                         </Box>
                     ) : (
@@ -78,20 +73,18 @@ function PortfoliosInfo({ user, error, isLoading }) {
                                 borderRadius: '10px',
                                 width: '95%',
                                 height: '200px',
-                                // marginTop: '20px'
                             }}>
                                 <Typography sx={{
                                     textAlign: 'center',
                                     fontFamily: 'DM Sans',
-                                    fontSize: {xs: '24px', md: '40px'},
+                                    fontSize: { xs: '24px', md: '40px' },
                                     color: '#AEAEAE',
                                     padding: '10px'
                                 }}>
                                     You don't have any portfolios yet
                                 </Typography>
-                                <CreatePortfolioButton isLarge={true} handlePortfoliosChange={handlePortfoliosChange}/>
+                                <CreatePortfolioButton isLarge={true} handlePortfoliosChange={handlePortfoliosChange} />
                             </Box>
-
                         </Box>
                     )
                 ) : (

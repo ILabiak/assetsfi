@@ -1,8 +1,7 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './donationsinfo.module.css';
-import { Button, Typography, Box, Snackbar, Alert } from '@mui/material';
+import { Box, Snackbar, Alert } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import FoundationInfo from './FoundationInfo';
 import Masonry from '@mui/lab/Masonry';
 
@@ -10,7 +9,6 @@ import Masonry from '@mui/lab/Masonry';
 function Foundations() {
     const [foundationsData, setFoundationsData] = useState()
     const [successOpen, setSuccessOpen] = useState(false);
-
 
     const handleSuccessClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -47,19 +45,17 @@ function Foundations() {
     return (
         <Box className={styles.foundationsContainer}>
             {foundationsData ? (
-                <Box sx={{ marginRight: -4}}>
-                <Masonry columns={2} spacing={4} sx={{
-                    // width: "auto"
-                }} >
-                    {
-                        foundationsData.data.map((el, index) => (
-                            <FoundationInfo
-                                key={`foundation-${index}`}
-                                foundation={el}
-                                copyData={copyToClipboard} />
-                        ))
-                    }
-                </Masonry>
+                <Box sx={{ marginRight: -4 }}>
+                    <Masonry columns={2} spacing={4} >
+                        {
+                            foundationsData.data.map((el, index) => (
+                                <FoundationInfo
+                                    key={`foundation-${index}`}
+                                    foundation={el}
+                                    copyData={copyToClipboard} />
+                            ))
+                        }
+                    </Masonry>
                 </Box>
 
             ) : (

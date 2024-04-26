@@ -1,11 +1,10 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './portfoliodata.module.css';
 import TotalPortfoliosInfo from '@/components/TotalPortfolioInfo/TotalPortfoliosInfo';
-import CreateTransactionButton from '@/components/CreateTransactionButton/CreateTransactionButton'
-import CoinsStatsTable from '@/components/CoinsStatsTable/CoinsStatsTable';
-import TransactionsTable from '@/components/TransactionsTable/TransactionsTable';
-import PortfolioTransactionHead from '@/components/PortfolioTransactionHead/PortfolioTransactionHead'
-import { Button, Typography, Box, Grid, Tabs, Tab } from '@mui/material';
+import CoinsStatsTable from '@/components/Portfolio/CoinsStatsTable/CoinsStatsTable';
+import TransactionsTable from '@/components/Portfolio/TransactionsTable/TransactionsTable';
+import PortfolioTransactionHead from '@/components/Portfolio/PortfolioTransactionHead/PortfolioTransactionHead'
+import { Typography, Box, Tabs, Tab } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
 
@@ -17,7 +16,6 @@ function PortfolioData({ uuid }) {
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
     };
-
 
     const fetchData = async () => {
         try {
@@ -61,12 +59,10 @@ function PortfolioData({ uuid }) {
                                     onChange={handleChange}
                                     indicatorColor="secondary"
                                     textColor="inherit"
-                                    // variant="fullWidth"
                                     aria-label="full width tabs example"
                                     sx={{
                                         color: 'white',
                                         '& button': {
-                                            // backgroundColor: 'blue',
                                             minHeight: '35px',
                                             border: '1px solid',
                                             marginRight: '20px',
@@ -74,7 +70,6 @@ function PortfolioData({ uuid }) {
                                             padding: '0px 10px',
                                             '&.Mui-selected': {
                                                 border: '2px solid #0228EE',
-                                                // borderBottom: '2px solid '
                                             },
                                         }
                                     }}
@@ -82,7 +77,6 @@ function PortfolioData({ uuid }) {
                                         sx: {
                                             backgroundColor: "#0228EE"
                                         }
-
                                     }}
                                 >
                                     <Tab label="Assets" tabIndex={0} />
@@ -115,7 +109,6 @@ function PortfolioData({ uuid }) {
                                     valuesHidden={valuesHidden}
                                     setValuesHidden={setValuesHidden}
                                 />
-
                                 <TransactionsTable
                                     transactions={portfloioData['Transactions']}
                                     currency={portfloioData['Currency']}
@@ -123,7 +116,6 @@ function PortfolioData({ uuid }) {
                                     valuesHidden={valuesHidden}
                                 />
                             </Box>
-
                         </Box>
                     ) : (
                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -136,7 +128,6 @@ function PortfolioData({ uuid }) {
                                 borderRadius: '10px',
                                 width: '95%',
                                 height: '200px',
-                                // marginTop: '20px'
                             }}>
                                 <Typography sx={{
                                     textAlign: 'center',

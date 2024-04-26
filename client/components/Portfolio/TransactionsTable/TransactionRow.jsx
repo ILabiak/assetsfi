@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import Image from 'next/image'
 import styles from './transactiontable.module.css';
-import TotalPortfoliosInfo from '../TotalPortfolioInfo/TotalPortfoliosInfo';
+import TotalPortfoliosInfo from '../../TotalPortfolioInfo/TotalPortfoliosInfo';
 import MenuChangeTransaction from '@/components/MenuChangeTransaction/MenuChangeTransaction'
 import MenuDeleteTransaction from '@/components/MenuDeleteTransaction/MenuDeleteTransaction'
 import {

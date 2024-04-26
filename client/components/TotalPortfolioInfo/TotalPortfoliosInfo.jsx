@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './totalportfolioinfo.module.css';
 import CreatePortfolioButton from '@/components/CreatePortfolioButton/CreatePortfolioButton';
-import CreateTransactionButton from '@/components/CreateTransactionButton/CreateTransactionButton'
+import CreateTransactionButton from '@/components/Portfolio/CreateTransactionButton/CreateTransactionButton'
 import { Typography, Box, Grid } from '@mui/material';
 import MiniStats from '@/components/MiniStats/MiniStats';
 import { useRouter } from 'next/navigation'

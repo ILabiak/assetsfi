@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image'
 import styles from './searchfield.module.css';
 import { Typography, Box, TextField, List, ListItem } from '@mui/material';
+import inputStyles from '@/components/themesMUI/InputStyles';
 
 
 function SearchField({ searchQuery, setSearchQuery, dataFiltered, setAsset }) {
@@ -21,10 +22,8 @@ function SearchField({ searchQuery, setSearchQuery, dataFiltered, setAsset }) {
 
     return (
         <Box>
-
             <TextField
                 required
-                // id="outlined-required"
                 label="Asset"
                 value={searchQuery}
                 onChange={(e) => {
@@ -36,40 +35,8 @@ function SearchField({ searchQuery, setSearchQuery, dataFiltered, setAsset }) {
                 type="search"
                 placeholder='Search asset'
                 fullWidth
-                sx={{
-                    marginBottom: '5px',
-                    '&:hover fieldset': {
-                        border: '1px solid',
-                        borderColor: 'white'
-                    },
-                    '& label': {
-                        color: '#AEAEAE',
-                    },
-                    '& label.Mui-focused': {
-                        color: '#AEAEAE',
-                    },
-                    input: {
-                        backgroundColor: '#313337',
-                        borderRadius: '5px',
-                        color: '#E8E9EB',
-                        fontSize: '16px',
-                    },
-                    '& .MuiOutlinedInput-root': {
-                        '&.Mui-focused fieldset': {
-                            borderColor: 'white',
-                        },
-                        '&.Mui-focused:hover fieldset': {
-                            borderColor: 'white',
-                        },
-                        '&:hover fieldset': {
-                            borderColor: 'white',
-                        },
-                    },
-
-                }}
+                sx={inputStyles.searchInput}
             />
-
-
 
             {assetsSearchOpen &&
                 <Box
@@ -105,7 +72,6 @@ function SearchField({ searchQuery, setSearchQuery, dataFiltered, setAsset }) {
                                     maxHeight: '190px',
                                     position: 'relative',
                                     overflow: 'auto',
-                                    // '& ul': { padding: 0 },
                                 }}
                                 subheader={<li />}
                                 disablePadding={true}
@@ -120,10 +86,13 @@ function SearchField({ searchQuery, setSearchQuery, dataFiltered, setAsset }) {
                                                 display: 'inline',
                                             }}
                                         >
-                                            <Box
-                                                className={styles.searchResult}
-                                            >
-                                                <Image alt='assetImg' width={30} height={30} src={asset?.image} className={styles.searchImg} />
+                                            <Box className={styles.searchResult}>
+                                                <Image
+                                                    alt='assetImg'
+                                                    width={30} height={30}
+                                                    src={asset?.image}
+                                                    className={styles.searchImg}
+                                                />
                                                 <Typography
                                                     sx={{
                                                         marginLeft: '10px'

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import styles from './menuchangeportfolio.module.css';
 import { Typography, Box, Backdrop, TextField, MenuItem } from '@mui/material';
+import inputStyles from '@/components/themesMUI/InputStyles';
 
 function MenuChangePortfolio({ portfolio, handlePortfoliosChange }) {
     const [backdropOpen, setBackdropOpen] = useState(false)
@@ -33,7 +34,6 @@ function MenuChangePortfolio({ portfolio, handlePortfoliosChange }) {
 
     const handlePortfolioDelete = async () => {
         setChangeButtonActive(false)
-        console.log('123')
         const response = await fetch('/api/server/portfolio/update', {
             method: 'PUT',
             headers: {
@@ -56,7 +56,6 @@ function MenuChangePortfolio({ portfolio, handlePortfoliosChange }) {
 
 
     return (
-
         <React.Fragment>
             <MenuItem
                 onClick={handleOpen}
@@ -79,7 +78,6 @@ function MenuChangePortfolio({ portfolio, handlePortfoliosChange }) {
                     <Typography
                         sx={{
                             fontFamily: 'DM Sans',
-                            // fontStyle: 'bold',
                             fontSize: '30px',
                             fontWeight: '1000',
                             paddingLeft: '20px',
@@ -99,37 +97,7 @@ function MenuChangePortfolio({ portfolio, handlePortfoliosChange }) {
                                 handleNameChange(e.target.value);
                             }}
                             fullWidth
-                            sx={{
-                                marginBottom: '20px',
-                                '&:hover fieldset': {
-                                    border: '1px solid',
-                                    borderColor: 'white'
-                                },
-                                '& label': {
-                                    color: '#AEAEAE',
-                                },
-                                '& label.Mui-focused': {
-                                    color: '#AEAEAE',
-                                },
-                                input: {
-                                    backgroundColor: '#313337',
-                                    borderRadius: '5px',
-                                    color: '#E8E9EB',
-                                    fontSize: '16px',
-                                },
-                                '& .MuiOutlinedInput-root': {
-                                    '&.Mui-focused fieldset': {
-                                        borderColor: 'white',
-                                    },
-                                    '&.Mui-focused:hover fieldset': {
-                                        borderColor: 'white',
-                                    },
-                                    '&:hover fieldset': {
-                                        borderColor: 'white',
-                                    },
-                                },
-
-                            }}
+                            sx={inputStyles.nameInput}
                         />
                     </Box>
 

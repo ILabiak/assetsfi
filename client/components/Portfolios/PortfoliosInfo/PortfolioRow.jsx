@@ -1,55 +1,36 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import Image from 'next/image'
 import styles from './portfoliosinfo.module.css';
-import MiniStats from '../../MiniStats/MiniStats';
-import TotalPortfoliosInfo from '../../TotalPortfolioInfo/TotalPortfoliosInfo';
 import MenuDeletePortfolio from '@/components/Portfolios/MenuDeletePortfolio/MenuDeletePortfolio'
 import MenuChangePortfolio from '@/components/Portfolios/MenuChangePortfolio/MenuChangePortfolio'
 import {
-    Typography, Box, Link, Table, TableCell, TableContainer,
-    TableHead, TableRow, TableBody, Collapse
+    Typography, Box, Link, Table, TableCell,
+    TableHead, TableRow, TableBody, Collapse, Menu
 } from '@mui/material';
-import { useRouter } from 'next/navigation'
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';;
 
 function formatDate(dateString) {
     const date = new Date(dateString);
-
-    // Format the day
     const day = date.getDate();
-
-    // Get the month name
     const monthNames = [
         "January", "February", "March", "April", "May", "June", "July",
         "August", "September", "October", "November", "December"
     ];
+
     const monthName = monthNames[date.getMonth()];
-
-    // Format the year
     const year = date.getFullYear();
-
-    // Construct the formatted date string
     const formattedDate = `${day} ${monthName}, ${year}`;
-
     return formattedDate;
 }
 
-function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
+function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
     const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
-
-    const [portfolio, setPortfolio] = useState(portfolioData)
 
     const handleMenuClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -62,11 +43,7 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
         <Fragment>
             <TableRow
                 key={portfolio.uuid}
-                sx={{
-                    '&:last-child td, &:last-child th': { border: 0 },
-                    '& th': { color: 'white', fontFamily: 'DM Sans' },
-                    '& td': { color: 'white', fontFamily: 'DM Sans' },
-                }}
+                variant='portfoliosItem'
             >
                 <TableCell component="th" scope="row" >
                     <Link
@@ -150,23 +127,13 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
                     </IconButton>
                     <Menu
                         id="portfolio-menu"
+                        variant='portfoliosMenu'
                         sx={{
                             mt: '-30px',
                             ml: '-60px',
-                            '& .MuiPaper-root': {
-                                backgroundColor: '#000000',
-                                border: '1px solid white',
-                                borderRadius: '10px',
-                                color: 'white',
-                                padding: '0px',
-                            },
                             '& .MuiMenuItem-root': {
                                 ml: '5px',
                                 mr: '5px',
-                                '&:hover': {
-                                    backgroundColor: "#34B17F",
-                                    borderRadius: '5px',
-                                },
                             },
                         }}
                         anchorEl={anchorEl}
@@ -216,7 +183,6 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
                                     '& td': {
                                         borderTop: '4px solid #1A1A1A',
                                     },
-
                                 }}>
                                     {
                                         portfolio['Transactions'] && portfolio['Transactions'].slice(0, 5).map((el, index) =>
@@ -250,7 +216,6 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
                                                         </Box>
                                                     </Box>
 
-
                                                 </TableCell>
 
                                                 <TableCell>
@@ -279,35 +244,24 @@ function PortfolioRow({ portfolioData, handlePortfoliosChange, valuesHidden }) {
                                     }
 
                                     <TableRow key={`viewall`}>
-                                        <TableCell component="th" scope="row">
-                                        </TableCell>
-
-                                        <TableCell>
-                                        </TableCell>
-
-                                        <TableCell align="right">
-                                        </TableCell>
-
-                                        <TableCell align="right">
-                                        </TableCell>
-
+                                        <TableCell component="th" scope="row" />
+                                        <TableCell />
+                                        <TableCell align="right" />
+                                        <TableCell align="right" />
                                         <TableCell align="right" >
                                             <Box className={styles.buttonCellWrap}>
-                                                <Link 
-                                                href={`/portfolio/${portfolio.uuid}`}
-                                                className={styles.viewAllButton} 
-                                                sx={{
-                                                    color: 'white',
-                                                    textDecoration: 'none',
-                                                }}>
+                                                <Link
+                                                    href={`/portfolio/${portfolio.uuid}`}
+                                                    className={styles.viewAllButton}
+                                                    sx={{
+                                                        color: 'white',
+                                                        textDecoration: 'none',
+                                                    }}>
                                                     View All
                                                 </Link>
                                             </Box>
-
                                         </TableCell>
-
                                     </TableRow>
-
                                 </TableBody>
                             </Table>
                         </Box>

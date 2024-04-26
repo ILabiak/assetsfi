@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import dayjs from 'dayjs';
+import React, { useState, useEffect } from 'react';
 import SelectorField from '../InputFields/SelectorField'
 import AmountField from '../InputFields/AmountField'
 import TextDataField from '../InputFields/TextDataField'
 import styles from './donationsinfo.module.css';
 import { Typography, Box, Backdrop, Snackbar, Alert } from '@mui/material';
 
-const numberRegex = /^[-+]?\d+(\.\d{0,5})?$/;
 
 function EditTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen, setBackdropOpen, handleTrackingsChange, networks, currencies, addressData }) {
     const [createButtonActive, setEditButtonActive] = useState(false)
@@ -91,7 +89,6 @@ function EditTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen
             let result = await response.json()
             setErrorText(result.message)
             setErrorOpen(true)
-            // console.log('Some other error');
             setEditButtonActive(true)
         }
     }
@@ -100,7 +97,6 @@ function EditTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen
         <>
             <Backdrop
                 onClick={handleClose}
-
                 sx={{
                     color: '#fff',
                     zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -146,6 +142,7 @@ function EditTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen
                                         text={name} setText={setName}
                                         title={'Name'} required={false}
                                     />
+
                                     {currency && (
                                         <AmountField
                                             amount={amount} setAmount={setAmount}
@@ -153,16 +150,13 @@ function EditTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen
                                         />
                                     )}
 
-
                                     <TextDataField
                                         text={address} setText={setAddress}
                                         title={'Wallet address'} required={true}
                                     />
-
                                 </Box>
                             )}
                         </Box>
-
                     </Box>
                     <Box className={styles.buttonsContainer}>
                         <Box className={styles.cancelButton}

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, use } from 'react';
+import React from 'react';
 import styles from './portfoliotransactionhead.module.css';
-import CreateTransactionButton from '@/components/CreateTransactionButton/CreateTransactionButton'
+import CreateTransactionButton from '@/components/Portfolio/CreateTransactionButton/CreateTransactionButton'
 import { Typography, Box } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-
 
 
 function PortfolioTransactionHead({ currency, portfolio, handleTransactionsChange, valuesHidden, setValuesHidden }) {
@@ -15,9 +14,10 @@ function PortfolioTransactionHead({ currency, portfolio, handleTransactionsChang
                 fontFamily: 'DM Sans',
                 fontSize: '30px',
                 color: 'white',
-                // ml: '30px',
                 textDecoration: 'none',
-            }}>Transactions</Typography>
+            }}>
+                Transactions
+            </Typography>
             <Box className={styles.createButtonBox}>
                 {
                     valuesHidden ? (
@@ -46,8 +46,6 @@ function PortfolioTransactionHead({ currency, portfolio, handleTransactionsChang
                     handleTransactionsChange={handleTransactionsChange} />
             </Box>
         </Box>
-
-
     );
 }
 export default PortfolioTransactionHead;

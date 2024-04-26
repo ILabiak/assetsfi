@@ -1,7 +1,6 @@
-import React, { useState, useEffect, use } from 'react';
+import React from 'react';
 import styles from './donationsinfo.module.css';
-import { Button, Typography, Box, Link, IconButton, Paper, Tab } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Typography, Box, Link, IconButton} from '@mui/material';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import LaunchIcon from '@mui/icons-material/Launch';
 import Image from 'next/image';

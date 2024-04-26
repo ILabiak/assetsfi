@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import CreateTransaction from '@/components/CreateTransaction/CreateTransaction'
+import React, { useState, useRef } from 'react';
+import CreateTransaction from '@/components/Portfolio/CreateTransaction/CreateTransaction'
 import styles from './createtransactionbutton.module.css';
-import { Typography, Box, Backdrop, TextField } from '@mui/material';
+import { Box } from '@mui/material';
 
 
 function CreateTransactionButton({ currency, portfolio, handleTransactionsChange }) {

@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
-import dayjs from 'dayjs';
+import React, { useState, useEffect } from 'react';
 import SelectorField from '../InputFields/SelectorField'
 import AmountField from '../InputFields/AmountField'
 import TextDataField from '../InputFields/TextDataField'
@@ -79,7 +78,6 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
             let result = await response.json()
             setErrorText(result.message)
             setErrorOpen(true)
-            // console.log('Some other error');
             setCreateButtonActive(true)
         }
     }
@@ -141,12 +139,10 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
                                         />
                                     )}
 
-
                                     <TextDataField
                                         text={address} setText={setAddress}
                                         title={'Wallet address'} required={true}
                                     />
-
                                 </Box>
                             )}
                         </Box>
@@ -198,4 +194,5 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
         </>
     );
 }
+
 export default AddTracking;

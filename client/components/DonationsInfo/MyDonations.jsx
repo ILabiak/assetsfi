@@ -1,6 +1,6 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './donationsinfo.module.css';
-import { Button, Typography, Box, Snackbar, Alert } from '@mui/material';
+import { Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import DonationsTable from './DonationsTable';
 import DonationStats from './DonationStats';
@@ -9,16 +9,6 @@ import DonationStats from './DonationStats';
 function MyDonations({currencies}) {
     const [myDonationsData, setMyDonationsData] = useState()
     const [foundations, setFoundations] = useState()
-
-    const [successOpen, setSuccessOpen] = useState(false);
-
-
-    const handleSuccessClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setSuccessOpen(false);
-    };
 
     const fetchData = async () => {
         try {
@@ -35,9 +25,7 @@ function MyDonations({currencies}) {
         }
     }
 
-
     useEffect(() => {
-
         const fetchFoundations = async () => {
             try {
                 const response = await fetch(`/api/server/foundationslist`);

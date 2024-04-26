@@ -1,42 +1,31 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import Image from 'next/image'
-import styles from './donationsinfo.module.css';
 import {
-    Typography, Box, Table, TableCell, TableRow
+    Typography, Box, TableCell, TableRow
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuDeleteDonation from '@/components/MenuDeleteDonation/MenuDeleteDonation'
 import MenuChangeDonation from '@/components/MenuChangeDonation/MenuChangeDonation'
 
 function formatDate(dateString) {
     const date = new Date(dateString);
-
-    // Format the day
     const day = date.getDate();
-
-    // Get the month name
     const monthNames = [
         "January", "February", "March", "April", "May", "June", "July",
         "August", "September", "October", "November", "December"
     ];
+
     const monthName = monthNames[date.getMonth()];
-
-    // Format the year
     const year = date.getFullYear();
-
-    // Construct the formatted date string
     const formattedDate = `${day} ${monthName}, ${year}`;
-
     return formattedDate;
 };
 
 
 function DonationRow({ donation, valuesHidden, handleDonationsChange, foundations, currencies }) {
-    const [open, setOpen] = useState(false);
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorEl, setAnchorEl] = useState(null);
     const menuOpen = Boolean(anchorEl);
 
     const handleMenuClick = (event) => {
@@ -50,11 +39,7 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange, foundation
         <Fragment>
             <TableRow
                 key={donation.id}
-                sx={{
-                    '&:last-child td, &:last-child th': { border: 0 },
-                    '& th': { color: 'white', fontFamily: 'DM Sans' },
-                    '& td': { color: 'white', fontFamily: 'DM Sans' },
-                }}
+                variant='donationsItem'
             >
                 <TableCell width={'30%'} component="th" scope="row">
                     <Box sx={{
@@ -76,9 +61,8 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange, foundation
                             </Typography>
                         </Box>
                     </Box>
-
-
                 </TableCell>
+
                 <TableCell width={'10%'} align="right" >
                     <Box sx={{
                         color: (donation.amount > 0) ? '#34B17F' : '#E85E5E'
@@ -90,14 +74,11 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange, foundation
                 <TableCell width={'20%'} align="right" >{formatDate(donation.date)}
                 </TableCell>
                 <TableCell align="right" >
-                    <Typography sx={{
-                        // maxWidth: '20%'
-                    }}>
+                    <Typography>
                         {donation.description.length > 1 ?
                             (donation.description.length < 30) ? donation.description :
                                 (donation.description.slice(0, 30) + '...') : ''}
                     </Typography>
-
                 </TableCell>
 
                 <TableCell width={'5%'} align="right" >
@@ -115,24 +96,14 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange, foundation
                         <MoreVertIcon />
                     </IconButton>
                     <Menu
-                        id="portfolio-menu"
+                        id="donation-menu"
+                        variant='donationsMenu'
                         sx={{
                             mt: '-30px',
                             ml: '-60px',
-                            '& .MuiPaper-root': {
-                                backgroundColor: '#000000',
-                                border: '1px solid white',
-                                borderRadius: '10px',
-                                color: 'white',
-                                padding: '0px',
-                            },
                             '& .MuiMenuItem-root': {
                                 ml: '5px',
                                 mr: '5px',
-                                '&:hover': {
-                                    backgroundColor: "#34B17F",
-                                    borderRadius: '5px',
-                                },
                             },
                         }}
                         anchorEl={anchorEl}

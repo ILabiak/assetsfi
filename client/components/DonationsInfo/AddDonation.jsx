@@ -35,8 +35,6 @@ function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen,
         }
     }, [amount]);
 
-
-
     const handleAddDonation = async () => {
         if (!createButtonActive) return;
         setCreateButtonActive(false)
@@ -67,7 +65,6 @@ function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen,
     return (
         <Backdrop
             onClick={handleClose}
-
             sx={{
                 color: '#fff',
                 zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -106,7 +103,6 @@ function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen,
                                     label={'Currency'}
                                     helperText={'Select currency'}
                                 />
-
                                 <AmountField amount={amount} setAmount={setAmount} currency={currency} title={'Amount'} />
                                 <NoteField note={note} setNote={setNote} />
                                 <DateField date={date} setDate={setDate} />

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './donationsinfo.module.css';
 import Foundations from './Foundations';
 import MyDonations from './MyDonations';
 import Tracker from './Tracker';
-import { Button, Typography, Box, Grid, Tabs, Tab } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Box, Tabs, Tab } from '@mui/material';
 
 
 function Donations() {
@@ -52,7 +51,6 @@ function Donations() {
                         sx={{
                             color: 'white',
                             '& button': {
-                                // backgroundColor: 'blue',
                                 minHeight: '35px',
                                 border: '1px solid',
                                 marginRight: '20px',
@@ -67,7 +65,6 @@ function Donations() {
                             sx: {
                                 backgroundColor: "#0228EE"
                             }
-
                         }}
                     >
                         <Tab label="My donations" tabIndex={0} />
@@ -96,9 +93,7 @@ function Donations() {
                 }}>
                     <Tracker currencies={currencies} />
                 </Box>
-
             </Box>
-
         </Box >
     );
 }
