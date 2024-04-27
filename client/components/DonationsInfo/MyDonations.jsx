@@ -1,12 +1,12 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './donationsinfo.module.css';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import DonationsTable from './DonationsTable';
 import DonationStats from './DonationStats';
+import AddDonationButton from './AddDonationButton';
 
-
-function MyDonations({currencies}) {
+function MyDonations({ currencies }) {
     const [myDonationsData, setMyDonationsData] = useState()
     const [foundations, setFoundations] = useState()
 
@@ -54,20 +54,42 @@ function MyDonations({currencies}) {
     return (
         <Box className={styles.myDonationsContainer}>
             {myDonationsData ? (
-                <Box className={styles.myDonationsData} >
-                    <DonationStats handleDonationsChange={handleDonationsChange}
-                        donations={myDonationsData}
-                        foundations={foundations}
-                        currencies={currencies}
-                    />
-                    <DonationsTable
-                        donations={myDonationsData.donations}
-                        handleDonationsChange={handleDonationsChange}
-                        foundations={foundations}
-                        currencies={currencies}
-                    />
-                </Box>
-
+                <>
+                    {
+                        myDonationsData.donations.length > 0 ? (
+                            <Box className={styles.myDonationsData} >
+                                <DonationStats handleDonationsChange={handleDonationsChange}
+                                    donations={myDonationsData}
+                                    foundations={foundations}
+                                    currencies={currencies}
+                                />
+                                <DonationsTable
+                                    donations={myDonationsData.donations}
+                                    handleDonationsChange={handleDonationsChange}
+                                    foundations={foundations}
+                                    currencies={currencies}
+                                />
+                            </Box>
+                        ) : (
+                            <Box className={styles.noDonationsContainer}>
+                                <Typography sx={{
+                                    textAlign: 'center',
+                                    fontFamily: 'DM Sans',
+                                    fontSize: { xs: '24px', md: '40px' },
+                                    color: '#AEAEAE',
+                                    padding: '10px'
+                                }}>
+                                    You currently don't have any donations
+                                </Typography>
+                                <AddDonationButton
+                                    handleDonationsChange={handleDonationsChange}
+                                    foundations={foundations}
+                                    currencies={currencies}
+                                />
+                            </Box>
+                        )
+                    }
+                </>
             ) : (
                 <Box sx={{
                     display: 'flex',

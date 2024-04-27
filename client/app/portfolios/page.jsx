@@ -10,7 +10,6 @@ import { useUser } from '@auth0/nextjs-auth0/client';
 
 export default function Portfolios() {
     const { user, error, isLoading } = useUser();
-    const [open, setOpen] = useState(true);
     return (
 
         <main className={styles.main}>
