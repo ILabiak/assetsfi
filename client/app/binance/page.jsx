@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from "./page.module.css";
 import Head from 'next/head';
 import DashboardHeader from '@/components/Header/Header';
-import BinanceData from '@/components/BinanceData/BinanceData';
+import BinanceData from '@/components/Binance/BinanceData/BinanceData';
 import Footer from '@/components/HomePage/Footer/Footer';
 import BackDrop from '@/components/BackDrop/BackDrop';
 import Sidebar from '@/components/Sidebar/Sidebar';

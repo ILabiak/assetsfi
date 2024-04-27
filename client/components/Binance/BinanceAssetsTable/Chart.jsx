@@ -1,8 +1,7 @@
 
-import { createChart, ColorType } from 'lightweight-charts';
+import { createChart } from 'lightweight-charts';
 import React, { useEffect, useRef } from 'react';
 import { Box, } from '@mui/material';
-
 
 export const ChartComponent = (props) => {
     const {
@@ -14,7 +13,6 @@ export const ChartComponent = (props) => {
             textColor = 'black',
         } = {},
     } = props;
-
 
     const getChartData = async (symbol, interval, series, candleStickData) => {
         try {
@@ -30,7 +28,6 @@ export const ChartComponent = (props) => {
                         close: parseFloat(el[4]),
                     });
                 });
-                // console.log('setdata')
                 series.setData(candleStickData)
                 subscribeToChartData(symbol, interval, series)
             } else {
@@ -55,7 +52,6 @@ export const ChartComponent = (props) => {
             // console.log("Message from server ", event.data)
             let dataObj = JSON.parse(event.data)
             if (dataObj.k?.t) {
-                // console.log('update')
                 if (!chartContainerRef.current) {
                     console.log('closing')
                     socket.close()
@@ -98,7 +94,6 @@ export const ChartComponent = (props) => {
                 timeScale: {
                     timeVisible: true,
                     secondsVisible: false,
-                    // shiftVisibleRangeOnNewBar: true,
                     rightOffset: 3
                 },
                 localization: {
@@ -113,21 +108,18 @@ export const ChartComponent = (props) => {
                     text: 'AssetsFi',
                     color: "rgba(256, 256, 256, 0.1)",
                 },
-
             });
-            // chart.timeScale().fitContent();
             chart.timeScale().applyOptions({
                 barSpacing: 20,
             });
 
             let precision = 2;
-
             if (asset.price.includes('.')) {
                 let precisionNum = asset.price.slice(asset.price.indexOf('.') + 1).length;
                 if (precisionNum > 2) {
-                  precision = precisionNum;
+                    precision = precisionNum;
                 }
-              }
+            }
 
             const newSeries = chart.addCandlestickSeries({
                 priceFormat: {

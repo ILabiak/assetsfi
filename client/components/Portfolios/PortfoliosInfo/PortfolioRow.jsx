@@ -43,7 +43,7 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
         <Fragment>
             <TableRow
                 key={portfolio.uuid}
-                variant='portfoliosItem'
+                variant='defaultItem'
             >
                 <TableCell component="th" scope="row" >
                     <Link
@@ -127,7 +127,7 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
                     </IconButton>
                     <Menu
                         id="portfolio-menu"
-                        variant='portfoliosMenu'
+                        variant='defaultMenu'
                         sx={{
                             mt: '-30px',
                             ml: '-60px',
@@ -161,14 +161,8 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
                                 <TableHead>
                                     <TableRow
                                         key={`${portfolio.uuid}-transactionsHead`}
-                                        sx={{
-                                            '& th': {
-                                                color: 'white',
-                                                fontSize: '12px',
-                                                fontFamily: 'DM Sans',
-                                                backgroundColor: 'black',
-                                            },
-                                        }}>
+                                        variant='defaultHead'
+                                        >
                                         <TableCell>Type</TableCell>
                                         <TableCell>Quantity</TableCell>
                                         <TableCell align="right">Fees</TableCell>
@@ -215,7 +209,6 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
 
                                                         </Box>
                                                     </Box>
-
                                                 </TableCell>
 
                                                 <TableCell>
@@ -238,7 +231,6 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
                                                     {valuesHidden ? '***' :
                                                         `${(el.amount * el.costPerUnitInCurrency).toFixed(2)} ${portfolio['Currency']?.symbol}`}
                                                 </TableCell>
-
                                             </TableRow>
                                         ))
                                     }

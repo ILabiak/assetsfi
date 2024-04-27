@@ -1,26 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Image from 'next/image'
-import styles from './binanceassetstable.module.css';
-import {
-    Typography, Box, Table, TableCell, TableRow, IconButton,
-} from '@mui/material';
+import React, { useContext } from 'react';
+import { TableCell, TableRow, IconButton } from '@mui/material';
 import SnackbarContext from '../BinanceData/SnackbarsContext';
 import CloseIcon from '@mui/icons-material/Close';
 
 function formatDate(timestamp) {
-    // Convert timestamp to milliseconds
     let date = new Date(timestamp);
 
-    // Get the year, month, day, hours, minutes, and seconds
     let year = date.getFullYear();
     let month = ('0' + (date.getMonth() + 1)).slice(-2);
     let day = ('0' + date.getDate()).slice(-2);
     let hours = ('0' + date.getHours()).slice(-2);
     let minutes = ('0' + date.getMinutes()).slice(-2);
 
-    // Format the date
     let formattedDate = `${year}-${month}-${day} ${hours}:${minutes}`;
-
     return formattedDate;
 }
 
@@ -48,13 +40,12 @@ function OrderRow({ order, handleOrdersChanged }) {
             credentials: 'include'
         });
         if (response.status === 200) {
-            let data = await response.json()
+            // let data = await response.json()
             setSuccessText(`Order was successfully canceled`)
             setSuccessOpen(true)
             handleOrdersChanged();
         } else {
             let data = await response.json()
-            // console.log(data)
             if (typeof data.message == 'string') {
                 setErrorText(data.message)
             } else {
@@ -66,15 +57,7 @@ function OrderRow({ order, handleOrdersChanged }) {
     }
 
     return (
-        <TableRow
-            key={order.orderId}
-            sx={{
-                maxHeight: '30px',
-                '&:last-child td, &:last-child th': { border: 0, maxHeight: '30px', },
-                '& th': { color: 'white', fontFamily: 'DM Sans', maxHeight: '30px', },
-                '& td': { color: 'white', fontFamily: 'DM Sans', maxHeight: '30px', },
-            }}
-        >
+        <TableRow key={order.orderId} variant='ordersItem' >
             <TableCell component="th" scope="row" >
                 {order.symbol}
             </TableCell>
@@ -85,7 +68,8 @@ function OrderRow({ order, handleOrdersChanged }) {
                 {order.side}
             </TableCell>
             <TableCell >
-                {order.type == 'MARKET' ? (parseFloat(order.cummulativeQuoteQty) / parseFloat(order.executedQty)).toFixed(2) : parseFloat(order.price)}
+                {order.type == 'MARKET' ? (parseFloat(order.cummulativeQuoteQty) / parseFloat(order.executedQty)).toFixed(2)
+                    : parseFloat(order.price)}
             </TableCell>
             <TableCell >
                 {order.type == 'MARKET' ? parseFloat(order.cummulativeQuoteQty) : parseFloat(order.origQty)}

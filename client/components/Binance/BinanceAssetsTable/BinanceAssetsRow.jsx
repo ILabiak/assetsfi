@@ -1,15 +1,14 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import Image from 'next/image'
 import styles from './binanceassetstable.module.css';
 import {
-    Typography, Box, Table, TableCell, TableRow, IconButton, Menu
+    Typography, Box, TableCell, TableRow, IconButton, Menu
 } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import MenuViewChart from './MenuViewChart';
 
 
 function BinanceAssetsRow({ asset, valuesHidden, handleChange }) {
-    const [open, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const menuOpen = Boolean(anchorEl);
 
@@ -24,11 +23,7 @@ function BinanceAssetsRow({ asset, valuesHidden, handleChange }) {
         <Fragment>
             <TableRow
                 key={asset.id}
-                sx={{
-                    '&:last-child td, &:last-child th': { border: 0 },
-                    '& th': { color: 'white', fontFamily: 'DM Sans' },
-                    '& td': { color: 'white', fontFamily: 'DM Sans' },
-                }}
+                variant='defaultItem'
             >
                 <TableCell component="th" scope="row" >
                     <Box className={styles.assetInfo}>
@@ -66,7 +61,6 @@ function BinanceAssetsRow({ asset, valuesHidden, handleChange }) {
                             </Box>
                         )
                     }
-
                 </TableCell>
                 <TableCell align="right">
                     {asset?.pair && (
@@ -86,23 +80,13 @@ function BinanceAssetsRow({ asset, valuesHidden, handleChange }) {
                             </IconButton>
                             <Menu
                                 id="portfolio-menu"
+                                variant='defaultMenu'
                                 sx={{
                                     mt: '-30px',
                                     ml: '-60px',
-                                    '& .MuiPaper-root': {
-                                        backgroundColor: '#000000',
-                                        border: '1px solid white',
-                                        borderRadius: '10px',
-                                        color: 'white',
-                                        padding: '0px',
-                                    },
                                     '& .MuiMenuItem-root': {
                                         ml: '5px',
                                         mr: '5px',
-                                        '&:hover': {
-                                            backgroundColor: "#34B17F",
-                                            borderRadius: '5px',
-                                        },
                                     },
                                 }}
                                 anchorEl={anchorEl}

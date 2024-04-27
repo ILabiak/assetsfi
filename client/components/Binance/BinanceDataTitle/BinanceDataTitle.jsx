@@ -3,7 +3,7 @@ import styles from './binancedatatitle.module.css';
 import { Typography, Box, Grid } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import BinanceDeleteButton from '@/components/BinanceDeleteButton/BinanceDeleteButton'
+import BinanceDeleteButton from '@/components/Binance/BinanceDeleteButton/BinanceDeleteButton'
 
 
 function BinanceDataTitle({ valuesHidden, setValuesHidden, handleChange }) {

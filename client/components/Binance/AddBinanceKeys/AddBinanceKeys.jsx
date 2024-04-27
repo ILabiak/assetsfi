@@ -1,7 +1,6 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState } from 'react';
 import styles from './addbinancekeys.module.css';
-import { Button, Typography, Box, TextField, Snackbar, Alert, Checkbox, FormControlLabel } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Typography, Box, TextField, Snackbar, Alert, Checkbox, FormControlLabel } from '@mui/material';
 import NodeRSA from 'node-rsa';
 
 const textFieldStyle = {
@@ -30,8 +29,6 @@ const textFieldStyle = {
 
 }
 
-
-
 function AddBinanceKeys({ handleChange }) {
     const [apiKey, setApiKey] = useState('');
     const [apiSecret, setApiSecret] = useState('');
@@ -43,7 +40,6 @@ function AddBinanceKeys({ handleChange }) {
     const handleCheckboxChange = (event) => {
         setIsTestnet(event.target.checked);
     };
-
 
     const handleErrorClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -101,13 +97,11 @@ function AddBinanceKeys({ handleChange }) {
         if (response.status === 201) {
             setSuccessOpen(true)
             handleChange()
-            //handleUpdateBinanceInfo
         } else {
             let data = await response.json()
             setErrorText(data?.error)
             setErrorOpen(true)
         }
-
     }
 
     return (

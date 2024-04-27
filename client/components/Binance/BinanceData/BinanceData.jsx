@@ -1,16 +1,14 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './binancedata.module.css';
-import { Button, Typography, Box, Snackbar, Alert } from '@mui/material';
-import AddBinanceKeys from '@/components/AddBinanceKeys/AddBinanceKeys'
-import BinanceAssetsInfo from '@/components/BinanceAssetsInfo/BinanceAssetsInfo'
+import { Box, Snackbar, Alert } from '@mui/material';
+import AddBinanceKeys from '@/components/Binance/AddBinanceKeys/AddBinanceKeys'
+import BinanceAssetsInfo from '@/components/Binance/BinanceAssetsInfo/BinanceAssetsInfo'
 import CircularProgress from '@mui/material/CircularProgress';
 import SnackbarContext from './SnackbarsContext';
 
 
-
 function BinanceData() {
     const [binanceData, setBinanceData] = useState()
-
     const [errorText, setErrorText] = useState('');
     const [successText, setSuccessText] = useState('');
     const [errorOpen, setErrorOpen] = useState(false);
@@ -69,7 +67,6 @@ function BinanceData() {
                 minHeight: { xs: `100vh`, md: `calc(100vh - 100px)` },
                 mt: { xs: '0px', md: '100px' } // header hight
             }}>
-
                 {
                     binanceData ? (
                         binanceData.totalValue ? (

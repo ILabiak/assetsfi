@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styles from './binanceassetstable.module.css';
-import { Typography, Box, Backdrop, TextField, MenuItem, Snackbar, Alert } from '@mui/material';
+import { Typography, Box, Backdrop, MenuItem } from '@mui/material';
 import Image from 'next/image'
 import { ChartComponent } from './Chart';
 import TradingTools from './TradingTools';
@@ -11,8 +11,6 @@ function MenuViewChart({ asset, handleChange }) {
     const [orders, setOrders] = useState()
     const socketRef = useRef(null);
     const [backdropOpen, setBackdropOpen] = useState(false)
-    const [buyButtonActive, setBuyButtonActive] = useState(true)
-    const [sellButtonActive, setSellButtonActive] = useState(false)
     const chartRef = useRef(null);
 
     const fetchOrders = async () => {
@@ -22,7 +20,7 @@ function MenuViewChart({ asset, handleChange }) {
                 const data = await response.json();
                 setOrders(data)
             } else {
-                const data = await response.json();
+                // const data = await response.json();
                 console.log('Some other error');
             }
         } catch (error) {
@@ -46,23 +44,11 @@ function MenuViewChart({ asset, handleChange }) {
         fetchOrders().catch(console.error)
     }, []);
 
-    const activateBuyButton = () => {
-        setSellButtonActive(false)
-        setBuyButtonActive(true)
-    }
-
-    const activateSellButton = () => {
-        setBuyButtonActive(false)
-        setSellButtonActive(true)
-
-    }
-
     const handleOpen = () => {
         setBackdropOpen(true);
     };
 
     return (
-
         <React.Fragment>
             <MenuItem
                 onClick={handleOpen}
@@ -70,7 +56,6 @@ function MenuViewChart({ asset, handleChange }) {
                 Open chart
             </MenuItem>
             <Backdrop
-                // onClick={handleClose}
                 sx={{
                     color: '#fff',
                     zIndex: (theme) => theme.zIndex.drawer + 1,
@@ -84,7 +69,6 @@ function MenuViewChart({ asset, handleChange }) {
                         <Box className={styles.assetInfo}>
                             <Image alt='assetImg' width={50} height={50} src={asset?.logo} />
                             <Typography sx={{
-                                // fontFamily: 'DM Sans',
                                 fontWeight: 600,
                                 ml: '10px',
 
@@ -95,14 +79,12 @@ function MenuViewChart({ asset, handleChange }) {
 
                         <Box className={styles.iconWrap}>
                             <Box
-                                onClick={()=> {setBackdropOpen(false)}}
+                                onClick={() => { setBackdropOpen(false) }}
                                 className={styles.closeBackdropIcon}
                             >
                                 <CloseIcon />
                             </Box>
                         </Box>
-
-
                     </Box>
                     <Box className={styles.chartInfo}>
                         <Box
@@ -113,7 +95,6 @@ function MenuViewChart({ asset, handleChange }) {
                                     <ChartComponent asset={asset} />
                                 )
                             }
-
                         </Box>
                         <TradingTools
                             asset={asset}
@@ -138,12 +119,9 @@ function MenuViewChart({ asset, handleChange }) {
                                 <OrdersTable orders={orders} handleOrdersChanged={handleOrdersChanged} />
                             </Box>
                         )}
-
                     </Box>
-
                 </Box>
             </Backdrop>
-
         </React.Fragment>
     );
 }

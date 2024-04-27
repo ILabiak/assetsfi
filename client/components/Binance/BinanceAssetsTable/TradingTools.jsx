@@ -1,8 +1,8 @@
-import React, { useState, useRef, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import styles from './binanceassetstable.module.css';
-import { Typography, Box, Snackbar, Alert } from '@mui/material';
-import AmountField from '../InputFields/AmountField';
-import DisabledField from '../InputFields/DisabledField';
+import { Typography, Box } from '@mui/material';
+import AmountField from '../../InputFields/AmountField';
+import DisabledField from '../../InputFields/DisabledField';
 import SnackbarContext from '../BinanceData/SnackbarsContext';
 import CircularProgress from '@mui/material/CircularProgress';
 
@@ -23,8 +23,6 @@ function TradingTools({ asset, handleOrdersChanged, handleChange }) {
         setSuccessOpen,
         setSuccessText
     } = useContext(SnackbarContext);
-
-
 
     useEffect(() => {
         const fetchPermissions = async () => {
@@ -184,7 +182,6 @@ function TradingTools({ asset, handleOrdersChanged, handleChange }) {
                                                     </>
                                                 )
                                             }
-
                                             {
                                                 isMarketOrder && (
                                                     <>
@@ -196,13 +193,15 @@ function TradingTools({ asset, handleOrdersChanged, handleChange }) {
                                                     </>
                                                 )
                                             }
-
                                         </Box>
 
                                         <Box className={styles.submitOrderContainer}>
                                             <Box
                                                 onClick={createOrder}
-                                                className={`${buyButtonActive ? `${styles.buyButton}` : `${styles.sellButton}`} ${!createOrderButtonActive ? `${styles.disabled}` : ''}`}
+                                                className={`${buyButtonActive
+                                                    ? `${styles.buyButton}`
+                                                    : `${styles.sellButton}`} ${!createOrderButtonActive
+                                                        ? `${styles.disabled}` : ''}`}
                                             >
                                                 {buyButtonActive ? 'Buy' : 'Sell'} {`${asset.asset}`}
                                             </Box>
@@ -237,9 +236,7 @@ function TradingTools({ asset, handleOrdersChanged, handleChange }) {
                                 )
                             }
                         </>
-
                     ) : (
-
                         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%', height: '100%' }}>
                             <CircularProgress size={40} sx={{
                                 color: '#0228EE',
@@ -249,8 +246,6 @@ function TradingTools({ asset, handleOrdersChanged, handleChange }) {
                 }
             </Box>
         </>
-
-
     );
 }
 export default TradingTools;

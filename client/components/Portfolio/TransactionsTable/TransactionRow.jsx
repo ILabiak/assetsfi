@@ -1,36 +1,26 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, Fragment } from 'react';
 import Image from 'next/image'
-import styles from './transactiontable.module.css';
-import TotalPortfoliosInfo from '../../TotalPortfolioInfo/TotalPortfoliosInfo';
 import MenuChangeTransaction from '@/components/MenuChangeTransaction/MenuChangeTransaction'
 import MenuDeleteTransaction from '@/components/MenuDeleteTransaction/MenuDeleteTransaction'
 import {
-    Typography, Box, Table, TableCell, TableRow
+    Typography, Box, TableCell, TableRow
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 function formatDate(dateString) {
     const date = new Date(dateString);
 
-    // Format the day
     const day = date.getDate();
-
-    // Get the month name
     const monthNames = [
         "January", "February", "March", "April", "May", "June", "July",
         "August", "September", "October", "November", "December"
     ];
+
     const monthName = monthNames[date.getMonth()];
-
-    // Format the year
     const year = date.getFullYear();
-
-    // Construct the formatted date string
     const formattedDate = `${day} ${monthName}, ${year}`;
-
     return formattedDate;
 }
 
@@ -51,14 +41,7 @@ function TransactionRow({ transactionData, currency, handleTransactionsChange, v
 
     return (
         <Fragment>
-            <TableRow
-                key={transaction.id}
-                sx={{
-                    '&:last-child td, &:last-child th': { border: 0 },
-                    '& th': { color: 'white', fontFamily: 'DM Sans' },
-                    '& td': { color: 'white', fontFamily: 'DM Sans' },
-                }}
-            >
+            <TableRow key={transaction.id} variant='defaultItem'>
                 <TableCell component="th" scope="row">
                     <Box sx={{
                         display: 'flex',
@@ -86,9 +69,8 @@ function TransactionRow({ transactionData, currency, handleTransactionsChange, v
 
                         </Box>
                     </Box>
-
-
                 </TableCell>
+
                 <TableCell>
                     <Box sx={{
                         color: (transaction.amount > 0) ? '#34B17F' : '#E85E5E'
@@ -110,6 +92,7 @@ function TransactionRow({ transactionData, currency, handleTransactionsChange, v
                         `${(transaction.amount * transaction.costPerUnitInCurrency).toFixed(2)} ${currency?.symbol}`}
 
                 </TableCell>
+
                 <TableCell align="right">
                     <IconButton
                         aria-label="more"
@@ -126,23 +109,13 @@ function TransactionRow({ transactionData, currency, handleTransactionsChange, v
                     </IconButton>
                     <Menu
                         id="portfolio-menu"
+                        variant='defaultMenu'
                         sx={{
                             mt: '-30px',
                             ml: '-60px',
-                            '& .MuiPaper-root': {
-                                backgroundColor: '#000000',
-                                border: '1px solid white',
-                                borderRadius: '10px',
-                                color: 'white',
-                                padding: '0px',
-                            },
                             '& .MuiMenuItem-root': {
                                 ml: '5px',
                                 mr: '5px',
-                                '&:hover': {
-                                    backgroundColor: "#34B17F",
-                                    borderRadius: '5px',
-                                },
                             },
                         }}
                         anchorEl={anchorEl}

@@ -66,36 +66,8 @@ function PortfoliosList({ portfoliosData, handlePortfoliosChange, valuesHidden }
                             borderSpacing: "0px 10px",
                         }}
                         aria-label="portfolios table">
-                        <TableHead
-                        variant="portfolios"
-                            // sx={{
-                            //     '& th': {
-                            //         borderBottom: 'none',
-                            //     },
-                            //     '& td': {
-                            //         borderBottom: 'none',
-                            //     },
-                            //     "& .MuiTableRow-root th:first-of-type": {
-                            //         borderTopLeftRadius: "10px",
-                            //         borderBottomLeftRadius: "10px",
-                            //     },
-                            //     "& .MuiTableRow-root th:last-child": {
-                            //         borderTopRightRadius: "10px",
-                            //         borderBottomRightRadius: "10px",
-                            //     },
-                            // }}
-                        >
-                            <TableRow 
-                            variant='portfoliosHead'
-                            // sx={{
-                                // '& th': {
-                                //     color: '#AEAEAE',
-                                //     fontSize: '12px',
-                                //     fontFamily: 'DM Sans',
-                                //     backgroundColor: 'black',
-                                // },
-                            // }}
-                            >
+                        <TableHead variant="default">
+                            <TableRow variant='defaultHead' >
                                 <TableCell>Name</TableCell>
                                 <TableCell align="right">Total value</TableCell>
                                 <TableCell align="right">24H change</TableCell>
@@ -104,38 +76,7 @@ function PortfoliosList({ portfoliosData, handlePortfoliosChange, valuesHidden }
                                 <TableCell align="right"></TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody 
-                        variant='portfolios'
-                        // sx={{
-                        //     borderRadius: '10px',
-                        //     '& th': {
-                        //         borderBottom: 'none',
-                        //         backgroundColor: 'black',
-                        //         flexDirection: 'row',
-                        //     },
-                        //     '& td': {
-                        //         borderBottom: 'none',
-                        //         backgroundColor: 'black',
-                        //         // paddingBottom: '10px'
-                        //     },
-                        //     "& .MuiTableRow-root th:first-child": {
-                        //         borderTopLeftRadius: "10px",
-                        //         borderBottomLeftRadius: "10px",
-                        //     },
-                        //     "& .MuiTableRow-root th:last-child": {
-                        //         borderTopLeftRadius: "10px",
-                        //         borderBottomLeftRadius: "10px",
-                        //     },
-                        //     "& .MuiTableRow-root td:first-child": {
-                        //         borderTopLeftRadius: "10px",
-                        //         borderBottomLeftRadius: "10px",
-                        //     },
-                        //     "& .MuiTableRow-root td:last-child": {
-                        //         borderTopRightRadius: "10px",
-                        //         borderBottomRightRadius: "10px",
-                        //     },
-                        // }}
-                        >
+                        <TableBody variant='default' >
                             {portfoliosData.map((el) => (
                                 <PortfolioRow
                                     key={`${el.uuid}-mainRow`}

@@ -39,7 +39,7 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange, foundation
         <Fragment>
             <TableRow
                 key={donation.id}
-                variant='donationsItem'
+                variant='defaultItem'
             >
                 <TableCell width={'30%'} component="th" scope="row">
                     <Box sx={{
@@ -97,7 +97,7 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange, foundation
                     </IconButton>
                     <Menu
                         id="donation-menu"
-                        variant='donationsMenu'
+                        variant='defaultMenu'
                         sx={{
                             mt: '-30px',
                             ml: '-60px',

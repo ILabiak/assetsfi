@@ -1,10 +1,9 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState } from 'react';
 import styles from './binanceassetsinfo.module.css';
-import { Button, Typography, Box, } from '@mui/material';
-import TotalBinanceInfo from '@/components/TotalBinanceInfo/TotalBinanceInfo'
-import BinanceAssetsTable from '@/components/BinanceAssetsTable/BinanceAssetsTable'
-import BinanceDeleteButton from '@/components/BinanceDeleteButton/BinanceDeleteButton'
-import BinanceDataTitle from '@/components/BinanceDataTitle/BinanceDataTitle'
+import { Box } from '@mui/material';
+import TotalBinanceInfo from '@/components/Binance/TotalBinanceInfo/TotalBinanceInfo'
+import BinanceAssetsTable from '@/components/Binance/BinanceAssetsTable/BinanceAssetsTable'
+import BinanceDataTitle from '@/components/Binance/BinanceDataTitle/BinanceDataTitle'
 
 
 function BinanceAssetsInfo({ assetsInfo, handleChange }) {
@@ -28,7 +27,6 @@ function BinanceAssetsInfo({ assetsInfo, handleChange }) {
                     handleChange={handleChange}
                 />
             </Box>
-
         </Box>
     )
 }
