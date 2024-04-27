@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from 'react';
 import Image from 'next/image'
-import MenuChangeTransaction from '@/components/MenuChangeTransaction/MenuChangeTransaction'
-import MenuDeleteTransaction from '@/components/MenuDeleteTransaction/MenuDeleteTransaction'
+import MenuChangeTransaction from '@/components/Portfolio/MenuChangeTransaction/MenuChangeTransaction'
+import MenuDeleteTransaction from '@/components/Portfolio/MenuDeleteTransaction/MenuDeleteTransaction'
 import {
     Typography, Box, TableCell, TableRow
 } from '@mui/material';

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import styles from './menudeletedonation.module.css';
-import { Typography, Box, Backdrop, TextField, MenuItem } from '@mui/material';
+import { Typography, Box, Backdrop, MenuItem } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 function MenuDeleteDonation({ donation, handleDonationsChange }) {
@@ -21,7 +21,6 @@ function MenuDeleteDonation({ donation, handleDonationsChange }) {
     };
 
     const handleTransactionDelete = async () => {
-        // return;
         setDeleteButtonActive(false)
         const response = await fetch('/api/server/donations/delete', {
             method: 'DELETE',
@@ -44,7 +43,6 @@ function MenuDeleteDonation({ donation, handleDonationsChange }) {
 
 
     return (
-
         <React.Fragment>
             <MenuItem
                 onClick={handleOpen}

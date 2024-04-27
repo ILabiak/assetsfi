@@ -6,8 +6,8 @@ import {
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import MenuDeleteDonation from '@/components/MenuDeleteDonation/MenuDeleteDonation'
-import MenuChangeDonation from '@/components/MenuChangeDonation/MenuChangeDonation'
+import MenuDeleteDonation from '@/components/DonationsInfo/MenuDeleteDonation/MenuDeleteDonation'
+import MenuChangeDonation from '@/components/DonationsInfo/MenuChangeDonation/MenuChangeDonation'
 
 function formatDate(dateString) {
     const date = new Date(dateString);

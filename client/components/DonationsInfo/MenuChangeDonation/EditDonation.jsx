@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import dayjs from 'dayjs';
-import SelectorField from '../InputFields/SelectorField'
-import AmountField from '../InputFields/AmountField'
-import NoteField from '../InputFields/NoteField'
-import DateField from '../InputFields/DateField';
+import SelectorField from '../../InputFields/SelectorField'
+import AmountField from '../../InputFields/AmountField'
+import NoteField from '../../InputFields/NoteField'
+import DateField from '../../InputFields/DateField';
 import styles from './editdonation.module.css';
 import { Typography, Box, Backdrop, TextField } from '@mui/material';
 
