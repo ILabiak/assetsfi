@@ -35,6 +35,7 @@ function DeleteTracking({ addressData, handleTrackingsChange }) {
         });
         if (response.status === 200) {
             setBackdropOpen(false)
+            setDeleteButtonActive(true)
             handleTrackingsChange();
         } else {
             console.log('Some other error');

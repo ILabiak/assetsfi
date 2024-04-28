@@ -63,14 +63,12 @@ function EditTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen
         if (addressData.targetAmount != parseFloat(amount)) {
             trackingObj.target = parseFloat(amount)
         }
-        if (addressData.address != address) {
+        if (addressData.address != address || addressData.networkId != network.id) {
             trackingObj.address = address
+            trackingObj.network = network
         }
         if (addressData.currencyId != currency.id) {
             trackingObj.currency = currency
-        }
-        if (addressData.networkId != network.id) {
-            trackingObj.network = network
         }
         const response = await fetch('/api/server/tracking/update', {
             method: 'PUT',
