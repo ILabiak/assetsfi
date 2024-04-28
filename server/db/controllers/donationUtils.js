@@ -13,7 +13,6 @@ const parseFoundationAddresses = async () => {
     foundationsData.updatedAt &&
     Date.now() - foundationsData.updatedAt < 24 * 60 * 60 * 1000 //24 hours
   ) {
-    console.log('Using cashed data');
     return foundationsData;
   }
   try {
@@ -94,7 +93,6 @@ const parseSaveLifeFoundation = async () => {
     return result;
   }
   return {};
-  //   console.log(cryptoAddresses.html());
 };
 
 const parsePritulaFoundation = async () => {
@@ -172,7 +170,6 @@ const parseSternenkoFoundation = async () => {
 
   let match;
   while ((match = regex.exec(description)) !== null) {
-    // Extract currencyType and walletAddress from the match groups
     let currencyType = match[1];
     const walletAddress = match[2];
     const walletAddresses = [walletAddress];
@@ -187,7 +184,6 @@ const parseSternenkoFoundation = async () => {
       currencyType = 'Tether (TRC20)';
     }
 
-    // Push the currencyType and walletAddress as an object to the array
     walletInfo.push({ currencyType, walletAddresses });
   }
 
@@ -240,7 +236,6 @@ const calculateDonationsStats = (donations) => {
     }
     result.favouriteFoundation = foundations[favFoundationKey];
   }
-  // console.log(result);
   return result;
 };
 
@@ -250,6 +245,7 @@ const checkWalletAddress = async (networkCode, address) => {
   const response = await fetch(url);
   let results = await response.json();
 
+  if (!results.data?.results) return false;
   return results.data.results[networkCode]?.address ? true : false;
 };
 
@@ -304,53 +300,70 @@ const getAddressData = async (data) => {
     }
   });
 
-  // if(data.targetAmount){
-  //   result.target = data.targetAmount;
-  // }
-
   return result;
-  // console.log(JSON.stringify(results, null, 2));
 };
 
 const getTokensMetadata = async (addresses) => {
+  let useCashedMetadata = true;
+  let dataPath = path.resolve(__dirname, 'coins-metadata.json');
+  let metaDataText = fs.readFileSync(dataPath, 'utf8');
+  let metaData = JSON.parse(metaDataText);
+  if (
+    !metaData.updatedAt ||
+    !metaData.data ||
+    Date.now() - metaData.updatedAt > 7 * 24 * 60 * 60 * 1000 // 7 days
+  ) {
+    useCashedMetadata = false;
+  }
+
   let symbolsArr = [];
   if (!addresses) {
     return {};
   }
   for (let el of addresses) {
     symbolsArr.push(...el.symbols);
+    for (let symbol of el.symbols) {
+      if (!metaData.data || !metaData.data[symbol]) {
+        useCashedMetadata = false;
+      }
+    }
   }
   if (symbolsArr.length < 1) {
     return {};
   }
-  const symbols = [...new Set(symbolsArr)].join(',');
 
   let metadataRes;
 
+  if (useCashedMetadata) {
+    return metaData.data;
+  }
+
+  const symbols = [...new Set(symbolsArr)].join(',');
   let metadataReqLink = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols}&aux=logo&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`;
   try {
     const response = await fetch(metadataReqLink);
-    metadataRes = await response.json();
+    metadataJson = await response.json();
   } catch (err) {
     console.log(err);
     return [err];
   }
-  if (!metadataRes.data) {
+  if (!metadataJson.data) {
     return { error: 'Could not get metadata' };
   }
-  return metadataRes.data;
+  if (metaData.data) {
+    metadataRes = {
+      updatedAt: Date.now(),
+      data: { ...metaData.data, ...metadataJson.data },
+    };
+  } else {
+    metadataRes = {
+      updatedAt: Date.now(),
+      data: metadataJson.data,
+    };
+  }
+  fs.writeFileSync(dataPath, JSON.stringify(metadataRes));
+  return metadataJson.data.map;
 };
-(async () => {
-  // console.time('Execution time:');
-  // // console.log(await parseFoundationAddresses());
-  // // // calculateDonationsStats(testData);
-  // console.log(
-  // await getAddressData(addressData)
-  // );
-  // console.timeEnd('Execution time:');
-  // console.log(await getTokensMetadata(testData));
-  // console.log(await checkWalletAddress('bitcoim', '0x51a1449b3b6d635ddec781cd47a99221712de97'))
-})();
 
 module.exports = {
   parseFoundationAddresses,

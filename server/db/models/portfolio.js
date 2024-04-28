@@ -4,10 +4,12 @@ module.exports = (sequelize, DataTypes) => {
   class Portfolio extends Model {
     static associate(models) {
       Portfolio.belongsTo(models.Currency, {
-        foreignKey: 'currencyId'
+        foreignKey: 'currencyId',
       });
       Portfolio.hasMany(models.Transaction, {
-        foreignKey: 'portfolioId'
+        foreignKey: 'portfolioId',
+        onDelete: 'cascade',
+        hooks: true,
       });
     }
   }
@@ -40,14 +42,14 @@ module.exports = (sequelize, DataTypes) => {
       visibility: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: false
+        defaultValue: false,
       },
     },
     {
       sequelize,
       modelName: 'Portfolio',
-      tableName: 'portfolios'
-    },
+      tableName: 'portfolios',
+    }
   );
   return Portfolio;
 };

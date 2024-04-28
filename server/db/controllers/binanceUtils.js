@@ -1,15 +1,55 @@
-// const Binance = require('binance-api-node').default;
 const { Spot } = require('@binance/connector');
 const coin = require('./coin');
 const fs = require('fs');
+const path = require('node:path');
 require('dotenv').config();
 const fetch = (...args) =>
   import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 let pairs = require('./pairs.json');
+let dataPath = path.resolve(__dirname, 'coins-metadata.json');
+
+const fetchMetadata = async (symbols, metaData) => {
+  let metadataReqLink = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols}&aux=logo&skip_invalid=true&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`;
+  try {
+    const response = await fetch(metadataReqLink);
+    metadataJson = await response.json();
+    if (metaData.data) {
+      metadataRes = {
+        updatedAt: Date.now(),
+        data: { ...metaData.data, ...metadataJson.data },
+      };
+    } else {
+      metadataRes = {
+        updatedAt: Date.now(),
+        data: metadataJson.data,
+      };
+    }
+    fs.writeFileSync(dataPath, JSON.stringify(metadataRes));
+  } catch (err) {
+    console.log(err);
+    return { error: err.message };
+  }
+
+  if (!metadataRes.data) {
+    return { error: 'Could not get metadata' };
+  }
+  return metadataRes;
+};
 
 const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
   let options = {};
+  let useCashedMetadata = true;
+  let metaDataText = fs.readFileSync(dataPath, 'utf8');
+  let metaData = JSON.parse(metaDataText);
+  if (
+    !metaData.updatedAt ||
+    !metaData.data ||
+    Date.now() - metaData.updatedAt > 7 * 24 * 60 * 60 * 1000 // 7 days
+  ) {
+    useCashedMetadata = false;
+  }
+
   if (isTestnet) {
     options.baseURL = 'https://testnet.binance.vision';
   }
@@ -35,35 +75,28 @@ const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
         coins.push(`${el.asset}USDT`);
       }
       coinsStr += el.asset + ',';
+      if (!metaData.data || !metaData.data[el.asset]) {
+        useCashedMetadata = false;
+      }
     });
-
     let priceChanges = await client.ticker24hr('', coins);
 
     let metadataRes;
-    let metadataReqLink = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${coinsStr}&aux=logo&skip_invalid=true&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`;
-    try {
-      const response = await fetch(metadataReqLink);
-      metadataRes = await response.json();
-    } catch (err) {
-      console.log(err);
-      return { error: err.message };
-    }
-
-    if (!metadataRes.data) {
-      return { error: 'Could not get metadata' };
+    if (useCashedMetadata) {
+      metadataRes = metaData;
+    } else {
+      metadataRes = await fetchMetadata(coinsStr, metaData);
     }
 
     const mapped = priceChanges?.data.map((item) => ({ [item.symbol]: item }));
     const mappedChanges = Object.assign({}, ...mapped);
 
     for (let el of assets) {
-      // console.log(el);
       let key = `${el.asset}USDT`;
       el.name = metadataRes.data[el.asset][0]?.name || el.asset;
       el.logo =
         metadataRes.data[el.asset][0]?.logo ||
         'https://static-00.iconduck.com/assets.00/no-image-icon-512x512-lfoanl0w.png';
-
       if (el.asset == 'USDT') {
         let tokens = parseFloat(el.free) + parseFloat(el.locked);
         el.totalValue = tokens;
@@ -106,8 +139,6 @@ const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
     assets.sort((a, b) => parseFloat(b.totalValue) - parseFloat(a.totalValue));
 
     result.assets = assets;
-    // console.log(result)
-
     return result;
   } catch (err) {
     if (err?.response?.data?.msg) {
@@ -126,13 +157,11 @@ const updateMarketPairs = async (apiKey, apiSecret, isTestnet) => {
   pairs = [];
   const client = new Spot(apiKey, apiSecret, options);
   let pairsData = await client.exchangeInfo();
-  // console.log(pairsData)
   pairsData?.data?.symbols.forEach((el) => {
     if (el.status == 'TRADING') {
       pairs.push(el.symbol);
     }
   });
-  console.log(pairs);
   fs.writeFileSync('pairs.json', JSON.stringify(pairs));
 };
 
@@ -193,7 +222,6 @@ const cancelOrder = async (apiKey, apiSecret, isTestnet, symbol, orderId) => {
   try {
     const client = new Spot(apiKey, apiSecret, options);
     let { data } = await client.cancelOrder(symbol, { orderId });
-    console.log(data);
     if (data.status == 'CANCELED') {
       return true;
     }
@@ -215,32 +243,14 @@ const checkTradePermissions = async (apiKey, apiSecret) => {
       return { err: err?.response?.data?.msg };
     }
     return { err };
-    //{ err: 'Invalid API-key, IP, or permissions for action.' }
   }
 };
 
 // (async () => {
-//   console.time('Execution');
-//   const client = new Spot(
-//     process.env.BINANCE_API_KEY,
-//     process.env.BINANCE_API_SECRET
-//   );
-//   // console.log(
-//   //   await getUserInformation(
-//   //     process.env.BINANCE_API_KEY,
-//   //     process.env.BINANCE_API_SECRET
-//   //   )
-//   // );
-//   // await updateMarketPairs(process.env.BINANCE_API_KEY,
-//   //      process.env.BINANCE_API_SECRET)
-//   console.log(
-//     await checkTradePermissions(
-//       process.env.BINANCE_API_KEY,
-//       process.env.BINANCE_API_SECRET
-//     )
-//   );
-
-//   console.timeEnd('Execution');
+  //   console.time('Execution');
+  // await updateMarketPairs(process.env.BINANCE_API_KEY,
+  //      process.env.BINANCE_API_SECRET)
+  //   console.timeEnd('Execution');
 // })();
 
 module.exports = {
@@ -248,5 +258,5 @@ module.exports = {
   getUserOrders,
   createOrder,
   cancelOrder,
-  checkTradePermissions
+  checkTradePermissions,
 };

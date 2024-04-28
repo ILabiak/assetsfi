@@ -80,7 +80,10 @@ module.exports = {
             .update({
               date: req.body.date || transaction.date,
               amount: req.body.amount || transaction.amount,
-              fees: req.body.fees || transaction.fees,
+              fees:
+                req.body.fees !== undefined && req.body.fees !== null
+                  ? req.body.fees
+                  : transaction.fees,
               description: req.body.description || transaction.description,
               costPerUnitInUsd:
                 req.body.costPerUnitInUsd || transaction.costPerUnitInUsd,

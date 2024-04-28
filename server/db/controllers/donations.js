@@ -107,7 +107,7 @@ module.exports = {
       req.body.address
     );
     if (!checkAddress) {
-      res.status(400).send({
+      return res.status(400).send({
         status: false,
         message: 'Address is not valid',
       });

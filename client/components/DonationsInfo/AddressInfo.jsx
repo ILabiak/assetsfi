@@ -143,7 +143,12 @@ function TokenData({ token, currency, metadata }) {
     return (
         <Box className={styles.tokenContainer}>
             <Box className={styles.tokenName}>
-                <Image src={metadata[token.symbol][0]?.logo} alt='tokenImg' width={30} height={30} />
+                {
+                    metadata[token.symbol] && (
+<Image src={metadata[token.symbol][0]?.logo} alt='tokenImg' width={30} height={30} />
+                    ) 
+                }
+                
                 <Typography sx={{
                     fontFamily: 'DM Sans',
                     fontSize: '16px',
