@@ -337,7 +337,6 @@ const getTokensMetadata = async (addresses) => {
   if (useCashedMetadata) {
     return metaData.data;
   }
-
   const symbols = [...new Set(symbolsArr)].join(',');
   let metadataReqLink = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols}&aux=logo&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`;
   try {
@@ -362,7 +361,7 @@ const getTokensMetadata = async (addresses) => {
     };
   }
   fs.writeFileSync(dataPath, JSON.stringify(metadataRes));
-  return metadataJson.data.map;
+  return metadataJson.data;
 };
 
 module.exports = {
