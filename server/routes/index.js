@@ -1,4 +1,4 @@
-const controllers = require('../db/controllers');
+const controllers = require('../controllers');
 
 const {
   portfolio: portfolioController,
