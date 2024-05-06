@@ -8,15 +8,9 @@ const fetch = (...args) =>
 
 module.exports = {
   async getUserUserMetadata(req, res) {
-    // console.log(req.user.sub)
-    return UserMetadata.findOne({
-      where: {
-        userId: req.user.sub,
-      },
-    })
+    return UserMetadata.findOne({ where: { userId: req.user.sub } })
       .then(async (metadata) => {
         if (!metadata) {
-          // console.log(req.headers.authorization);
           const response = await fetch(
             `${process.env.AUTH0_ISSUER_BASE_URL}/userinfo`,
             {
@@ -27,7 +21,6 @@ module.exports = {
             }
           );
           const userData = await response.json();
-          // console.log(userData);
           if (!userData.name) {
             res.status(400).send({ error: 'Could not get user data' });
           }
@@ -45,28 +38,11 @@ module.exports = {
       .catch((error) => res.status(400).send(error));
   },
 
-  add(req, res) {
-    if (!req.body.name || !req.body.currencyId) {
-      res.status(400).send({
-        status: false,
-        message: 'Not enough data to create portfolio',
-      });
-    }
-    return UserMetadata.create({
-      // uuid: uuidv4(),
-      userId: req.user.sub,
-      title: req.body.name,
-      currencyId: req.body.currencyId,
-    })
-      .then((portfolio) => res.status(201).send(portfolio))
-      .catch((error) => res.status(400).send(error));
-  },
-
   async changePassword(req, res) {
     if (!req.body.email || !req.body.newPassword || !req.body.oldPassword) {
-      return res.status(400).send({
-        error: 'Not enough data to change password',
-      });
+      return res
+        .status(400)
+        .send({ error: 'Not enough data to change password' });
     }
     let privateKey = Buffer.from(
       process.env.RSA_KEY_PRIVATE,
@@ -97,25 +73,19 @@ module.exports = {
       );
       const checkPassword = await request.json();
       if (checkPassword?.error) {
-        // return checkPassword?.error_description;
-        if(checkPassword?.error_description == 'Wrong email or password.'){
-          return res.status(400).send({
-            error: 'Invalid old password',
-          });
+        if (checkPassword?.error_description == 'Wrong email or password.') {
+          return res.status(400).send({ error: 'Invalid old password' });
         }
-        return res.status(400).send({
-          error: checkPassword?.error_description,
-        });
+        return res
+          .status(400)
+          .send({ error: checkPassword?.error_description });
       }
       if (checkPassword?.access_token) {
         let decoded = jwtDecode(checkPassword?.access_token);
         if (!decoded.sub) {
-          return res.status(400).send({
-            error: 'Error, no user id',
-          });
+          return res.status(400).send({ error: 'Error, no user id' });
         }
         let userId = decoded.sub;
-        // console.log(userId);
         options = {
           method: 'PATCH',
           headers: {
@@ -123,9 +93,7 @@ module.exports = {
             Accept: 'application/json',
             Authorization: `Bearer ${process.env.AUTH0_MANAGEMENT_TOKEN}`,
           },
-          body: JSON.stringify({
-            password: newPassword,
-          }),
+          body: JSON.stringify({ password: newPassword }),
         };
 
         let request = await fetch(
@@ -135,20 +103,14 @@ module.exports = {
         let passwordChanged = await request.json();
 
         if (passwordChanged.email) {
-          console.log('password was saccessfully changed');
           res
             .status(200)
             .send({ message: 'Password was successfully changed' });
         }
-        return res.status(400).send({
-          error: 'Something went wrong',
-        });
+        return res.status(400).send({ error: 'Something went wrong' });
       }
-      // console.log(checkPassword);
     } catch (err) {
-      return res.status(400).send({
-        error: err,
-      });
+      return res.status(400).send({ error: err });
     }
   },
 
@@ -175,6 +137,4 @@ module.exports = {
       })
       .catch((error) => res.status(400).send(error));
   },
-
-  delete(req, res) {},
 };

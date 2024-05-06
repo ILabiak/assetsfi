@@ -125,8 +125,6 @@ const calculatePortfolioCoins = async (portfolio) => {
   try {
     const response = await fetch(url, options);
     responseArr = await response.json();
-    // responseArr = coingeckoResponse;
-    // console.log(responseArr)
   } catch (err) {
     return err;
   }
@@ -136,20 +134,14 @@ const calculatePortfolioCoins = async (portfolio) => {
   const responseObj = Object.assign({}, ...mapped);
 
   portfolio.Transactions.forEach((transaction) => {
-    let transactionStartValue =
-      transaction.amount * transaction.costPerUnitInCurrency;
-    if (transaction.amount < 0) {
-      transactionStartValue -= transaction.fees;
+    let transactionStartValue = transaction.amount * transaction.costPerUnitInCurrency;
+    if (transaction.amount < 0) { 
+      transactionStartValue -= transaction.fees; 
     } else {
       transactionStartValue += transaction.fees;
     }
-    let transactionNowValue =
-      transaction.amount *
-      responseObj[transaction['Coin']['code']].current_price;
-    let transaction24HValue =
-      transaction.amount *
-      (responseObj[transaction['Coin']['code']].current_price -
-        responseObj[transaction['Coin']['code']].price_change_24h);
+    let transactionNowValue = transaction.amount * responseObj[transaction['Coin']['code']].current_price;
+    let transaction24HValue = transaction.amount * (responseObj[transaction['Coin']['code']].current_price - responseObj[transaction['Coin']['code']].price_change_24h);
 
     let dailyChange = transactionNowValue - transaction24HValue;
     let totalChange = transactionNowValue - transactionStartValue;
@@ -166,27 +158,13 @@ const calculatePortfolioCoins = async (portfolio) => {
     portfolio.coins[transaction.Coin.id].totalInvested += transactionStartValue;
     portfolio.coins[transaction.Coin.id].totalValue += transactionNowValue;
   });
-  portfolio.dailyChangePercentage = (
-    (portfolio.dailyChange * 100) /
-    portfolio.totalValue
-  ).toFixed(2);
-  portfolio.totalChangePercentage = (
-    (portfolio.totalChange * 100) /
-    portfolio.totalInvested
-  ).toFixed(2);
+  portfolio.dailyChangePercentage = ((portfolio.dailyChange * 100) / portfolio.totalValue).toFixed(2);
+  portfolio.totalChangePercentage = ((portfolio.totalChange * 100) / portfolio.totalInvested).toFixed(2);
   portfolio.coins = Object.values(portfolio.coins);
   for (let coin of portfolio.coins) {
-    coin.dailyChangePercentage = (
-      (coin.dailyChange * 100) /
-      coin.totalValue
-    ).toFixed(2);
-    coin.totalChangePercentage = (
-      (coin.totalChange * 100) /
-      coin.totalInvested
-    ).toFixed(2);
-    coin.allocation = ((coin.totalValue * 100) / portfolio.totalValue).toFixed(
-      2
-    );
+    coin.dailyChangePercentage = ((coin.dailyChange * 100) / coin.totalValue).toFixed(2);
+    coin.totalChangePercentage = ((coin.totalChange * 100) / coin.totalInvested).toFixed(2);
+    coin.allocation = ((coin.totalValue * 100) / portfolio.totalValue).toFixed(2);
   }
   return portfolio;
 };

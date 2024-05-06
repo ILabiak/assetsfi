@@ -18,34 +18,6 @@ module.exports = {
     });
   },
 
-  add(req, res) {
-    return Currency.create({
-      //
-    })
-      .then((section) => res.status(201).send(section))
-      .catch((error) => res.status(400).send(error));
-  },
-
-  delete(req, res) {
-    return Currency.findByPk(req.params.id)
-      .then((currency) => {
-        if (!currency) {
-          return res.status(400).send({
-            message: 'Currency Not Found',
-          });
-        }
-        return currency
-          .destroy()
-          .then(() =>
-            res
-              .status(200)
-              .send({ message: 'Currency was successfully deleted!' })
-          )
-          .catch((error) => res.status(400).send(error));
-      })
-      .catch((error) => res.status(400).send(error));
-  },
-
   async getCurrencyRate(req, res) {
     if (!req.params.currency) {
       return res.status(400).send({

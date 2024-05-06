@@ -4,7 +4,6 @@ const Currency = require('../models').Currency;
 const Transaction = require('../models').Transaction;
 const Coin = require('../models').Coin;
 const sequelize = require('sequelize');
-const { v4: uuidv4 } = require('uuid');
 const {
   calculatePortfolioStats,
   calculatePortfolioCoins,

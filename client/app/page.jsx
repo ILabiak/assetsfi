@@ -15,7 +15,6 @@ export default function Home() {
   const [open, setOpen] = useState(true);
 
   return (
-
     <main className={styles.main}>
       <Head>
         <link rel="icon" href='/favicon.ico' />

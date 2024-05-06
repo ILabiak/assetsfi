@@ -116,7 +116,7 @@ const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
       let tokens = parseFloat(el.free) + parseFloat(el.locked);
       let totalValue = parseFloat(el.price) * tokens;
       let dailyPrice = mappedChanges[key].openPrice.replace(/\.?0+$/, '');
-      let dailyValue = parseFloat(dailyPrice) * parseFloat(el.free);
+      let dailyValue = parseFloat(dailyPrice) * (parseFloat(el.free) + parseFloat(el.locked));
       let dailyChange = totalValue - dailyValue;
 
       el.tokens = parseFloat(tokens.toFixed(8));

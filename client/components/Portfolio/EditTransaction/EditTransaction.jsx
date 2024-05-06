@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
 import dayjs from 'dayjs';
-import SearchField from '../InputFields/SearchField'
-import QuantityField from '../InputFields/QuantityField'
-import PriceField from '../InputFields/PriceField'
-import FeesField from '../InputFields/FeesField'
-import TotalPriceField from '../InputFields/TotalPriceField'
-import NoteField from '../InputFields/NoteField'
-import DateField from '../InputFields/DateField';
+import SearchField from '../../InputFields/SearchField'
+import QuantityField from '../../InputFields/QuantityField'
+import PriceField from '../../InputFields/PriceField'
+import FeesField from '../../InputFields/FeesField'
+import TotalPriceField from '../../InputFields/TotalPriceField'
+import NoteField from '../../InputFields/NoteField'
+import DateField from '../../InputFields/DateField';
 import styles from './edittransaction.module.css';
 import { Typography, Box, Backdrop, TextField } from '@mui/material';
 

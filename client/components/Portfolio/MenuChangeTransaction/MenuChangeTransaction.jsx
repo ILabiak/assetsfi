@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import EditTransaction from '@/components/EditTransaction/EditTransaction'
+import EditTransaction from '@/components/Portfolio/EditTransaction/EditTransaction'
 import { Typography, Box, Backdrop, TextField, MenuItem } from '@mui/material';
 
 function MenuChangeTransaction({ transaction, currency, handleTransactionsChange }) {

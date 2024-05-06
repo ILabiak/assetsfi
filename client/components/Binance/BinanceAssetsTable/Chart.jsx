@@ -83,31 +83,11 @@ export const ChartComponent = (props) => {
                 chart.applyOptions({ width: chartContainerRef.current.clientWidth });
             };
             const chart = createChart(chartContainerRef.current, {
-                layout: {
-                    background: { color: '#161A1E' },
-                    textColor: 'white',
-                },
-                grid: {
-                    vertLines: { color: '#444' },
-                    horzLines: { color: '#444' },
-                },
-                timeScale: {
-                    timeVisible: true,
-                    secondsVisible: false,
-                    rightOffset: 3
-                },
-                localization: {
-                    locale: 'eng'
-                },
-                crosshair: {
-                    mode: 0
-                },
-                watermark: {
-                    visible: false,
-                    fontSize: 60,
-                    text: 'AssetsFi',
-                    color: "rgba(256, 256, 256, 0.1)",
-                },
+                layout: { background: { color: '#161A1E' }, textColor: 'white', },
+                grid: { vertLines: { color: '#444' }, horzLines: { color: '#444' }, },
+                timeScale: { timeVisible: true, secondsVisible: false, rightOffset: 3 },
+                localization: { locale: 'eng' },
+                crosshair: { mode: 0 },
             });
             chart.timeScale().applyOptions({
                 barSpacing: 20,

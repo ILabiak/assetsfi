@@ -279,8 +279,6 @@ module.exports = {
     });
   },
 
-  update(req, res) {},
-
   delete(req, res) {
     return Binance.findOne({
       where: {

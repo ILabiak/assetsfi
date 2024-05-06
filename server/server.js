@@ -34,6 +34,15 @@ fastify.addHook('onRequest', async (req, res) => {
   }
 });
 
+// Run the server!
+fastify.listen({ host: process.env.HOST, port: process.env.PORT }, (err) => {
+  if (err) {
+    fastify.log.error(err);
+    process.exit(1);
+  }
+});
+
+
 fastify.get('/', async (req, res) => {
   // console.log(req.user)
   res.send({ hello: 'world' });
@@ -45,13 +54,5 @@ fastify.get('/test', async (req, res) => {
   } catch (error) {
     console.error('Error verifying token:', error);
     res.status(401).send({ message: 'Unauthorized' });
-  }
-});
-
-// Run the server!
-fastify.listen({ host: process.env.HOST, port: process.env.PORT }, (err) => {
-  if (err) {
-    fastify.log.error(err);
-    process.exit(1);
   }
 });

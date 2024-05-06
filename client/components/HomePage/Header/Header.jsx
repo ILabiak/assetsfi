@@ -239,14 +239,12 @@ function Header({ user, error, isLoading }) {
                                         </Box>
                                     ) : (
                                         <Box sx={{ flexGrow: 0 }}>
-                                            {/* <Tooltip title="Open settings"> */}
                                             <IconButton onClick={handleOpenUserMenu} sx={{
                                                 p: 0,
                                                 border: '2px solid white'
                                             }}>
                                                 <Avatar alt={userData?.nickname} src={userData?.picture} />
                                             </IconButton>
-                                            {/* </Tooltip> */}
                                             <Menu
                                                 sx={{
                                                     mt: { xs: '55px', md: '0' },
@@ -257,7 +255,6 @@ function Header({ user, error, isLoading }) {
                                                         borderRadius: '10px',
                                                         color: 'white'
                                                     },
-                                                    // borderRadius: '80px'
                                                 }}
                                                 id="menu-appbar"
                                                 anchorEl={anchorElUser}

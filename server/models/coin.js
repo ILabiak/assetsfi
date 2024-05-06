@@ -6,35 +6,14 @@ module.exports = (sequelize, DataTypes) => {
   }
   Coin.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      name: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      code: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      symbol: {
-        type: DataTypes.TEXT,
-      },
-      provider: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      image: {
-        type: DataTypes.TEXT,
-      },
+      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+      name: { type: DataTypes.TEXT, allowNull: false },
+      code: { type: DataTypes.TEXT, allowNull: false },
+      symbol: { type: DataTypes.TEXT },
+      provider: { type: DataTypes.TEXT, allowNull: false },
+      image: { type: DataTypes.TEXT },
     },
-    {
-      sequelize,
-      modelName: 'Coin',
-      tableName: 'coins'
-    }
+    { sequelize, modelName: 'Coin', tableName: 'coins' }
   );
   return Coin;
 };

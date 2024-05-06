@@ -37,17 +37,13 @@ const parseFoundationAddresses = async () => {
 const parseSaveLifeFoundation = async () => {
   let result = {
     orgName: 'Come Back Alive',
-    orgLogo:
-      'https://savelife.in.ua/wp-content/themes/savelife/assets/images/new-logo-en.svg',
-    addresses: [],
-    link: 'https://savelife.in.ua/donate/#donate-army-crypto',
+    orgLogo: 'https://savelife.in.ua/wp-content/themes/savelife/assets/images/new-logo-en.svg',
+    addresses: [], link: 'https://savelife.in.ua/donate/#donate-army-crypto',
   };
 
   const response = await fetch(result.link);
   const body = await response.text();
-
   const $ = cheerio.load(body);
-
   const cryptoAddresses = $('.tab-pane#donate-army-crypto');
   const parentElements = cryptoAddresses.find('.currency-icon').parent();
 
@@ -55,7 +51,6 @@ const parseSaveLifeFoundation = async () => {
     .map((index, element) => {
       const currencyIconSrc = $(element).find('.currency-icon').attr('src');
       let currencyType = '';
-
       if (currencyIconSrc.includes('icon-btc')) {
         currencyType = 'Bitcoin';
       } else if (currencyIconSrc.includes('eth.svg')) {
@@ -68,25 +63,16 @@ const parseSaveLifeFoundation = async () => {
       let walletAddresses = [];
 
       if (currencyType === 'Ethereum') {
-        $(element)
-          .next('div')
-          .find('.fw-bold.text-break.mb-1')
-          .each((index, addressElement) => {
+        $(element).next('div').find('.fw-bold.text-break.mb-1').each((index, addressElement) => {
             const address = $(addressElement).text().trim();
             walletAddresses.push(address);
           });
       } else {
-        const walletAddress = $(element)
-          .next('div')
-          .find('.fw-bold.text-break.mb-1')
-          .text()
-          .trim();
+        const walletAddress = $(element).next('div').find('.fw-bold.text-break.mb-1').text().trim();
         walletAddresses.push(walletAddress);
       }
-
       return { currencyType, walletAddresses };
-    })
-    .get();
+    }).get();
 
   if (walletInfo[0]) {
     result.addresses = walletInfo;

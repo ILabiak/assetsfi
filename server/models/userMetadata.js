@@ -10,25 +10,12 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      userId: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      name: {
-        type: DataTypes.TEXT,
-      },
-      nickname: {
-        type: DataTypes.TEXT,
-      },
-      picture: {
-        type: DataTypes.TEXT,
-      },
+      userId: { type: DataTypes.TEXT, allowNull: false },
+      name: { type: DataTypes.TEXT },
+      nickname: { type: DataTypes.TEXT },
+      picture: { type: DataTypes.TEXT },
     },
-    {
-      sequelize,
-      modelName: 'UserMetadata',
-      tableName: 'userMetadata',
-    }
+    { sequelize, modelName: 'UserMetadata', tableName: 'userMetadata' }
   );
   return UserMetadata;
 };
