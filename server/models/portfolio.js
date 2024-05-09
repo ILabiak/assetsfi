@@ -3,9 +3,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Portfolio extends Model {
     static associate(models) {
-      Portfolio.belongsTo(models.Currency, {
-        foreignKey: 'currencyId',
-      });
+      Portfolio.belongsTo(models.Currency, { foreignKey: 'currencyId' });
       Portfolio.hasMany(models.Transaction, {
         foreignKey: 'portfolioId',
         onDelete: 'cascade',
@@ -27,18 +25,9 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         unique: true,
       },
-      userId: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      title: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      currencyId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
+      userId: { type: DataTypes.TEXT, allowNull: false },
+      title: { type: DataTypes.TEXT, allowNull: false },
+      currencyId: { type: DataTypes.INTEGER, allowNull: false },
       visibility: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

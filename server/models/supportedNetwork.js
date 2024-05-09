@@ -6,22 +6,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   SupportedNetwork.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      name: {
-        type: DataTypes.TEXT,
-        unique: true,
-      },
-      code: {
-        type: DataTypes.TEXT,
-        unique: true,
-      },
-      logoUrl: {
-        type: DataTypes.TEXT,
-      },
+      id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+      name: { type: DataTypes.TEXT, unique: true },
+      code: { type: DataTypes.TEXT, unique: true },
+      logoUrl: { type: DataTypes.TEXT },
     },
     {
       sequelize,

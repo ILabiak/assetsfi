@@ -1,6 +1,5 @@
 'use strict';
 const Currency = require('../models').Currency;
-const sequelize = require('sequelize');
 require('dotenv').config();
 
 const fetch = (...args) =>
@@ -30,7 +29,9 @@ module.exports = {
     if (responseJSON?.rates) {
       return res
         .status(200)
-        .send({ rate: responseJSON.rates[req.params.currency.toUpperCase()] || 0 });
+        .send({
+          rate: responseJSON.rates[req.params.currency.toUpperCase()] || 0,
+        });
     }
     return res.status(400).send({
       message: 'Could not parse exchange rate',

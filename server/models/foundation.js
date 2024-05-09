@@ -3,9 +3,7 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Foundation extends Model {
     static associate(models) {
-      Foundation.hasMany(models.Donation, {
-        foreignKey: 'foundationId'
-      });
+      Foundation.hasMany(models.Donation, { foreignKey: 'foundationId' });
     }
   }
   Foundation.init(
@@ -16,23 +14,15 @@ module.exports = (sequelize, DataTypes) => {
         autoIncrement: true,
         allowNull: false,
       },
-      name: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        unique: true
-      },
-      logoUrl: {
-        type: DataTypes.TEXT,
-      },
-      name: {
-        type: DataTypes.TEXT,
-      },
+      name: { type: DataTypes.TEXT, allowNull: false, unique: true },
+      logoUrl: { type: DataTypes.TEXT },
+      name: { type: DataTypes.TEXT },
     },
     {
       sequelize,
       modelName: 'Foundation',
-      tableName: 'foundations'
-    },
+      tableName: 'foundations',
+    }
   );
   return Foundation;
 };
