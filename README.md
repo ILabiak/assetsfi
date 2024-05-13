@@ -98,6 +98,6 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 ---
 
-> [AssetsFi](https://assetsfi.online/)
-> GitHub [@ILabiak](https://github.com/ILabiak)
+> [AssetsFi](https://assetsfi.online/) <br>
+> GitHub [@ILabiak](https://github.com/ILabiak)<br>
 > LinkedIn [@ilabiak](https://www.linkedin.com/in/ilabiak/)
