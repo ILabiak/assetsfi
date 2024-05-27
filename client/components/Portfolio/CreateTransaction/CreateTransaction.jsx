@@ -158,7 +158,9 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
             }}
             open={backdropOpen}
         >
-            <Box className={styles.createPortfolioContainer} ref={transactionCreateRef}>
+            <Box className={styles.createPortfolioContainer} ref={transactionCreateRef} sx={{
+                width: {xs: '90%', md:'30%'}
+            }}>
                 <Typography
                     sx={{
                         fontFamily: 'DM Sans',

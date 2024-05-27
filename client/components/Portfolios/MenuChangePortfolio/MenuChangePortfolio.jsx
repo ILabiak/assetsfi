@@ -73,7 +73,9 @@ function MenuChangePortfolio({ portfolio, handlePortfoliosChange }) {
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.deletePortfolioContainer} ref={portfolioChangeRef}>
+                <Box className={styles.deletePortfolioContainer} ref={portfolioChangeRef} sx={{
+                width: {xs: '90%', md:'25%'}
+            }}>
 
                     <Typography
                         sx={{

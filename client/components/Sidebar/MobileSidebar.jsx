@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation'
 
 import MenuIcon from '@mui/icons-material/Menu';
+import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SvgIcon from "@mui/material/SvgIcon";
 import WalletIcon from '@mui/icons-material/Wallet';
@@ -38,7 +39,7 @@ const MobileSidebar = ({ drawerOpen, setDrawerOpen }) => {
                 </svg>
             </SvgIcon>, active: pathname == '/binance' ? true : false, href: '/binance'
         },
-        { text: 'Settings', icon: <WalletIcon />, active: pathname == '/settings' ? true : false, href: '/settings' },]
+        { text: 'Settings', icon: <SettingsIcon />, active: pathname == '/settings' ? true : false, href: '/settings' },]
     return (
         <ThemeProvider theme={theme}>
             <SwipeableDrawer
@@ -84,6 +85,7 @@ const MobileSidebar = ({ drawerOpen, setDrawerOpen }) => {
                             aria-haspopup="true"
                             onClick={() => setDrawerOpen(!drawerOpen)}
                             color="inherit"
+                            sx={{ paddingRight: '20px'}}
                         >
                             <MenuIcon fontSize='large' sx={{
                                 color: 'white'

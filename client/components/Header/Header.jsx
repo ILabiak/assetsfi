@@ -79,7 +79,7 @@ function DashboardHeader({ title }) {
                                 component="a"
                                 href='/'
                                 sx={{
-                                    mr: 2,
+                                    // mr: 2,
                                     alignItems: 'center',
                                     height: '68px',
                                     display: 'flex',
@@ -91,18 +91,18 @@ function DashboardHeader({ title }) {
                                 noWrap
                                 component="a"
                                 sx={{
-                                    mr: 2,
+                                    // mr: 2,
                                     fontFamily: 'DM Sans',
                                     fontWeight: 1000,
                                     fontSize: '25px',
                                     color: 'inherit',
                                     textDecoration: 'none',
-                                    marginLeft: '10px',
+                                    // marginLeft: '0px',
                                 }}
                             >
                                 {title}
                             </Typography>
-                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none', justifyContent: 'flex-end', paddingRight: '10px' } }}>
+                            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none', justifyContent: 'flex-end', } }}>
                                 <IconButton
                                     size="large"
                                     aria-label="Menu"
@@ -110,6 +110,9 @@ function DashboardHeader({ title }) {
                                     aria-haspopup="true"
                                     onClick={()=>setDrawerOpen(!drawerOpen)}
                                     color="inherit"
+                                    sx={{
+                                        justifyContent: 'flex-end'
+                                    }}
                                 >
                                     <MenuIcon fontSize='large' />
                                 </IconButton>

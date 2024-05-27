@@ -92,7 +92,9 @@ function CreatePortfolioButton({ isLarge, handlePortfoliosChange }) {
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.createPortfolioContainer} ref={portfolioCreateRef}>
+                <Box className={styles.createPortfolioContainer} ref={portfolioCreateRef}sx={{
+                width: {xs: '90%', md:'60%'}
+            }}>
                     <Typography
                         sx={{
                             fontFamily: 'DM Sans',

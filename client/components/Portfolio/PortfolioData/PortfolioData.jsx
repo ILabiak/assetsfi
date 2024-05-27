@@ -46,14 +46,16 @@ function PortfolioData({ uuid }) {
             width: { xs: '100%', md: `calc(100% - 260px)` },
             ml: { xs: '0', md: '260px' }, // sidebar width
             minHeight: { xs: `100vh`, md: `calc(100vh - 100px)` },
-            mt: { xs: '0px', md: '100px' } // header hight
+            mt: { xs: '100px', md: '100px' } // header hight
         }}>
 
             {
                 portfloioData ? (
                     portfloioData?.title ? (
                         <Box>
-                            <Box className={styles.tabsContainer}>
+                            <Box sx={{
+                                margin: {xs: '0px 15px 0', md: '0px 30px 0'}
+                            }}>
                                 <Tabs
                                     value={tabValue}
                                     onChange={handleChange}

@@ -14,7 +14,9 @@ function CoinsStatsTable({ portfolio, handlePortfoliosChange, valuesHidden }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box className={styles.coinStatsContainer}>
+            <Box className={styles.coinStatsContainer} sx={{
+                margin: {xs: '20px 15px 0', md: '20px 30px 0'}
+            }}>
                 <TableContainer sx={{
                     borderRadius: '5px'
                 }}>
@@ -25,12 +27,12 @@ function CoinsStatsTable({ portfolio, handlePortfoliosChange, valuesHidden }) {
                     }} aria-label="portfolios table">
                         <TableHead variant='default' >
                             <TableRow variant='defaultHead'>
-                                <TableCell>Name</TableCell>
+                                <TableCell >Name</TableCell>
                                 <TableCell align="right">Total value</TableCell>
                                 <TableCell align="right">Amount</TableCell>
                                 <TableCell align="right">Price</TableCell>
-                                <TableCell align="right">24H change</TableCell>
-                                <TableCell align="right">Total change</TableCell>
+                                <TableCell width={'17%'} align="right">24H change</TableCell>
+                                <TableCell width={'17%'} align="right">Total change</TableCell>
                                 <TableCell align="right">Total invested</TableCell>
                             </TableRow>
                         </TableHead>
