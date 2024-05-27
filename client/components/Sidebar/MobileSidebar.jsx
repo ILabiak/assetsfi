@@ -1,109 +1,159 @@
 import * as React from 'react';
 import styles from './sidebar.module.css';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import LogoutIcon from '@mui/icons-material/Logout';
-import WindowIcon from '@mui/icons-material/Window';
-import SwapVerticalCircleIcon from '@mui/icons-material/SwapVerticalCircle';
-import WalletIcon from '@mui/icons-material/Wallet';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './SidebarTheme';
+import {
+    Box, SwipeableDrawer, List, ListItem, ListItemButton, ListItemIcon,
+    Link, Typography, Divider, IconButton
+} from '@mui/material';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation'
 import { usePathname } from 'next/navigation'
 
-const drawerHight = 90;
+import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
+import SvgIcon from "@mui/material/SvgIcon";
+import WalletIcon from '@mui/icons-material/Wallet';
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import logo from '@/public/logo.svg';
 
 
-const MobileSidebar = React.memo(() => {
-    const router = useRouter();
+const MobileSidebar = ({ drawerOpen, setDrawerOpen }) => {
     const pathname = usePathname()
 
-    const sidebarPages = [{ text: 'Home', icon: <WindowIcon />, active: pathname == '/dashboard' ? true : false, href: '/dashboard' },
-    // { text: 'Transactions', icon: <SwapVerticalCircleIcon />, active: pathname == '/transactions' ? true : false, href: '/transactions' },
-    { text: 'Portfolios', icon: <WalletIcon />, active: pathname == '/portfolios' ? true : false, href: '/portfolios' },
-    { text: 'Log out', icon: <WalletIcon />, active: false, href: '/api/auth/logout' }]
-    return (
-        <Drawer
-            sx={{
-                display: { xs: 'flex', md: 'none' },
-                height: drawerHight,
-                flexShrink: 0,
-                '& .MuiDrawer-paper': {
-                    height: drawerHight,
-                    boxSizing: 'border-box',
-                    backgroundColor: 'black',
-                    justifyContent: 'center'
-                },
-            }}
-            variant="permanent"
-            anchor="bottom"
-        >
-            <List disablePadding sx={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
+    const sidebarPages = [
+        { text: 'Portfolios', icon: <WalletIcon />, active: pathname == '/portfolios' ? true : false, href: '/portfolios' },
+        { text: 'Donations', icon: <VolunteerActivismIcon />, active: pathname == '/donations' ? true : false, href: '/donations' },
+        {
+            text: 'Binance Spot', icon: <SvgIcon sx={{
+                color: pathname == '/binance' ? 'white' : '#AEAEAE',
+                '& path': {
+                    fill: 'currentColor',
+                }
             }}>
-                {sidebarPages.map((item, index) => (
-                    <ListItem sx={{
-                        padding: '5px'
-                    }} key={item.text} >
-                        <ListItemButton className={styles.listItem} selected={item.active}
-                            onClick={() => router.push(item.href)}
-                            sx={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: '10px 5px',
-                                borderRadius: '5px',
-                                "&.Mui-selected": {
-                                    backgroundColor: "#0328EE"
-                                },
-                                "&.Mui-selected:hover": {
-                                    backgroundColor: "#010D50"
-                                },
-                                "&.Mui-focusVisible": {
-                                    backgroundColor: "#010D50"
-                                },
-                                "&:hover": {
-                                    backgroundColor: "#010D50",
-                                    "& svg": {
-                                        color: "white"
-                                    },
-                                    "& p": {
-                                        color: "white"
-                                    }
-                                },
-                                "& .MuiListItemIcon-root": {
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48" strokeWidth={1.5} stroke="currentColor" id="Binance"><path
+                    fill="#ffffff"
+                    d="M14.6782 20.1697L23.9997 10.8486 33.3262 20.1746 38.7501 14.7507 23.9997 0 9.25428 14.7458 14.6782 20.1697zM10.8479 23.9988L5.42408 18.575 0 23.9991 5.42381 29.4229 10.8479 23.9988zM23.9997 37.1507L14.6782 27.8296 9.24634 33.2463 23.9997 47.9993 38.7501 33.2489 38.7527 33.2459 33.3258 27.825 23.9997 37.1507zM42.5759 29.4254L48 24.0014 42.5762 18.5775 37.1521 24.0016 42.5759 29.4254z"
+                    className="color000000 svgShape"></path>
+                    <path fill="#ffffff" d="M29.5036 23.9968H29.5013L29.5063 23.9995L29.5036 24.0025L23.9997 29.5064L18.5008 24.0074L18.4932 23.9995L23.9997 18.4929L29.5036 23.9968Z" className="color000000 svgShape"></path>
+                </svg>
+            </SvgIcon>, active: pathname == '/binance' ? true : false, href: '/binance'
+        },
+        { text: 'Settings', icon: <WalletIcon />, active: pathname == '/settings' ? true : false, href: '/settings' },]
+    return (
+        <ThemeProvider theme={theme}>
+            <SwipeableDrawer
+                sx={{
+                    display: { xs: 'flex', md: 'none' },
+                    width: '70vw',
+                    flexShrink: 0,
+                    '& .MuiDrawer-paper': {
+                        width: '70vw',
+                    },
 
-                            }}>
-                            <ListItemIcon sx={{
-                                color: item.active ? 'white' : '#AEAEAE',
-                            }}>
-                                {item.icon}
-                            </ListItemIcon>
-                            <Typography sx={{
-                                fontSize: '16px',
-                                fontFamily: 'DM Sans',
-                                color: item.active ? 'white' : '#AEAEAE',
-                            }}>
-                                {item.text}
+                }}
+                open={drawerOpen}
+                onClose={() => setDrawerOpen(false)}
+                onOpen={(() => setDrawerOpen(true))}
+                anchor="right"
+            >
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-between'
+                    }}>
+                        <Link href={'/'} variant='logo' >
+                            <Image
+                                priority
+                                src={logo}
+                                alt="logo"
+                                height={50}
+                                width={50}
+                            />
+                            <Typography variant='logo1' noWrap >
+                                AssetsFi
                             </Typography>
-                        </ListItemButton>
-                    </ListItem>
-                ))}
-            </List>
-        </Drawer>
+                        </Link>
+                        <IconButton
+                            size="large"
+                            aria-label="Menu"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={() => setDrawerOpen(!drawerOpen)}
+                            color="inherit"
+                        >
+                            <MenuIcon fontSize='large' sx={{
+                                color: 'white'
+                            }} />
+                        </IconButton>
+                    </Box>
+
+
+                    <Divider
+                    />
+                    <List>
+                        {sidebarPages.map((item, index) => (
+                            <ListItem key={item.text} >
+                                <Link
+                                    variant='default'
+                                    href={item.href}>
+                                    <ListItemButton className={styles.listItem} selected={item.active}>
+                                        <ListItemIcon sx={{
+                                            color: item.active ? 'white' : '#AEAEAE',
+                                        }}>
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <Typography sx={{
+                                            fontSize: '20px',
+                                            fontFamily: 'DM Sans',
+                                            color: item.active ? 'white' : '#AEAEAE',
+                                        }}>
+                                            {item.text}
+                                        </Typography>
+                                    </ListItemButton>
+                                </Link>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Box>
+
+                <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column'
+                }}>
+                    <Divider sx={{
+                        alignSelf: 'center',
+                        backgroundColor: '#AEAEAE',
+                        width: '80%'
+                    }} />
+                    <List>
+                        <ListItem key='logout'>
+                            <Link
+                                variant='default'
+                                href={'/api/auth/logout'}
+                            >
+                                <ListItemButton className={styles.listItem}>
+                                    <ListItemIcon sx={{ color: '#AEAEAE', }}>
+                                        <LogoutIcon />
+                                    </ListItemIcon>
+                                    <Typography sx={{
+                                        fontSize: '20px',
+                                        fontFamily: 'DM Sans',
+                                        color: '#AEAEAE'
+                                    }}>
+                                        Log Out
+                                    </Typography>
+                                </ListItemButton>
+                            </Link>
+                        </ListItem>
+                    </List>
+                </Box>
+            </SwipeableDrawer>
+        </ThemeProvider>
     );
-})
+}
 
 export default MobileSidebar
