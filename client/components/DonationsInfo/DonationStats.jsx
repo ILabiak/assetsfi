@@ -25,7 +25,11 @@ function DonationStats({ handleDonationsChange, donations, foundations, currenci
                 </Grid>
 
             </Box>
-            <Box className={styles.addButtonContainer}>
+            <Box className={styles.addButtonContainer} sx={{
+                marginBottom: {xs: '15px', md: '5px'},
+                marginTop: {xs: '25px', md: '15px'},
+                justifyContent: {xs: 'center', md: 'flex-end'}
+            }}>
                 <Box>
                     <AddDonationButton 
                     handleDonationsChange={handleDonationsChange} 

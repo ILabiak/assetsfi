@@ -59,7 +59,9 @@ function MenuDeleteDonation({ donation, handleDonationsChange }) {
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.deleteDonationContainer} ref={portfolioDeleteRef}>
+                <Box className={styles.deleteDonationContainer} ref={portfolioDeleteRef} sx={{
+                width: {xs: '90%', md:'25%'}
+            }}>
                     <Box className={styles.warningContainer}>
                         <Box className={styles.warning}>
                             <Box className={styles.deleteIcon}>

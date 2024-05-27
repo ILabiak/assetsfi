@@ -3,12 +3,14 @@ import styles from './donationsinfo.module.css';
 import Foundations from './Foundations';
 import MyDonations from './MyDonations';
 import Tracker from './Tracker';
-import { Box, Tabs, Tab } from '@mui/material';
+import { Box, Tabs, Tab, useMediaQuery, useTheme } from '@mui/material';
 
 
 function Donations() {
     const [tabValue, setTabValue] = useState(0)
     const [currencies, setCurrencies] = useState();
+    const theme = useTheme();
+    const isXs = useMediaQuery(theme.breakpoints.down('md'));
 
     const handleChange = (event, newValue) => {
         setTabValue(newValue);
@@ -38,10 +40,12 @@ function Donations() {
             width: { xs: '100%', md: `calc(100% - 260px)` },
             ml: { xs: '0', md: '260px' }, // sidebar width
             minHeight: { xs: `100vh`, md: `calc(100vh - 100px)` },
-            mt: { xs: '0px', md: '100px' } // header hight
+            mt: { xs: '100px', md: '100px' } // header hight
         }}>
             <Box>
-                <Box className={styles.tabsContainer}>
+                <Box className={styles.tabsContainer} sx={{
+                    margin: { xs: '0px 15px 0', md: '0px 30px 0' }
+                }}>
                     <Tabs
                         value={tabValue}
                         onChange={handleChange}
@@ -53,7 +57,7 @@ function Donations() {
                             '& button': {
                                 minHeight: '35px',
                                 border: '1px solid',
-                                marginRight: '20px',
+                                marginRight: { xs: '10px', md: '20px' },
                                 borderRadius: '20px',
                                 padding: '0px 10px',
                                 '&.Mui-selected': {
@@ -69,7 +73,7 @@ function Donations() {
                     >
                         <Tab label="My donations" tabIndex={0} />
                         <Tab label="Foundations" tabIndex={1} />
-                        <Tab label="Donations Tracker" tabIndex={2} />
+                        <Tab label={isXs ? "Tracker" : "Donations Tracker"} tabIndex={2}/>
                     </Tabs>
                 </Box>
 

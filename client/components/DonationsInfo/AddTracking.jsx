@@ -95,7 +95,9 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.createDonationContainer} ref={trackingCreateRef}>
+                <Box className={styles.createDonationContainer} ref={trackingCreateRef} sx={{
+                    width: {xs: '90%', md: '30%'},
+                }}>
                     <Typography
                         sx={{
                             fontFamily: 'DM Sans',

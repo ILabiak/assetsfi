@@ -1,13 +1,27 @@
 import React, { useState, useRef } from 'react';
 import styles from './donationsinfo.module.css';
-import { Typography, Box, Backdrop } from '@mui/material';
+import { Typography, Box, Backdrop, useMediaQuery, useTheme } from '@mui/material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DeleteIcon from '@mui/icons-material/Delete';
+
+
+function truncateMiddle(str, startLength, endLength) {
+    if (str.length <= startLength + endLength) {
+        return str;
+    }
+    
+    const start = str.substring(0, startLength);
+    const end = str.substring(str.length - endLength);
+    
+    return `${start}...${end}`;
+}
 
 function DeleteTracking({ addressData, handleTrackingsChange }) {
     const [backdropOpen, setBackdropOpen] = useState(false)
     const [deleteButtonActive, setDeleteButtonActive] = useState(true)
     const trackingDeleteRef = useRef(null);
+    const theme = useTheme();
+    const isXs = useMediaQuery(theme.breakpoints.down('md'));
 
     const handleClose = (event) => {
         if (
@@ -62,13 +76,14 @@ function DeleteTracking({ addressData, handleTrackingsChange }) {
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.deletePortfolioContainer} ref={trackingDeleteRef}>
+                <Box className={styles.deletePortfolioContainer} ref={trackingDeleteRef} sx={{
+                    width: {xs: '90%', md: '35%'},
+                }}>
                     <Box className={styles.warningContainer}>
                         <Box className={styles.warning}>
                             <Box className={styles.deleteBackdropIcon}>
                                 <DeleteIcon />
                             </Box>
-
                             <Box className={styles.warningTextBox}>
                                 <Typography
                                     sx={{
@@ -76,7 +91,7 @@ function DeleteTracking({ addressData, handleTrackingsChange }) {
                                         fontSize: '16px',
                                         fontWeight: '1000',
                                     }}>
-                                    {`Delete ${addressData.address}`}
+                                    {`Delete ${isXs ? truncateMiddle(addressData.address, 8, 8) : addressData.address}`}
                                 </Typography>
                                 <Typography
                                     sx={{
@@ -87,9 +102,7 @@ function DeleteTracking({ addressData, handleTrackingsChange }) {
                                     Do you want to delete this tracking address?
                                 </Typography>
                             </Box>
-
                         </Box>
-
                     </Box>
 
                     <Box className={styles.buttonsContainer}>

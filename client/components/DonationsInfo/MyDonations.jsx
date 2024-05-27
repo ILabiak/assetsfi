@@ -52,7 +52,9 @@ function MyDonations({ currencies }) {
     }
 
     return (
-        <Box className={styles.myDonationsContainer}>
+        <Box className={styles.myDonationsContainer} sx={{
+            margin: { xs: '0 15px 30px' , md: '0 30px 30px'}
+        }}>
             {myDonationsData ? (
                 <>
                     {
