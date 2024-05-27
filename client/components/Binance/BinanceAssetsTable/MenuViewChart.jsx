@@ -64,7 +64,9 @@ function MenuViewChart({ asset, handleChange }) {
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.assetChartContainer} ref={chartRef}>
+                <Box className={styles.assetChartContainer} ref={chartRef} sx={{
+                    width: {xs: '95%', md: '80%'}
+                }}>
                     <Box className={styles.assetTitle}>
                         <Box className={styles.assetInfo}>
                             <Image alt='assetImg' width={50} height={50} src={asset?.logo} />
@@ -86,9 +88,18 @@ function MenuViewChart({ asset, handleChange }) {
                             </Box>
                         </Box>
                     </Box>
-                    <Box className={styles.chartInfo}>
+                    <Box className={styles.chartInfo} sx={{
+                        flexDirection: {xs: 'column', md: 'row'},
+                        height: {xs: '80%', md: '55%'},
+                                minHeight: {xs: '80%', md: '55%'},
+                    }}>
                         <Box
                             className={styles.chart}
+                            sx={{
+                                minWidth: {xs: '100%', md: '70%'},
+                                height: {xs: '50%', md: '100%'},
+                                minHeight: {xs: '50%', md: '100%'},
+                        }}
                         >
                             {backdropOpen &&
                                 (
@@ -103,7 +114,9 @@ function MenuViewChart({ asset, handleChange }) {
                         />
                     </Box>
 
-                    <Box className={styles.ordersContainer}>
+                    <Box className={styles.ordersContainer} sx={{
+                                display: {xs: 'none', md: 'flex'}
+                            }}>
                         <Box className={styles.ordersTitle}>
                             <Typography sx={{
                                 fontWeight: 600,
@@ -115,7 +128,7 @@ function MenuViewChart({ asset, handleChange }) {
                             </Typography>
                         </Box>
                         {orders && (
-                            <Box className={styles.ordersTable}>
+                            <Box className={styles.ordersTable} >
                                 <OrdersTable orders={orders} handleOrdersChanged={handleOrdersChanged} />
                             </Box>
                         )}

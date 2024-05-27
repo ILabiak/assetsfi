@@ -122,7 +122,10 @@ function TradingTools({ asset, handleOrdersChanged, handleChange }) {
                         <>
                             {
                                 tradingEnabled ? (
-                                    <Box className={styles.tradingTools}>
+                                    <Box className={styles.tradingTools} sx={{
+                                        ml: {xs: '0px', md: '30px'},
+                                        mt: {xs: '20px', md: '0px'}
+                                    }}>
                                         <Box className={styles.tradeBuySellButtons}>
                                             <Box
                                                 onClick={activateBuyButton}

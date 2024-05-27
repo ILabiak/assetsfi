@@ -65,7 +65,7 @@ function BinanceData() {
                 width: { xs: '100%', md: `calc(100% - 260px)` },
                 ml: { xs: '0', md: '260px' }, // sidebar width
                 minHeight: { xs: `100vh`, md: `calc(100vh - 100px)` },
-                mt: { xs: '0px', md: '100px' } // header hight
+                mt: { xs: '100px', md: '100px' } // header hight
             }}>
                 {
                     binanceData ? (

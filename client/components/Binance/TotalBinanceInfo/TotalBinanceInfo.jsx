@@ -9,7 +9,9 @@ function TotalBinanceInfo({ totalData, valuesHidden }) {
             display: 'flex',
             flexDirection: 'column'
         }}>
-            <Box className={styles.totalPotrfolioStats}>
+            <Box className={styles.totalPotrfolioStats} sx={{
+                margin: {xs: '0px 15px 0', md: '0px 30px 0'}
+            }}>
                 <Grid container columnSpacing={4} spacing={1}>
                     <Grid item xs={12} md={6}>
                         <MiniStats title={'Total Binance Spot Value'} percentage={''} value={valuesHidden ? '***' : `${totalData?.totalValue.toFixed(2)} ${totalData['Currency']?.symbol || "$"}`} />
