@@ -18,17 +18,17 @@ function CoinsStatsRow({ coin, currency, handlePortfoliosChange, valuesHidden })
                         </Typography>
                     </Box>
                 </TableCell>
-                <TableCell align="right">
+                <TableCell  align="right">
                     {valuesHidden ? '***' : `${coin?.totalValue.toFixed(2)} ${currency?.symbol}`}
                 </TableCell>
-                <TableCell align="right">
+                <TableCell  align="right">
                     {valuesHidden ? '***' : `${parseFloat(coin?.amount.toFixed(5))} ${coin?.symbol.toUpperCase()}`}
                 </TableCell>
                 <TableCell align="right">
                     {valuesHidden ? '***' : `${coin?.price.toFixed(2)} ${currency?.symbol}`}
                 </TableCell>
-                <TableCell align="right">
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
+                <TableCell  width={'17%'} align="right">
+                    <Box sx={{ display: 'flex', flexDirection: {xs: 'column',md:'row'}, justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
                             {valuesHidden ? '***' : `${coin?.dailyChange.toFixed(2)} ${currency?.symbol}`}
                         </Box>
@@ -43,8 +43,8 @@ function CoinsStatsRow({ coin, currency, handlePortfoliosChange, valuesHidden })
                         }
                     </Box>
                 </TableCell>
-                <TableCell align="right">
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
+                <TableCell  width={'17%'} align="right">
+                    <Box sx={{ display: 'flex', flexDirection: {xs: 'column',md:'row'}, justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
                             {valuesHidden ? '***' : `${coin?.totalChange.toFixed(2)} ${currency?.symbol}`}
                         </Box>

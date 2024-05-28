@@ -13,7 +13,9 @@ function BinanceDataTitle({ valuesHidden, setValuesHidden, handleChange }) {
             display: 'flex',
             flexDirection: 'column'
         }}>
-            <Box className={styles.totalBinanceTitleInfoContainer}>
+            <Box className={styles.totalBinanceTitleInfoContainer} sx={{
+                margin: {xs: '0px 15px 20px', md: '0px 30px 20px'}
+            }}>
                 <Box className={styles.totalBinanceTitleValueInfo}>
                     <Box sx={{
                         display: 'flex',

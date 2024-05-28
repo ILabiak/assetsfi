@@ -59,7 +59,9 @@ function BinanceDeleteButton({ handleBinanceChange }) {
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.deletePortfolioContainer} ref={binanceDeleteRef}>
+                <Box className={styles.deletePortfolioContainer} ref={binanceDeleteRef} sx={{
+                    width: {xs: '90%', md: '25%'}
+                }}>
                     <Box className={styles.warningContainer}>
                         <Box className={styles.warning}>
                             <Box className={styles.deleteIcon}>

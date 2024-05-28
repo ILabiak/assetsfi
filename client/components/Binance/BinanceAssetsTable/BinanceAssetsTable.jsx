@@ -20,7 +20,9 @@ function BinanceAssetsTable({ binanceAssets, valuesHidden, handleChange }) {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box className={styles.coinStatsContainer}>
+            <Box className={styles.coinStatsContainer} sx={{
+                margin: {xs: '10px 15px 0', md: '10px 30px 0'}
+            }}>
                 <TableContainer sx={{
                     borderRadius: '5px'
                 }}>

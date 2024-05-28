@@ -126,7 +126,9 @@ function EditTransaction({ transactionEditRef, handleClose, backdropOpen, setBac
             }}
             open={backdropOpen}
         >
-            <Box className={styles.createPortfolioContainer} ref={transactionEditRef}>
+            <Box className={styles.createPortfolioContainer} ref={transactionEditRef} sx={{
+                width: {xs: '90%', md:'30%'}
+            }}>
                 <Typography
                     sx={{
                         fontFamily: 'DM Sans',

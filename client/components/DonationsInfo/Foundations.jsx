@@ -1,6 +1,6 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './donationsinfo.module.css';
-import { Box, Snackbar, Alert } from '@mui/material';
+import { Box, Snackbar, Alert, useMediaQuery, useTheme } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import FoundationInfo from './FoundationInfo';
 import Masonry from '@mui/lab/Masonry';
@@ -9,6 +9,8 @@ import Masonry from '@mui/lab/Masonry';
 function Foundations() {
     const [foundationsData, setFoundationsData] = useState()
     const [successOpen, setSuccessOpen] = useState(false);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
     const handleSuccessClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -43,10 +45,13 @@ function Foundations() {
     }, []);
 
     return (
-        <Box className={styles.foundationsContainer}>
+        <Box className={styles.foundationsContainer} sx={{
+            marginLeft: {xs: '15px', md: '30px'},
+            marginRight: {xs: '15px', md: '30px'},
+        }}>
             {foundationsData ? (
                 <Box sx={{ marginRight: -4 }}>
-                    <Masonry columns={2} spacing={4} >
+                    <Masonry columns={isMobile ? 1 : 2} spacing={4} >
                         {
                             foundationsData.data.map((el, index) => (
                                 <FoundationInfo

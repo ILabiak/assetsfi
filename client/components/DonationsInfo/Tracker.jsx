@@ -1,6 +1,6 @@
 import React, { useState, useEffect, use } from 'react';
 import styles from './donationsinfo.module.css';
-import { Button, Typography, Box, Snackbar, Alert } from '@mui/material';
+import { Button, Typography, Box, Snackbar, Alert, useMediaQuery, useTheme } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import AddTrackingButton from './AddTrackingButton';
 import AddressInfo from './AddressInfo'
@@ -10,12 +10,9 @@ import Masonry from '@mui/lab/Masonry';
 function Tracker({ currencies }) {
     const [trackingData, setTrackingData] = useState()
     const [networks, setNetworks] = useState()
-
-    // FIX !!!!!!!!!
-    // const [currencies, setCurrencies] = useState(
-    //     [{ "id": 1, "name": "USD", "code": "usd", "symbol": "$", "createdAt": "2024-03-10T18:21:45.952Z", "updatedAt": "2024-03-10T18:21:45.952Z" }, { "id": 2, "name": "EUR", "code": "eur", "symbol": "€", "createdAt": "2024-03-10T18:21:45.952Z", "updatedAt": "2024-03-10T18:21:45.952Z" }, { "id": 3, "name": "UAH", "code": "uah", "symbol": "₴", "createdAt": "2024-03-10T18:21:45.952Z", "updatedAt": "2024-03-10T18:21:45.952Z" }]
-    // );
     const [successOpen, setSuccessOpen] = useState(false);
+    const theme = useTheme();
+    const isXs = useMediaQuery(theme.breakpoints.down('md'));
 
 
     const handleSuccessClose = (event, reason) => {
@@ -71,7 +68,10 @@ function Tracker({ currencies }) {
     }
 
     return (
-        <Box className={styles.trackerContainer}>
+        <Box className={styles.trackerContainer} sx={{
+            marginLeft: {xs: '15px', md: '30px'},
+            marginRight: {xs: '15px', md: '30px'},
+        }}>
             <Box className={styles.titleContainer}>
                 <Box className={styles.totalBinanceTitleValueInfo}>
                     <Typography sx={{
@@ -92,7 +92,7 @@ function Tracker({ currencies }) {
                     {
                         trackingData?.addresses ? (
                             <Box sx={{ marginRight: -4 }}>
-                                <Masonry columns={2} spacing={4} >
+                                <Masonry columns={isXs ? 1 : 2} spacing={4} >
                                     {trackingData?.addresses.map((el, index) => (
                                         <AddressInfo
                                             key={`addressinfo-${index}`}

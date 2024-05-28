@@ -62,7 +62,9 @@ function MenuDeleteTransaction({ transaction, handleTransactionsChange }) {
                 }}
                 open={backdropOpen}
             >
-                <Box className={styles.deletePortfolioContainer} ref={portfolioDeleteRef}>
+                <Box className={styles.deletePortfolioContainer} ref={portfolioDeleteRef} sx={{
+                width: {xs: '90%', md:'25%'}
+            }}>
                     <Box className={styles.warningContainer}>
                         <Box className={styles.warning}>
                             <Box className={styles.deleteIcon}>

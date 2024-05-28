@@ -95,7 +95,9 @@ function EditDonation({ donationEditRef, handleClose, backdropOpen, setBackdropO
             }}
             open={backdropOpen}
         >
-            <Box className={styles.createPortfolioContainer} ref={donationEditRef}>
+            <Box className={styles.createPortfolioContainer} ref={donationEditRef} sx={{
+                width: {xs: '90%', md:'30%'}
+            }}>
                 <Typography
                     sx={{
                         fontFamily: 'DM Sans',

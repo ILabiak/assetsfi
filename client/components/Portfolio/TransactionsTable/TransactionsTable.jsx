@@ -19,7 +19,9 @@ function TransactionsTable({ transactions, currency, handleTransactionsChange, v
 
     return (
         <ThemeProvider theme={theme}>
-            <Box className={styles.coinStatsContainer}>
+            <Box className={styles.coinStatsContainer} sx={{
+                margin: {xs: '20px 15px 0', md: '20px 30px 0'}
+            }}>
                 <TableContainer sx={{
                     borderRadius: '5px'
                 }}>

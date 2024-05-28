@@ -112,15 +112,15 @@ function DonationRow({ donation, valuesHidden, handleDonationsChange, foundation
                         open={menuOpen}
                         onClose={handleMenuClose}
                     >
-                        <MenuDeleteDonation
-                            donation={donation}
-                            handleDonationsChange={handleDonationsChange}
-                        />
                         <MenuChangeDonation
                             donation={donation}
                             handleDonationsChange={handleDonationsChange}
                             foundations={foundations}
                             currencies={currencies}
+                        />
+                        <MenuDeleteDonation
+                            donation={donation}
+                            handleDonationsChange={handleDonationsChange}
                         />
                     </Menu>
                 </TableCell>

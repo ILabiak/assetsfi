@@ -18,7 +18,10 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
             display: 'flex',
             flexDirection: 'column'
         }}>
-            <Box className={styles.totalPortfoliosInfoContainer}>
+            <Box className={styles.totalPortfoliosInfoContainer} sx={{
+                margin: { xs: '0 15px 0', md: '0 30px 0' },
+                // flexDirection: {xs: 'column', md: 'row'}
+            }}>
                 <Box className={styles.totalPortfoliosValueInfo}>
                     <Box sx={{
                         display: 'flex',
@@ -73,32 +76,7 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
                     </Box>
                 </Box>
 
-                {singlePortfolio ? 
-                <Box className={styles.createButtonContainer}>
-                    {
-                        valuesHidden ? (
-                            <VisibilityOffIcon
-                                onClick={() => { setValuesHidden(false) }}
-                                sx={{
-                                    color: '#AEAEAE',
-                                    fontSize: '20px',
-                                    marginRight: '20px',
-                                    cursor: 'pointer',
-                                }} />
-                        ) : (
-                            <VisibilityIcon
-                                onClick={() => { setValuesHidden(true) }}
-                                sx={{
-                                    color: '#AEAEAE',
-                                    fontSize: '20px',
-                                    marginRight: '20px',
-                                    cursor: 'pointer',
-                                }} />
-                        )
-                    }
-                    {/* <CreatePortfolioButton handlePortfoliosChange={handlePortfoliosChange} /> */}
-                    <CreateTransactionButton currency={totalData['Currency']} portfolio={totalData} handleTransactionsChange={handlePortfolioChange} />
-                </Box> :
+                {singlePortfolio ?
                     <Box className={styles.createButtonContainer}>
                         {
                             valuesHidden ? (
@@ -121,13 +99,40 @@ function TotalPortfoliosInfo({ totalData, handlePortfolioChange, singlePortfolio
                                     }} />
                             )
                         }
+                        {/* <CreatePortfolioButton handlePortfoliosChange={handlePortfoliosChange} /> */}
+                        <CreateTransactionButton currency={totalData['Currency']} portfolio={totalData} handleTransactionsChange={handlePortfolioChange} />
+                    </Box> :
+                    <Box className={styles.createButtonContainer}>
+                        {
+                            valuesHidden ? (
+                                <VisibilityOffIcon
+                                    onClick={() => { setValuesHidden(false) }}
+                                    sx={{
+                                        color: '#AEAEAE',
+                                        fontSize: '20px',
+                                        marginRight: { xs: '10px', md: '20px' },
+                                        cursor: 'pointer',
+                                    }} />
+                            ) : (
+                                <VisibilityIcon
+                                    onClick={() => { setValuesHidden(true) }}
+                                    sx={{
+                                        color: '#AEAEAE',
+                                        fontSize: '20px',
+                                        marginRight: { xs: '10px', md: '20px' },
+                                        cursor: 'pointer',
+                                    }} />
+                            )
+                        }
 
                         <CreatePortfolioButton handlePortfoliosChange={handlePortfolioChange} portfolio={totalData} />
                     </Box>
                 }
             </Box>
 
-            <Box className={styles.totalPotrfolioStats}>
+            <Box className={styles.totalPotrfolioStats} sx={{
+                margin: { xs: '20px 15px 0', md: '20px 30px 0' },
+            }}>
                 <Grid container columnSpacing={4} spacing={1}>
                     <Grid item xs={12} md={4}>
                         <MiniStats title={'Daily Gain'}

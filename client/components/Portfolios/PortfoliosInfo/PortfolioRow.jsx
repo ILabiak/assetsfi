@@ -45,7 +45,7 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
                 key={portfolio.uuid}
                 variant='defaultItem'
             >
-                <TableCell component="th" scope="row" >
+                <TableCell width={'15%'} component="th" scope="row" >
                     <Link
                         href={`/portfolio/${portfolio.uuid}`}
                         sx={{
@@ -63,15 +63,18 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
                     </Link>
 
                 </TableCell>
-                <TableCell align="right">{valuesHidden ? '***' : `${portfolio?.totalValue.toFixed(2)} ${portfolio['Currency']?.symbol}`}
+                <TableCell width={'20%'} align="right">{valuesHidden ? '***' : `${portfolio?.totalValue.toFixed(2)} ${portfolio['Currency']?.symbol}`}
                 </TableCell>
-                <TableCell align="right">
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
+                <TableCell width={'17%'} align="right">
+                    <Box sx={{ display: 'flex', flexDirection: {xs: 'column',md:'row'}, justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
                             {valuesHidden ? '***' : `${portfolio?.dailyChange.toFixed(2)} ${portfolio['Currency']?.symbol}`}
                         </Box>
                         {!isNaN(portfolio?.dailyChangePercentage) && !valuesHidden &&
                             <Box sx={{
+                                display: 'flex',
+                                width: 'fit-content',
+                                alignSelf: 'flex-end',
                                 backgroundColor: (parseFloat(portfolio?.dailyChangePercentage) > 0) ? '#34B17F' : '#5D2626',
                                 borderRadius: '5px',
                                 padding: '0 3px',
@@ -81,8 +84,8 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
                         }
                     </Box>
                 </TableCell>
-                <TableCell align="right">
-                    <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-end', alignContent: 'center', }}>
+                <TableCell width={'17%'} align="right">
+                    <Box sx={{ display: 'flex', flexDirection: {xs: 'column',md:'row'}, justifyContent: 'flex-end', alignContent: 'center', }}>
                         <Box>
                             {
                                 valuesHidden ? '***' : `${portfolio?.totalChange.toFixed(2)} ${portfolio['Currency']?.symbol}`
@@ -91,6 +94,8 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
                         {!isNaN(portfolio?.totalChangePercentage) && !valuesHidden &&
                             <Box sx={{
                                 backgroundColor: (parseFloat(portfolio?.totalChangePercentage) > 0) ? '#34B17F' : '#5D2626',
+                                width: 'fit-content',
+                                alignSelf: 'flex-end',
                                 borderRadius: '5px',
                                 padding: '0 3px',
                                 marginLeft: '5px'
@@ -100,8 +105,8 @@ function PortfolioRow({ portfolio, handlePortfoliosChange, valuesHidden }) {
                     </Box>
 
                 </TableCell>
-                <TableCell align="right">{valuesHidden ? '***' : `${portfolio?.totalInvested.toFixed(2)} ${portfolio['Currency']?.symbol}`}</TableCell>
-                <TableCell align="right">
+                <TableCell width={'19%'} align="right">{valuesHidden ? '***' : `${portfolio?.totalInvested.toFixed(2)} ${portfolio['Currency']?.symbol}`}</TableCell>
+                <TableCell width={'10%'} align="right">
                     <IconButton
                         aria-label="expand row"
                         size="small"
