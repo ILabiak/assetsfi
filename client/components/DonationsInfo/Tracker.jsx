@@ -59,11 +59,10 @@ function Tracker({ currencies }) {
 
         fetchNetworks().catch(console.error)
         fetchTrackingAddresses().catch(console.error)
-
     }, []);
 
     const handleTrackingsChange = () => {
-        // setTrackingData();
+        setTrackingData();
         fetchTrackingAddresses().catch(console.error)
     }
 
