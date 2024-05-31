@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model bnKeys {
+  id        Int       @id @default(autoincrement())
+  userId    String    @unique(map: "userIdUnique")
+  apiKey    String
+  apiSecret String
+  createdAt DateTime? @db.Timestamptz(6)
+  updatedAt DateTime? @db.Timestamptz(6)
+  isTestnet Boolean   @default(false)
+}
+
+model coins {
+  id           Int            @id
+  name         String
+  code         String         @unique(map: "uniqueCode")
+  provider     String
+  image        String
+  symbol       String?
+  createdAt    DateTime?      @db.Timestamptz(6)
+  updatedAt    DateTime?      @db.Timestamptz(6)
+  transactions transactions[]
+}
+
+model currencies {
+  id               Int                @id
+  name             String             @unique(map: "currencynameunique")
+  code             String             @unique(map: "currencycodeunique")
+  createdAt        DateTime           @db.Timestamptz(6)
+  updatedAt        DateTime           @db.Timestamptz(6)
+  symbol           String
+  donations        donations[]
+  portfolios       portfolios[]
+  trackedAddresses trackedAddresses[]
+}
+
+model donations {
+  id           Int          @id @default(autoincrement())
+  userId       String
+  foundationId Int?
+  amount       Float
+  date         DateTime     @db.Timestamptz(6)
+  description  String?
+  currencyId   Int
+  amountInUsd  Float
+  createdAt    DateTime?    @db.Timestamptz(6)
+  updatedAt    DateTime?    @db.Timestamptz(6)
+  currencies   currencies   @relation(fields: [currencyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "currencyFK")
+  foundations  foundations? @relation(fields: [foundationId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "foundationFK")
+}
+
+model foundations {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique(map: "foundationsNameUnique")
+  logoUrl   String?
+  link      String?
+  createdAt DateTime?   @db.Timestamptz(6)
+  updatedAt DateTime?   @db.Timestamptz(6)
+  donations donations[]
+}
+
+model portfolios {
+  id           Int            @id @unique(map: "portfolioId_unique") @default(autoincrement())
+  userId       String
+  title        String
+  currencyId   Int
+  visibility   Boolean        @default(false)
+  uuid         String         @unique(map: "uuid_unique") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt    DateTime       @db.Timestamptz(6)
+  updatedAt    DateTime       @db.Timestamptz(6)
+  currencies   currencies     @relation(fields: [currencyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "currencyidFK")
+  transactions transactions[]
+}
+
+model supportedNetworks {
+  id               Int                @id @default(autoincrement())
+  name             String             @unique(map: "uniqueNetworkName")
+  code             String             @unique(map: "uniqueNetworkCode")
+  updatedAt        DateTime?          @db.Timestamptz(6)
+  createdAt        DateTime?          @db.Timestamptz(6)
+  logoUrl          String?
+  trackedAddresses trackedAddresses[]
+}
+
+model trackedAddresses {
+  id                Int               @id @default(autoincrement())
+  userId            String
+  networkId         Int
+  address           String
+  targetAmount      Float?
+  currencyId        Int
+  updatedAt         DateTime?         @db.Timestamptz(6)
+  createdAt         DateTime?         @db.Timestamptz(6)
+  name              String?
+  currencies        currencies        @relation(fields: [currencyId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "currencyFK")
+  supportedNetworks supportedNetworks @relation(fields: [networkId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "networkFK")
+}
+
+model transactions {
+  id                    Int        @id @default(autoincrement())
+  portfolioId           Int
+  coinId                Int
+  date                  DateTime   @db.Timestamptz(6)
+  amount                Float
+  fees                  Float?
+  description           String?
+  originCurrency        String
+  costPerUnitInUsd      Float
+  costPerUnitInCurrency Float
+  createdAt             DateTime?  @db.Timestamptz(6)
+  updatedAt             DateTime?  @db.Timestamptz(6)
+  coins                 coins      @relation(fields: [coinId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "coinIdFK")
+  portfolios            portfolios @relation(fields: [portfolioId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "portfolioIdFK")
+}
+
+model userMetadata {
+  id        Int       @id @default(autoincrement())
+  userId    String    @unique(map: "uniqueUserId")
+  name      String?
+  nickname  String?
+  picture   String?
+  createdAt DateTime? @db.Timestamptz(6)
+  updatedAt DateTime? @db.Timestamptz(6)
+}
