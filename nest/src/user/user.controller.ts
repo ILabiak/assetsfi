@@ -24,20 +24,19 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Get()
-  findAll(@Request() req) {
-    return req.user;
-    // return this.userService.findAll();
+  @Get('/metadata')
+  getMetadata(@Request() req) {
+    return this.userService.getMetadata(
+      req.user.sub,
+      req.headers.authorization,
+    );
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+  @UseGuards(AuthGuard('jwt'))
+  @Patch('/update')
+  update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
+    console.log(updateUserDto);
+    // return this.userService.update(req.user.sub, updateUserDto);
   }
 
   @Delete(':id')
