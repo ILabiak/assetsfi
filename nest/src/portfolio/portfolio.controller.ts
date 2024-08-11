@@ -2,10 +2,8 @@ import {
   Controller,
   Get,
   Post,
-  Body,
   Put,
   Param,
-  Delete,
   HttpCode,
   UseGuards,
   Request,
@@ -13,7 +11,7 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { PortfolioService } from './portfolio.service';
 // import { CreatePortfolioDto } from './dto/create-portfolio.dto';
-import { UpdatePortfolioDto } from './dto/update-portfolio.dto';
+// import { UpdatePortfolioDto } from './dto/update-portfolio.dto';
 
 @Controller('portfolio')
 @UseGuards(AuthGuard('jwt'))

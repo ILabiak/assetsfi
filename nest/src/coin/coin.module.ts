@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CoinService } from './coin.service';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { CoinController } from './coin.controller';
 
 @Module({
