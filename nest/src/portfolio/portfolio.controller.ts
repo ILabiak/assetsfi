@@ -7,11 +7,13 @@ import {
   HttpCode,
   UseGuards,
   Request,
+  Body,
 } from '@nestjs/common';
+import { User } from '../decorators/user.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { PortfolioService } from './portfolio.service';
-// import { CreatePortfolioDto } from './dto/create-portfolio.dto';
-// import { UpdatePortfolioDto } from './dto/update-portfolio.dto';
+import { CreatePortfolioDto } from './dto/create-portfolio.dto';
+import { UpdatePortfolioDto } from './dto/update-portfolio.dto';
 
 @Controller('portfolio')
 @UseGuards(AuthGuard('jwt'))
@@ -19,30 +21,29 @@ export class PortfolioController {
   constructor(private readonly portfolioService: PortfolioService) {}
 
   @Post('create')
-  create(@Request() req) {
-    console.log(req);
-    return this.portfolioService.create(req.user.sub, req.body);
+  create(@Body() createPortfolioDto: CreatePortfolioDto, @User() user) {
+    return this.portfolioService.create(user.sub, createPortfolioDto);
   }
 
   @Get('data')
-  findUserPortfolios(@Request() req) {
-    return this.portfolioService.findUserPortfolios(req.user.sub);
+  findUserPortfolios(@User() user) {
+    return this.portfolioService.findUserPortfolios(user.sub);
   }
 
   @Get(':uuid')
-  findOne(@Param('uuid') uuid: string, @Request() req) {
-    return this.portfolioService.findOne(uuid, req.user.sub);
+  findOne(@Param('uuid') uuid: string, @User() user) {
+    return this.portfolioService.findOne(uuid, user.sub);
   }
 
   @Put('update')
-  update(@Request() req) {
-    return this.portfolioService.update(req.body, req.user.sub);
+  update(@Body() UpdatePortfolioDto: UpdatePortfolioDto, @User() user) {
+    return this.portfolioService.update(UpdatePortfolioDto, user.sub);
   }
 
   @Post('delete')
   @HttpCode(200)
-  remove(@Request() req) {
-    return this.portfolioService.remove(req.body.uuid, req.user.sub);
+  remove(@Body() body, @User() user) {
+    return this.portfolioService.remove(body.uuid, user.sub);
   }
 
   // @Delete(':id')
