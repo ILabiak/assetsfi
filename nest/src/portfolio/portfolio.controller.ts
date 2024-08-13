@@ -3,10 +3,10 @@ import {
   Get,
   Post,
   Put,
+  Delete,
   Param,
   HttpCode,
   UseGuards,
-  Request,
   Body,
 } from '@nestjs/common';
 import { User } from '../decorators/user.decorator';
@@ -36,11 +36,11 @@ export class PortfolioController {
   }
 
   @Put('update')
-  update(@Body() UpdatePortfolioDto: UpdatePortfolioDto, @User() user) {
-    return this.portfolioService.update(UpdatePortfolioDto, user.sub);
+  update(@Body() updatePortfolioDto: UpdatePortfolioDto, @User() user) {
+    return this.portfolioService.update(updatePortfolioDto, user.sub);
   }
 
-  @Post('delete')
+  @Delete('delete')
   @HttpCode(200)
   remove(@Body() body, @User() user) {
     return this.portfolioService.remove(body.uuid, user.sub);

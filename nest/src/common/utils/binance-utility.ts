@@ -1,20 +1,16 @@
-const { Spot } = require('@binance/connector');
-const coin = require('./coin');
-const fs = require('fs');
-const path = require('node:path');
-require('dotenv').config();
-const fetch = (...args) =>
-  import('node-fetch').then(({ default: fetch }) => fetch(...args));
+import * as fs from 'fs';
+import pairs from './pairs.json';
+import path from 'node:path';
+import { Spot } from '@binance/connector';
 
-let pairs = require('./pairs.json');
-let dataPath = path.resolve(__dirname, 'coins-metadata.json');
+const dataPath = path.resolve('./src/common/utils', 'coins-metadata.json');
 
 const fetchMetadata = async (symbols, metaData) => {
   let metadataRes;
-  let metadataReqLink = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols}&aux=logo&skip_invalid=true&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`;
+  const metadataReqLink = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols}&aux=logo&skip_invalid=true&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`;
   try {
     const response = await fetch(metadataReqLink);
-    let metadataJson = await response.json();
+    const metadataJson = await response.json();
     if (metaData.data) {
       metadataRes = {
         updatedAt: Date.now(),
@@ -38,11 +34,11 @@ const fetchMetadata = async (symbols, metaData) => {
   return metadataRes;
 };
 
-const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
-  let options = {};
+export async function getUserInformation(apiKey, apiSecret, isTestnet) {
+  const options: any = {};
   let useCashedMetadata = true;
-  let metaDataText = fs.readFileSync(dataPath, 'utf8');
-  let metaData = JSON.parse(metaDataText);
+  const metaDataText = fs.readFileSync(dataPath, 'utf8');
+  const metaData = JSON.parse(metaDataText);
   if (
     !metaData.updatedAt ||
     !metaData.data ||
@@ -55,21 +51,22 @@ const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
     options.baseURL = 'https://testnet.binance.vision';
   }
 
-  let result = {
+  const result = {
     totalValue: 0,
     dailyValue: 0,
     dailyChange: 0,
-    dailyChangePercentage: 0,
+    dailyChangePercentage: '',
+    assets: [],
   };
   let coinsStr = '';
-  let coins = [];
+  const coins = [];
   const client = new Spot(apiKey, apiSecret, options);
   try {
-    let { data } = await client.account();
-    let assets = data.balances.filter(
+    const { data } = await client.account();
+    const assets = data.balances.filter(
       (el) =>
         parseFloat(el.free) + parseFloat(el.locked) > 0 &&
-        (pairs.includes(`${el.asset}USDT`) || el.asset == 'USDT')
+        (pairs.includes(`${el.asset}USDT`) || el.asset == 'USDT'),
     );
     assets.map((el) => {
       if (el.asset != 'USDT') {
@@ -80,7 +77,7 @@ const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
         useCashedMetadata = false;
       }
     });
-    let priceChanges = await client.ticker24hr('', coins);
+    const priceChanges = await client.ticker24hr('', coins);
 
     let metadataRes;
     if (useCashedMetadata) {
@@ -92,14 +89,14 @@ const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
     const mapped = priceChanges?.data.map((item) => ({ [item.symbol]: item }));
     const mappedChanges = Object.assign({}, ...mapped);
 
-    for (let el of assets) {
-      let key = `${el.asset}USDT`;
+    for (const el of assets) {
+      const key = `${el.asset}USDT`;
       el.name = metadataRes.data[el.asset][0]?.name || el.asset;
       el.logo =
         metadataRes.data[el.asset][0]?.logo ||
         'https://static-00.iconduck.com/assets.00/no-image-icon-512x512-lfoanl0w.png';
       if (el.asset == 'USDT') {
-        let tokens = parseFloat(el.free) + parseFloat(el.locked);
+        const tokens = parseFloat(el.free) + parseFloat(el.locked);
         el.totalValue = tokens;
         el.tokens = parseFloat(tokens.toFixed(8));
         el.dailyChange = 0;
@@ -114,18 +111,19 @@ const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
       }
       el.price = mappedChanges[key].lastPrice.replace(/\.?0+$/, '');
 
-      let tokens = parseFloat(el.free) + parseFloat(el.locked);
-      let totalValue = parseFloat(el.price) * tokens;
-      let dailyPrice = mappedChanges[key].openPrice.replace(/\.?0+$/, '');
-      let dailyValue = parseFloat(dailyPrice) * (parseFloat(el.free) + parseFloat(el.locked));
-      let dailyChange = totalValue - dailyValue;
+      const tokens = parseFloat(el.free) + parseFloat(el.locked);
+      const totalValue = parseFloat(el.price) * tokens;
+      const dailyPrice = mappedChanges[key].openPrice.replace(/\.?0+$/, '');
+      const dailyValue =
+        parseFloat(dailyPrice) * (parseFloat(el.free) + parseFloat(el.locked));
+      const dailyChange = totalValue - dailyValue;
 
       el.tokens = parseFloat(tokens.toFixed(8));
       el.totalValue = totalValue.toFixed(2);
       el.pair = `${el.asset}USDT`;
       el.dailyChange = dailyChange.toFixed(2);
       el.dailyChangePercentage = parseFloat(
-        mappedChanges[key]?.priceChangePercent
+        mappedChanges[key]?.priceChangePercent,
       ).toFixed(2);
 
       result.totalValue += totalValue;
@@ -148,93 +146,9 @@ const getUserInformation = async (apiKey, apiSecret, isTestnet) => {
     console.log(err);
     return { error: 'Got an error while fetching account data:' };
   }
-};
+}
 
-const updateMarketPairs = async (apiKey, apiSecret, isTestnet) => {
-  let options = {};
-  if (isTestnet) {
-    options.baseURL = 'https://testnet.binance.vision';
-  }
-  pairs = [];
-  const client = new Spot(apiKey, apiSecret, options);
-  let pairsData = await client.exchangeInfo();
-  pairsData?.data?.symbols.forEach((el) => {
-    if (el.status == 'TRADING') {
-      pairs.push(el.symbol);
-    }
-  });
-  fs.writeFileSync('pairs.json', JSON.stringify(pairs));
-};
-
-const getUserOrders = async (apiKey, apiSecret, isTestnet, symbol) => {
-  let options = {};
-  if (isTestnet) {
-    options.baseURL = 'https://testnet.binance.vision';
-  }
-  const client = new Spot(apiKey, apiSecret, options);
-
-  try {
-    let { data } = await client.allOrders(symbol);
-    if (data.length < 1) {
-      return [];
-    }
-    return data.reverse();
-  } catch (err) {
-    if (err?.response?.data?.msg) {
-      return { err: err?.response?.data?.msg };
-    }
-    return { err };
-  }
-};
-
-const createOrder = async (
-  apiKey,
-  apiSecret,
-  isTestnet,
-  symbol,
-  type,
-  side,
-  orderOptions
-) => {
-  let options = {};
-  if (isTestnet) {
-    options.baseURL = 'https://testnet.binance.vision';
-  }
-  const client = new Spot(apiKey, apiSecret, options);
-
-  try {
-    let { data } = await client.newOrder(symbol, side, type, orderOptions);
-    if (data?.orderId) {
-      return data;
-    }
-  } catch (err) {
-    if (err?.response?.data?.msg) {
-      return { err: err?.response?.data?.msg };
-    }
-    return { err };
-  }
-};
-
-const cancelOrder = async (apiKey, apiSecret, isTestnet, symbol, orderId) => {
-  let options = {};
-  if (isTestnet) {
-    options.baseURL = 'https://testnet.binance.vision';
-  }
-  try {
-    const client = new Spot(apiKey, apiSecret, options);
-    let { data } = await client.cancelOrder(symbol, { orderId });
-    if (data.status == 'CANCELED') {
-      return true;
-    }
-  } catch (err) {
-    if (err?.response?.data?.msg) {
-      return { err: err?.response?.data?.msg };
-    }
-    return { err };
-  }
-};
-
-const checkTradePermissions = async (apiKey, apiSecret) => {
+export async function checkTradePermissions(apiKey, apiSecret) {
   try {
     const client = new Spot(apiKey, apiSecret);
     const { data } = await client.apiPermissions();
@@ -245,19 +159,121 @@ const checkTradePermissions = async (apiKey, apiSecret) => {
     }
     return { err };
   }
-};
+}
 
-// (async () => {
-  //   console.time('Execution');
-  // await updateMarketPairs(process.env.BINANCE_API_KEY,
-  //      process.env.BINANCE_API_SECRET)
-  //   console.timeEnd('Execution');
-// })();
+export async function getUserOrders(apiKey, apiSecret, isTestnet, symbol) {
+  const options = {
+    baseURL: '',
+  };
+  if (isTestnet) {
+    options.baseURL = 'https://testnet.binance.vision';
+  }
+  const client = new Spot(apiKey, apiSecret, options);
 
-module.exports = {
-  getUserInformation,
-  getUserOrders,
-  createOrder,
-  cancelOrder,
-  checkTradePermissions,
-};
+  try {
+    const { data } = await client.allOrders(symbol);
+    if (data.length < 1) {
+      return [];
+    }
+    return data.reverse();
+  } catch (err) {
+    if (err?.response?.data?.msg) {
+      return { err: err?.response?.data?.msg };
+    }
+    return { err };
+  }
+}
+
+export function checkKeys(apiKey, apiSecret, isTestnet) {
+  let client;
+  // console.log('123\n\n')
+  if (isTestnet) {
+    client = new Spot(apiKey, apiSecret, {
+      baseURL: 'https://testnet.binance.vision',
+    });
+  } else {
+    client = new Spot(apiKey, apiSecret);
+  }
+  // console.log('done')
+
+  return client;
+}
+
+export async function updateMarketPairs(apiKey, apiSecret, isTestnet) {
+  let client;
+  if (isTestnet) {
+    client = new Spot(apiKey, apiSecret, {
+      baseURL: 'https://testnet.binance.vision',
+    });
+  } else {
+    client = new Spot(apiKey, apiSecret);
+  }
+  const pairs = [];
+
+  const pairsData = await client.exchangeInfo();
+  pairsData?.data?.symbols.forEach((el) => {
+    if (el.status == 'TRADING') {
+      pairs.push(el.symbol);
+    }
+  });
+  fs.writeFileSync('pairs.json', JSON.stringify(pairs));
+}
+
+export async function createOrder(
+  apiKey,
+  apiSecret,
+  isTestnet,
+  symbol,
+  type,
+  side,
+  orderOptions,
+) {
+  let client;
+  if (isTestnet) {
+    client = new Spot(apiKey, apiSecret, {
+      baseURL: 'https://testnet.binance.vision',
+    });
+  } else {
+    client = new Spot(apiKey, apiSecret);
+  }
+
+  try {
+    const { data } = await client.newOrder(symbol, side, type, orderOptions);
+    if (data?.orderId) {
+      return data;
+    }
+  } catch (err) {
+    if (err?.response?.data?.msg) {
+      return { err: err?.response?.data?.msg };
+    }
+    return { err };
+  }
+}
+
+export async function cancelOrder(
+  apiKey,
+  apiSecret,
+  isTestnet,
+  symbol,
+  orderId,
+) {
+  let client;
+  if (isTestnet) {
+    client = new Spot(apiKey, apiSecret, {
+      baseURL: 'https://testnet.binance.vision',
+    });
+  } else {
+    client = new Spot(apiKey, apiSecret);
+  }
+  try {
+    const { data } = await client.cancelOrder(symbol, { orderId });
+    if (data.status == 'CANCELED') {
+      return true;
+    }
+  } catch (err) {
+    if (err?.response?.data?.msg) {
+      return { err: err?.response?.data?.msg };
+    }
+    return { err };
+  }
+}
