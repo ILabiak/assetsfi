@@ -8,6 +8,7 @@ import { PortfolioModule } from './portfolio/portfolio.module';
 import { CurrencyModule } from './currency/currency.module';
 import { TransactionModule } from './transaction/transaction.module';
 import { BinanceModule } from './binance/binance.module';
+import { DonationsModule } from './donations/donations.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { BinanceModule } from './binance/binance.module';
     CurrencyModule,
     TransactionModule,
     BinanceModule,
+    DonationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

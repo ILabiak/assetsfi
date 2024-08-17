@@ -125,7 +125,7 @@ export class TransactionService {
       })
       .catch(() => {
         throw new HttpException(
-          'Portfolio Not Found to update transaction or user does not have access to that portfilio',
+          'Portfolio Not Found to delete transaction or user does not have access to that portfilio',
           400,
         );
       });
