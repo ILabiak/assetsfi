@@ -81,7 +81,9 @@ export class PortfolioService {
       }
 
       return { portfolios: portfolioData, totalData };
-    } catch (err) {}
+    } catch (error) {
+      throw new HttpException({ message: error.message }, 400);
+    }
   }
 
   findOne(id: string, userId: string) {

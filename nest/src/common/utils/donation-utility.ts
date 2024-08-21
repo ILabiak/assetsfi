@@ -240,14 +240,3 @@ const parseSternenkoFoundation = async () => {
   }
   // return {};
 };
-
-export async function getCurrencyRate(symbol, base) {
-  if (symbol == base) return 1;
-  const requestUrl = `https://api.currencybeacon.com/v1/latest?base=${base}&symbols=${symbol}&api_key=${process.env.BEACON_API}`;
-  const response = await fetch(requestUrl);
-  const responseJSON = await response.json();
-  if (!responseJSON?.rates) {
-    return;
-  }
-  return responseJSON.rates[symbol.toUpperCase()];
-}
