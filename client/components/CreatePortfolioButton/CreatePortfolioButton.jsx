@@ -14,7 +14,7 @@ function CreatePortfolioButton({ isLarge, handlePortfoliosChange }) {
     useEffect(() => {
         const fetchCurrencies = async () => {
             try {
-                const response = await fetch('/api/server/currencies');
+                const response = await fetch('/api/server/currency/list');
                 if (response.status === 200) {
                     const data = await response.json();
                     setCurrencies(data)
@@ -54,7 +54,7 @@ function CreatePortfolioButton({ isLarge, handlePortfoliosChange }) {
         if (!createButtonActive) return;
         setCreateButtonActive(false)
         // console.log({ name, currencyId })
-        const response = await fetch('/api/server/portfolio/create', {
+        const response = await fetch('/api/server/portfolio', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

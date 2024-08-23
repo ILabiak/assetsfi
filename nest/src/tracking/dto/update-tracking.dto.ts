@@ -9,6 +9,7 @@ import {
   MinLength,
   MaxLength,
   IsString,
+  IsOptional,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -27,7 +28,7 @@ export class UpdateTrackingDto extends PartialType(CreateTrackingDto) {
   @IsDefined()
   id: number;
 
-  @IsDefined()
+  @IsOptional()
   @IsNotEmptyObject()
   @IsObject()
   @ValidateNested()

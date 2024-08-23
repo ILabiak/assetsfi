@@ -45,7 +45,7 @@ function AddDonation({ donationCreateRef, handleClose, handleOpen, backdropOpen,
             description: note,
             currency: currency
         }
-        const response = await fetch('/api/server/donations/create', {
+        const response = await fetch('/api/server/donations', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

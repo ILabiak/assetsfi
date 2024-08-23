@@ -14,7 +14,7 @@ function PortfoliosInfo() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch('/api/server/portfoliosdata');
+            const response = await fetch('/api/server/portfolio/data');
             if (response.status === 200) {
                 const data = await response.json();
                 setPortfoliosData(data.portfolios)

@@ -24,6 +24,7 @@ class Currency {
 }
 
 export class CreateDonationDto {
+  @IsOptional()
   @IsNumber()
   foundationId: number;
 

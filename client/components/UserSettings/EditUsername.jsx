@@ -74,7 +74,7 @@ function EditUsername({ user, setUserData }) {
             updateData.nickname = username
         }
         setEditButtonActive(false)
-        const response = await fetch('/api/server/user/update', {
+        const response = await fetch('/api/server/user', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

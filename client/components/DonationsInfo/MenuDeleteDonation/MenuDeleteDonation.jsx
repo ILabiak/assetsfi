@@ -22,14 +22,14 @@ function MenuDeleteDonation({ donation, handleDonationsChange }) {
 
     const handleTransactionDelete = async () => {
         setDeleteButtonActive(false)
-        const response = await fetch('/api/server/donations/delete', {
+        const response = await fetch(`/api/server/donations/${donation.id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                id: donation.id,
-            }),
+            // body: JSON.stringify({
+            //     id: donation.id,
+            // }),
             credentials: 'include'
         });
         if (response.status === 200) {

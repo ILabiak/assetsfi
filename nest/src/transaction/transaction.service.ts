@@ -8,15 +8,6 @@ export class TransactionService {
   constructor(private prisma: PrismaService) {}
 
   async create(createTransactionDto: CreateTransactionDto, userId: string) {
-    if (!createTransactionDto.coinId || !createTransactionDto.portfolioId) {
-      throw new HttpException(
-        {
-          message: 'Not enough data to create transaction',
-        },
-        400,
-      );
-    }
-
     const portfolio = await this.prisma.portfolios.findFirst({
       where: {
         uuid: createTransactionDto.portfolioId,
@@ -55,14 +46,6 @@ export class TransactionService {
   }
 
   async update(updateTransactionDto: UpdateTransactionDto, userId: string) {
-    if (!updateTransactionDto.id || !updateTransactionDto.portfolioId) {
-      throw new HttpException(
-        {
-          message: 'Not enough data to edit transaction',
-        },
-        400,
-      );
-    }
     const portfilio = await this.prisma.portfolios
       .findFirstOrThrow({
         where: {
@@ -112,28 +95,40 @@ export class TransactionService {
     return updateTx;
   }
 
-  async remove(deleteTransactionDto: UpdateTransactionDto, userId: string) {
-    if (!deleteTransactionDto.portfolioId) {
-      throw new HttpException("You didn't provide portfolio id.", 400);
-    }
-    await this.prisma.portfolios
+  async remove(id: number, userId: string) {
+    const transaction = await this.prisma.transactions
       .findFirstOrThrow({
         where: {
-          id: deleteTransactionDto.portfolioId,
+          id,
+        },
+      })
+      .catch(() => {
+        throw new HttpException('Transaction not found', 400);
+      });
+    const portfilio = this.prisma.portfolios
+      .findFirstOrThrow({
+        where: {
+          id: transaction.portfolioId,
           userId,
         },
       })
       .catch(() => {
         throw new HttpException(
-          'Portfolio Not Found to delete transaction or user does not have access to that portfilio',
+          'User does not have access to that portfolio',
           400,
         );
       });
-    return this.prisma.transactions.delete({
-      where: {
-        id: deleteTransactionDto.id,
-        portfolioId: deleteTransactionDto.portfolioId,
-      },
-    });
+    if (!portfilio) {
+      throw new HttpException('Portfolio not found', 400);
+    }
+    try {
+      return this.prisma.transactions.delete({
+        where: {
+          id,
+        },
+      });
+    } catch (err) {
+      throw new HttpException(err.message, 400);
+    }
   }
 }

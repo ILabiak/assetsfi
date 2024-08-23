@@ -34,7 +34,7 @@ function MenuChangePortfolio({ portfolio, handlePortfoliosChange }) {
 
     const handlePortfolioDelete = async () => {
         setChangeButtonActive(false)
-        const response = await fetch('/api/server/portfolio/update', {
+        const response = await fetch('/api/server/portfolio', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

@@ -155,11 +155,11 @@ export class PortfolioService {
     }
   }
 
-  async remove(id: string, userId: string) {
+  async remove(uuid: string, userId: string) {
     try {
       const deleted = await this.prisma.portfolios.delete({
         where: {
-          uuid: id,
+          uuid,
           userId,
         },
       });

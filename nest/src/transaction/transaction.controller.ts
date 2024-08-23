@@ -1,4 +1,12 @@
-import { Controller, Post, Put, Body, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Put,
+  Body,
+  Delete,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../decorators/user.decorator';
@@ -10,18 +18,18 @@ import { UpdateTransactionDto } from './dto/update-transaction.dto';
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Post('create')
+  @Post()
   create(@Body() createTransactionDto: CreateTransactionDto, @User() user) {
     return this.transactionService.create(createTransactionDto, user.sub);
   }
 
-  @Put('update')
+  @Put()
   update(@Body() updateTransactionDto: UpdateTransactionDto, @User() user) {
     return this.transactionService.update(updateTransactionDto, user.sub);
   }
 
-  @Delete('delete')
-  remove(@Body() body: any, @User() user) {
-    return this.transactionService.remove(body, user.sub);
+  @Delete(':id')
+  remove(@Param('id') id: string, @User() user) {
+    return this.transactionService.remove(+id, user.sub);
   }
 }

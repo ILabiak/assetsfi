@@ -5,7 +5,6 @@ import {
   Put,
   Delete,
   Param,
-  HttpCode,
   UseGuards,
   Body,
 } from '@nestjs/common';
@@ -20,7 +19,7 @@ import { UpdatePortfolioDto } from './dto/update-portfolio.dto';
 export class PortfolioController {
   constructor(private readonly portfolioService: PortfolioService) {}
 
-  @Post('create')
+  @Post()
   create(@Body() createPortfolioDto: CreatePortfolioDto, @User() user) {
     return this.portfolioService.create(user.sub, createPortfolioDto);
   }
@@ -35,19 +34,13 @@ export class PortfolioController {
     return this.portfolioService.findOne(uuid, user.sub);
   }
 
-  @Put('update')
+  @Put()
   update(@Body() updatePortfolioDto: UpdatePortfolioDto, @User() user) {
     return this.portfolioService.update(updatePortfolioDto, user.sub);
   }
 
-  @Delete('delete')
-  @HttpCode(200)
-  remove(@Body() body, @User() user) {
-    return this.portfolioService.remove(body.uuid, user.sub);
+  @Delete(':uuid')
+  remove(@Param('uuid') uuid: string, @User() user) {
+    return this.portfolioService.remove(uuid, user.sub);
   }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.portfolioService.remove(+id);
-  // }
 }

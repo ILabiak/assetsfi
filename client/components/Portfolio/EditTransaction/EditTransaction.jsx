@@ -96,7 +96,7 @@ function EditTransaction({ transactionEditRef, handleClose, backdropOpen, setBac
         // console.dir(transactionObj)
         // return;
 
-        const response = await fetch('/api/server/transaction/update', {
+        const response = await fetch('/api/server/transaction', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

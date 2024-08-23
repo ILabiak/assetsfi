@@ -38,7 +38,9 @@ export class BinanceService {
 
   async getUserData(userId: string) {
     const { apiKey, apiSecret, isTestnet } = await this.getKeys(userId);
+    // console.log({ apiKey, apiSecret, isTestnet })
     const result: any = await getUserInformation(apiKey, apiSecret, isTestnet);
+    // return 1;
     if (result.totalValue) {
       return result;
     }
@@ -118,14 +120,6 @@ export class BinanceService {
   }
 
   async create(createBinanceDto: CreateBinanceDto, userId: string) {
-    if (!createBinanceDto.apiKey || !createBinanceDto.apiSecret) {
-      throw new HttpException(
-        {
-          message: 'Not enough data to add binance api keys',
-        },
-        400,
-      );
-    }
     const privateKey = Buffer.from(
       process.env.RSA_KEY_PRIVATE,
       'base64',
@@ -170,37 +164,7 @@ export class BinanceService {
   }
 
   async createOrder(createOrderDto: CreateOrderDto, userId: string) {
-    if (
-      !createOrderDto.type ||
-      (createOrderDto.type != 'MARKET' && createOrderDto.type != 'LIMIT')
-    ) {
-      throw new HttpException(
-        {
-          message: 'Wrong order type (or not specified)',
-        },
-        400,
-      );
-    }
-    if (
-      (createOrderDto.type == 'MARKET' &&
-        (!createOrderDto.usdtQuantity ||
-          !createOrderDto.symbol ||
-          !createOrderDto.side)) ||
-      (createOrderDto.type == 'LIMIT' &&
-        (!createOrderDto.symbol ||
-          !createOrderDto.side ||
-          !createOrderDto.price ||
-          !createOrderDto.quantity))
-    ) {
-      throw new HttpException(
-        {
-          message: 'Not enough data to create order',
-        },
-        400,
-      );
-    }
     const { apiKey, apiSecret, isTestnet } = await this.getKeys(userId);
-
     let options;
     if (createOrderDto.type == 'LIMIT') {
       options = {
@@ -241,14 +205,6 @@ export class BinanceService {
   }
 
   async cancelOrder(cancelOrderDto: CancelOrderDto, userId: string) {
-    if (!cancelOrderDto.orderId || !cancelOrderDto.symbol) {
-      throw new HttpException(
-        {
-          message: 'Not enough data to cancel order',
-        },
-        400,
-      );
-    }
     const { apiKey, apiSecret, isTestnet } = await this.getKeys(userId);
     const canceled = await cancelOrder(
       apiKey,

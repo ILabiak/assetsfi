@@ -19,7 +19,7 @@ import { UpdateTrackingDto } from './dto/update-tracking.dto';
 export class TrackingController {
   constructor(private readonly trackingService: TrackingService) {}
 
-  @Get('list')
+  @Get()
   userAdresses(@User() user) {
     return this.trackingService.findUserAdresses(user.sub);
   }
@@ -29,17 +29,17 @@ export class TrackingController {
     return this.trackingService.findNetworks();
   }
 
-  @Post('create')
+  @Post()
   create(@Body() createTrackingDto: CreateTrackingDto, @User() user) {
     return this.trackingService.create(createTrackingDto, user.sub);
   }
 
-  @Put('update')
+  @Put()
   update(@Body() updateTrackingDto: UpdateTrackingDto, @User() user) {
     return this.trackingService.update(updateTrackingDto, user.sub);
   }
 
-  @Delete('delete/:id')
+  @Delete(':id')
   remove(@Param('id') id: string, @User() user) {
     return this.trackingService.remove(+id, user.sub);
   }

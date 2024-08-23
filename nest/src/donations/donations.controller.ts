@@ -34,17 +34,17 @@ export class DonationsController {
     return this.donationsService.foundationsList();
   }
 
-  @Post('create')
+  @Post()
   create(@Body() createDonationDto: CreateDonationDto, @User() user) {
     return this.donationsService.create(createDonationDto, user.sub);
   }
 
-  @Put('update')
+  @Put()
   update(@Body() updateDonationDto: UpdateDonationDto, @User() user) {
     return this.donationsService.update(updateDonationDto, user.sub);
   }
 
-  @Delete('delete/:id')
+  @Delete(':id')
   remove(@Param('id') id: string, @User() user) {
     return this.donationsService.remove(+id, user.sub);
   }

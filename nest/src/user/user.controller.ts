@@ -1,46 +1,26 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  Request,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Body, Put, Headers, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from '../decorators/user.decorator';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, ChangeUserPasswordDto } from './dto/update-user.dto';
 
 @Controller('user')
+@UseGuards(AuthGuard('jwt'))
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @Get('metadata')
+  getMetadata(@Headers('authorization') authorization: string, @User() user) {
+    return this.userService.getMetadata(authorization, user.sub);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Get('/metadata')
-  getMetadata(@Request() req) {
-    return this.userService.getMetadata(
-      req.user.sub,
-      req.headers.authorization,
-    );
+  @Put()
+  update(@Body() updateUserDto: UpdateUserDto, @User() user) {
+    return this.userService.update(updateUserDto, user.sub);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Patch('/update')
-  update(@Request() req, @Body() updateUserDto: UpdateUserDto) {
-    console.log(updateUserDto);
-    // return this.userService.update(req.user.sub, updateUserDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  @Put('changepassword')
+  changePassword(@Body() changeUserPasswordDto: ChangeUserPasswordDto) {
+    return this.userService.changePassword(changeUserPasswordDto);
   }
 }

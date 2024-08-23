@@ -99,7 +99,7 @@ function TradingTools({ asset, handleOrdersChanged, handleChange }) {
             body: JSON.stringify(orderObj),
             credentials: 'include'
         });
-        if (response.status === 200) {
+        if (response.status === 201) {
             let data = await response.json()
             setSuccessText(`Order ${data.orderId} successfully created`)
             setSuccessOpen(true)

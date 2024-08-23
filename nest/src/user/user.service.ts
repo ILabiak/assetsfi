@@ -1,22 +1,18 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Injectable, HttpException } from '@nestjs/common';
+import { UpdateUserDto, ChangeUserPasswordDto } from './dto/update-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { NotFoundException } from '@nestjs/common';
-// import { userMetadata, Prisma } from '@prisma/client';
+import fetch from 'node-fetch';
+import NodeRSA from 'node-rsa';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
-  }
-
-  async getMetadata(id: string, authorization: string) {
+  async getMetadata(authorization: string, userId: string) {
     const metadata = await this.prisma.userMetadata.findFirst({
       where: {
-        userId: id,
+        userId,
       },
     });
     if (metadata === null) {
@@ -30,13 +26,12 @@ export class UserService {
         },
       );
       const userData = await response.json();
-      console.log(userData);
       if (!userData?.name) {
-        throw new NotFoundException('Could not get user data');
+        throw new HttpException('Could not get user data', 400);
       }
       return this.prisma.userMetadata.create({
         data: {
-          userId: id,
+          userId,
           name: userData.name,
           nickname: userData.nickname,
           picture: userData.picture,
@@ -46,19 +41,100 @@ export class UserService {
     return metadata;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async update(updateUserDto: UpdateUserDto, userId: string) {
+    const userMetadata = await this.prisma.userMetadata.findFirst({
+      where: {
+        userId,
+      },
+    });
+    if (!userMetadata) {
+      throw new HttpException('UserMetadata Not Found', 400);
+    }
+    try {
+      const updatedMetadata = await this.prisma.userMetadata.update({
+        where: {
+          userId,
+        },
+        data: {
+          name: updateUserDto.name || userMetadata.name,
+          nickname: updateUserDto.nickname || userMetadata.nickname,
+          picture: updateUserDto.picture || userMetadata.picture,
+        },
+      });
+      return updatedMetadata;
+    } catch (err) {
+      throw new HttpException('UserMetadata Not Found', 400);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+  async changePassword(changeUserPasswordDto: ChangeUserPasswordDto) {
+    const privateKey = Buffer.from(
+      process.env.RSA_KEY_PRIVATE,
+      'base64',
+    ).toString('ascii');
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+    const key = new NodeRSA(privateKey, 'private');
+    const oldPassword = key.decrypt(changeUserPasswordDto.oldPassword, 'utf8');
+    const newPassword = key.decrypt(changeUserPasswordDto.newPassword, 'utf8');
+    const checkUserOptions = {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        grant_type: 'password',
+        username: changeUserPasswordDto.email,
+        password: oldPassword,
+        audience: 'https://assetsfi.onrender.com/',
+        scope: 'SCOPE',
+        client_id: process.env.AUTH0_CLIENT_ID,
+        client_secret: process.env.AUTH0_CLIENT_SECRET,
+      }),
+      redirect: 'follow',
+    };
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    try {
+      const request = await fetch(
+        `${process.env.AUTH0_ISSUER_BASE_URL}/oauth/token`,
+        checkUserOptions,
+      );
+      const checkPassword = await request.json();
+      if (checkPassword?.error) {
+        if (checkPassword?.error_description == 'Wrong email or password.') {
+          throw new HttpException({ error: 'Invalid old password' }, 400);
+        }
+        throw new HttpException(
+          { error: checkPassword?.error_description },
+          400,
+        );
+      }
+      if (checkPassword?.access_token) {
+        const decoded = jwtDecode(checkPassword?.access_token);
+        if (!decoded.sub) {
+          throw new HttpException({ error: 'Error, no user id' }, 400);
+        }
+        const userId = decoded.sub;
+        const changePassOptions = {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+            Authorization: `Bearer ${process.env.AUTH0_MANAGEMENT_TOKEN}`,
+          },
+          body: JSON.stringify({ password: newPassword }),
+        };
+
+        const request = await fetch(
+          `${process.env.AUTH0_ISSUER_BASE_URL}/api/v2/users/${userId}`,
+          changePassOptions,
+        );
+        const passwordChanged = await request.json();
+
+        if (passwordChanged.email) {
+          return { message: 'Password was successfully changed' };
+        }
+        throw new HttpException({ error: 'Something went wrong' }, 400);
+      }
+    } catch (err) {
+      throw new HttpException({ error: err }, 400);
+    }
   }
 }

@@ -23,12 +23,11 @@ function MenuDeletePortfolio({ portfolio, handlePortfoliosChange }) {
 
     const handlePortfolioDelete = async () => {
         setDeleteButtonActive(false)
-        const response = await fetch('/api/server/portfolio/delete', {
+        const response = await fetch(`/api/server/portfolio/${portfolio?.uuid}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ uuid: portfolio?.uuid }),
             credentials: 'include'
         });
         if (response.status === 200) {

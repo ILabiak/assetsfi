@@ -26,7 +26,7 @@ function Foundations() {
 
     const fetchData = async () => {
         try {
-            const response = await fetch(`/api/server/foundations`);
+            const response = await fetch(`/api/server/donations/foundations/wallets`);
             if (response.status === 200) {
                 const data = await response.json();
                 setFoundationsData(data)

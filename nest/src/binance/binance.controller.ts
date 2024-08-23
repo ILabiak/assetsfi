@@ -6,6 +6,7 @@ import {
   Delete,
   Param,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { BinanceService } from './binance.service';
 import { AuthGuard } from '@nestjs/passport';
@@ -33,7 +34,7 @@ export class BinanceController {
     return this.binanceService.userOrders(symbol, user.sub);
   }
 
-  @Post('create')
+  @Post()
   create(@Body() createBinanceDto: CreateBinanceDto, @User() user) {
     return this.binanceService.create(createBinanceDto, user.sub);
   }
@@ -44,11 +45,12 @@ export class BinanceController {
   }
 
   @Post('order/cancel')
+  @HttpCode(200)
   cancelOrder(@Body() cancelOrderDto: CancelOrderDto, @User() user) {
     return this.binanceService.cancelOrder(cancelOrderDto, user.sub);
   }
 
-  @Delete('delete')
+  @Delete()
   remove(@User() user) {
     return this.binanceService.remove(user.sub);
   }

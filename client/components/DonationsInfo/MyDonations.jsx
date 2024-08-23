@@ -16,7 +16,8 @@ function MyDonations({ currencies }) {
             if (response.status === 200) {
                 const data = await response.json();
                 setMyDonationsData(data)
-            } else if (response.status === 401) {
+            } else if (response.status === 400) {
+                setMyDonationsData({donations: []})
             } else {
                 console.log('Some other error');
             }
@@ -28,7 +29,7 @@ function MyDonations({ currencies }) {
     useEffect(() => {
         const fetchFoundations = async () => {
             try {
-                const response = await fetch(`/api/server/foundationslist`);
+                const response = await fetch(`/api/server/donations/foundations`);
                 if (response.status === 200) {
                     const data = await response.json();
                     data.unshift({ "id": null, "name": "Other", "logoUrl": "https://svgshare.com/i/14xY.svg" })

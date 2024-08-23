@@ -62,7 +62,7 @@ function AddTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen,
         if(name.length > 0 && name.length < 50){
             trackingObj.name = name
         }
-        const response = await fetch('/api/server/tracking/create', {
+        const response = await fetch('/api/server/tracking', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

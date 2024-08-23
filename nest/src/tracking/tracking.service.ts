@@ -43,7 +43,7 @@ export class TrackingService {
           return addressStats;
         }),
       );
-
+      console.log(addressesData);
       const metadata = await getTokensMetadata(addressesData);
       return { addresses: addressesData, metadata: metadata };
     } catch (error) {
@@ -109,7 +109,7 @@ export class TrackingService {
         ? parseFloat(updateTrackingDto.target.toFixed(5))
         : trackingAddress.targetAmount,
       currencyId: updateTrackingDto.currency?.id || trackingAddress.currencyId,
-      address: '',
+      address: updateTrackingDto.address || trackingAddress.address,
     };
 
     if (
@@ -154,7 +154,7 @@ export class TrackingService {
     try {
       const deletedAddress = await this.prisma.trackedAddresses.delete({
         where: {
-          id: id,
+          id,
           userId,
         },
       });

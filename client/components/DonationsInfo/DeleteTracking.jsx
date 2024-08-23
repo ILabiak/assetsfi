@@ -9,10 +9,10 @@ function truncateMiddle(str, startLength, endLength) {
     if (str.length <= startLength + endLength) {
         return str;
     }
-    
+
     const start = str.substring(0, startLength);
     const end = str.substring(str.length - endLength);
-    
+
     return `${start}...${end}`;
 }
 
@@ -37,14 +37,11 @@ function DeleteTracking({ addressData, handleTrackingsChange }) {
 
     const handleTransactionDelete = async () => {
         setDeleteButtonActive(false)
-        const response = await fetch('/api/server/tracking/delete', {
+        const response = await fetch(`/api/server/tracking/${addressData?.id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                id: addressData?.id
-            }),
             credentials: 'include'
         });
         if (response.status === 200) {
@@ -77,7 +74,7 @@ function DeleteTracking({ addressData, handleTrackingsChange }) {
                 open={backdropOpen}
             >
                 <Box className={styles.deletePortfolioContainer} ref={trackingDeleteRef} sx={{
-                    width: {xs: '90%', md: '35%'},
+                    width: { xs: '90%', md: '35%' },
                 }}>
                     <Box className={styles.warningContainer}>
                         <Box className={styles.warning}>

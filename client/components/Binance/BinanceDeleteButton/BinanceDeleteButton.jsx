@@ -23,7 +23,7 @@ function BinanceDeleteButton({ handleBinanceChange }) {
 
     const handleDeleteKeys = async () => {
         setDeleteButtonActive(false)
-        const response = await fetch('/api/server/binance/delete', {
+        const response = await fetch('/api/server/binance', {
             method: 'DELETE',
             credentials: 'include'
         });
