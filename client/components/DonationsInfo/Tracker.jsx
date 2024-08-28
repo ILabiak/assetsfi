@@ -29,7 +29,7 @@ function Tracker({ currencies }) {
 
     const fetchTrackingAddresses = async () => {
         try {
-            const response = await fetch('/api/server/tracking/list');
+            const response = await fetch('/api/server/tracking');
             if (response.status === 200) {
                 const data = await response.json();
                 setTrackingData(data)
@@ -45,7 +45,7 @@ function Tracker({ currencies }) {
     useEffect(() => {
         const fetchNetworks = async () => {
             try {
-                const response = await fetch('/api/server/networks');
+                const response = await fetch('/api/server/tracking/networks');
                 if (response.status === 200) {
                     const data = await response.json();
                     setNetworks(data)
@@ -59,7 +59,6 @@ function Tracker({ currencies }) {
 
         fetchNetworks().catch(console.error)
         fetchTrackingAddresses().catch(console.error)
-
     }, []);
 
     const handleTrackingsChange = () => {

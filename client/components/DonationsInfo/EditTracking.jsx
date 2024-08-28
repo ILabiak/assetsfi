@@ -70,7 +70,7 @@ function EditTracking({ trackingCreateRef, handleClose, handleOpen, backdropOpen
         if (addressData.currencyId != currency.id) {
             trackingObj.currency = currency
         }
-        const response = await fetch('/api/server/tracking/update', {
+        const response = await fetch('/api/server/tracking', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

@@ -66,7 +66,7 @@ function EditDonation({ donationEditRef, handleClose, backdropOpen, setBackdropO
             donationObj.currency = currency;
         }
 
-        const response = await fetch('/api/server/donations/update', {
+        const response = await fetch('/api/server/donations', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

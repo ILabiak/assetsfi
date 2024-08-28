@@ -10,10 +10,11 @@ let pairs = require('./pairs.json');
 let dataPath = path.resolve(__dirname, 'coins-metadata.json');
 
 const fetchMetadata = async (symbols, metaData) => {
+  let metadataRes;
   let metadataReqLink = `https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?symbol=${symbols}&aux=logo&skip_invalid=true&CMC_PRO_API_KEY=${process.env.CMC_API_KEY}`;
   try {
     const response = await fetch(metadataReqLink);
-    metadataJson = await response.json();
+    let metadataJson = await response.json();
     if (metaData.data) {
       metadataRes = {
         updatedAt: Date.now(),

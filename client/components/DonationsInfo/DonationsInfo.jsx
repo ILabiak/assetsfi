@@ -20,7 +20,7 @@ function Donations() {
 
         const fetchCurrencies = async () => {
             try {
-                const response = await fetch('/api/server/currencies');
+                const response = await fetch('/api/server/currency/list');
                 if (response.status === 200) {
                     const data = await response.json();
                     setCurrencies(data)

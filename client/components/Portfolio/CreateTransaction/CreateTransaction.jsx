@@ -129,7 +129,7 @@ function CreateTransaction({ transactionCreateRef, handleClose, handleOpen, back
             costPerUnitInUsd: (parseFloat(price) / currencyRate),
             costPerUnitInCurrency: parseFloat(price),
         }
-        const response = await fetch('/api/server/transaction/create', {
+        const response = await fetch('/api/server/transaction', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

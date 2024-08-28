@@ -21,17 +21,12 @@ function MenuDeleteTransaction({ transaction, handleTransactionsChange }) {
     };
 
     const handleTransactionDelete = async () => {
-        // return;
         setDeleteButtonActive(false)
-        const response = await fetch('/api/server/transaction/delete', {
+        const response = await fetch(`/api/server/transaction/${transaction?.id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                id: transaction?.id,
-                portfolioId: transaction?.portfolioId
-            }),
             credentials: 'include'
         });
         if (response.status === 200) {

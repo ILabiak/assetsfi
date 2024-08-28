@@ -37,12 +37,14 @@ function BinanceData() {
                 setBinanceData(data)
                 console.log(data)
             } else {
-                const data = await response.json();
-                console.log('Some other error');
-                console.log(data)
+                setBinanceData({})
+                // const data = await response.json();
+                // console.log('Some other error');
+                // console.log(data)
             }
         } catch (error) {
             console.log('Error while getting portfolios data', error);
+            
         }
     }
 
@@ -69,7 +71,7 @@ function BinanceData() {
             }}>
                 {
                     binanceData ? (
-                        binanceData.totalValue ? (
+                        binanceData?.totalValue > -1 ? (
                             <BinanceAssetsInfo assetsInfo={binanceData} handleChange={handleChange} />
                         ) : (
                             <AddBinanceKeys handleChange={handleChange} />

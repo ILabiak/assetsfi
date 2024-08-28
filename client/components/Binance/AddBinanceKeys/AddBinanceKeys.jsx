@@ -86,7 +86,7 @@ function AddBinanceKeys({ handleChange }) {
             isTestnet: isTestnet
         }
 
-        const response = await fetch('/api/server/binance/create', {
+        const response = await fetch('/api/server/binance', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

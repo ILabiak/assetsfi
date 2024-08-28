@@ -119,26 +119,33 @@ function ChangePassword({ user, setUserData }) {
             newPassword: encryptedNewPassword
         }
         setChangeButtonActive(false)
-        const response = await fetch('/api/server/user/changepassword', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(changeData),
-            credentials: 'include'
-        });
-        if (response.status === 200) {
-            let data = await response.json()
-            console.log(data)
-            // setUserData(data)
-            setSuccessOpen(true)
-            setOldPassword('')
-            setNewPassword('')
-        } else {
-            console.log('Some other error');
-            let data = await response.json()
-            console.log(data)
-            setErrorText(data?.error)
+        try {
+            const response = await fetch('/api/server/user/changepassword', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(changeData),
+                credentials: 'include'
+            });
+            if (response.status === 200) {
+                let data = await response.json()
+                console.log(data)
+                // setUserData(data)
+                setSuccessOpen(true)
+                setOldPassword('')
+                setNewPassword('')
+            } else {
+                console.log('Some other error');
+                let error = await response.json()
+                const errorMsg = error?.error?.response?.error || 'Internal error'
+                setErrorText(errorMsg)
+                setErrorOpen(true)
+                setChangeButtonActive(true)
+            }
+        } catch (err) {
+            console.log(err)
+            setErrorText('Internal error occured')
             setErrorOpen(true)
             setChangeButtonActive(true)
         }
@@ -147,7 +154,7 @@ function ChangePassword({ user, setUserData }) {
     return (
         <Box>
 
-            
+
             <Typography className={styles.textFieldTitle}>Old password</Typography>
             <Box sx={{
                 display: 'flex',
