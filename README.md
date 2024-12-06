@@ -80,13 +80,13 @@ $ npm run start
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add features to add, delete, update portfolios
-- [x] Add features to add, delete, update transactions
-- [x] Add integration with Binance API
-- [x] Add donations page
-- [ ] Add responsive design
-- [ ] Add feature to share portfolios
-- [ ] Add stocks and ETFs support for portfolios
+- [x] Add, delete, update portfolios
+- [x] Add, delete, update transactions
+- [x] Integration with Binance API
+- [x] Donations page
+- [ ] Responsive design
+- [ ] Feature to share portfolios
+- [ ] Stocks and ETFs support for portfolios
 - [ ] Multi-language Support
     - [x] English
     - [ ] Ukrainian
