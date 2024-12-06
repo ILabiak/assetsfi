@@ -31,8 +31,6 @@ export async function calculatePortfolioStats(portfolio) {
   try {
     const response = await fetch(url, options);
     responseArr = await response.json();
-    // responseArr = coingeckoResponse;
-    // console.log(responseArr)
   } catch (err) {
     return err;
   }

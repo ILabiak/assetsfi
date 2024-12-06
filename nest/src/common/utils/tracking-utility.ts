@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import path from 'node:path';
-// import * as cheerio from 'cheerio';
 import fetch from 'node-fetch';
 
 export async function getCurrencyRate(symbol, base) {

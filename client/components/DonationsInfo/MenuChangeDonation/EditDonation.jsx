@@ -101,7 +101,6 @@ function EditDonation({ donationEditRef, handleClose, backdropOpen, setBackdropO
                 <Typography
                     sx={{
                         fontFamily: 'DM Sans',
-                        // fontStyle: 'bold',
                         fontSize: '30px',
                         fontWeight: '1000',
                         paddingLeft: '20px',

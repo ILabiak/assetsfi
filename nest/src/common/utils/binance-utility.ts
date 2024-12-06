@@ -186,7 +186,6 @@ export async function getUserOrders(apiKey, apiSecret, isTestnet, symbol) {
 
 export function checkKeys(apiKey, apiSecret, isTestnet) {
   let client;
-  // console.log('123\n\n')
   if (isTestnet) {
     client = new Spot(apiKey, apiSecret, {
       baseURL: 'https://testnet.binance.vision',
@@ -194,8 +193,6 @@ export function checkKeys(apiKey, apiSecret, isTestnet) {
   } else {
     client = new Spot(apiKey, apiSecret);
   }
-  // console.log('done')
-
   return client;
 }
 

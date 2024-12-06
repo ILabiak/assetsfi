@@ -186,7 +186,6 @@ const parsePritulaFoundation = async () => {
     result.addresses = walletInfo;
     return result;
   }
-  // return {};
 };
 
 const parseSternenkoFoundation = async () => {
@@ -238,5 +237,4 @@ const parseSternenkoFoundation = async () => {
     result.addresses = walletInfo;
     return result;
   }
-  // return {};
 };

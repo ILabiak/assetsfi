@@ -27,9 +27,6 @@ function MenuDeleteDonation({ donation, handleDonationsChange }) {
             headers: {
                 'Content-Type': 'application/json',
             },
-            // body: JSON.stringify({
-            //     id: donation.id,
-            // }),
             credentials: 'include'
         });
         if (response.status === 200) {
@@ -60,8 +57,8 @@ function MenuDeleteDonation({ donation, handleDonationsChange }) {
                 open={backdropOpen}
             >
                 <Box className={styles.deleteDonationContainer} ref={portfolioDeleteRef} sx={{
-                width: {xs: '90%', md:'25%'}
-            }}>
+                    width: { xs: '90%', md: '25%' }
+                }}>
                     <Box className={styles.warningContainer}>
                         <Box className={styles.warning}>
                             <Box className={styles.deleteIcon}>
