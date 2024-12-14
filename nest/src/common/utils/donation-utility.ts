@@ -59,12 +59,12 @@ export async function calculateDonationsStats(donations) {
 export async function parseFoundationAddresses() {
   const dataPath = path.resolve('./src/common/utils', 'foundations-data.json');
   let foundationsData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-  if (
-    foundationsData.updatedAt &&
-    Date.now() - foundationsData.updatedAt < 24 * 60 * 60 * 1000 //24 hours
-  ) {
-    return foundationsData;
-  }
+  // if (
+  //   foundationsData.updatedAt &&
+  //   Date.now() - foundationsData.updatedAt < 24 * 60 * 60 * 1000 //24 hours
+  // ) {
+  //   return foundationsData;
+  // }
   try {
     const [slRes, prRes, ptRes] = await Promise.all([
       parseSaveLifeFoundation(),
@@ -72,7 +72,7 @@ export async function parseFoundationAddresses() {
       parseSternenkoFoundation(),
     ]);
     const results = [slRes, prRes, ptRes].filter(
-      (res): res is Result => res.orgName !== undefined,
+      (res): res is Result => res?.orgName !== undefined,
     );
     foundationsData = {
       updatedAt: Date.now(),
@@ -90,13 +90,30 @@ const parseSaveLifeFoundation = async () => {
   const result = {
     orgName: 'Come Back Alive',
     orgLogo:
-      'https://savelife.in.ua/wp-content/themes/savelife/assets/images/new-logo-en.svg',
-    addresses: [],
+      'https://raw.githubusercontent.com/ILabiak/uno-project/refs/heads/main/public/comebackalive.svg',
+    addresses: [
+      {
+        currencyType: 'Bitcoin',
+        walletAddresses: ['bc1qkd5az2ml7dk5j5h672yhxmhmxe9tuf97j39fm6'],
+      },
+      {
+        currencyType: 'Ethereum',
+        walletAddresses: [
+          '0xa1b1bbB8070Df2450810b8eB2425D543cfCeF79b',
+          '0x93Bda139023d582C19D70F55561f232D3CA6a54c',
+        ],
+      },
+      {
+        currencyType: 'Tether (TRC20)',
+        walletAddresses: ['TX9aNri16bSxVYi6oMnKDj5RMKAMBXWzon'],
+      },
+    ],
     link: 'https://savelife.in.ua/donate/#donate-army-crypto',
   };
-
+  return result;
   const response = await fetch(result.link);
   const body = await response.text();
+  console.log(body);
   const $ = cheerio.load(body);
   const cryptoAddresses = $('.tab-pane#donate-army-crypto');
   const parentElements = cryptoAddresses.find('.currency-icon').parent();
@@ -191,7 +208,8 @@ const parsePritulaFoundation = async () => {
 const parseSternenkoFoundation = async () => {
   const result: Result = {
     orgName: 'Serhiy Sternenko (FPV drones)',
-    orgLogo: 'https://svgshare.com/i/14uM.svg',
+    orgLogo:
+      'https://raw.githubusercontent.com/ILabiak/uno-project/refs/heads/main/public/drone-svgrepo-com.svg',
     addresses: [],
     link: 'https://t.me/ssternenko/22022',
   };

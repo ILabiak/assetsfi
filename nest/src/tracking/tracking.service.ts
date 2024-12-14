@@ -43,7 +43,6 @@ export class TrackingService {
           return addressStats;
         }),
       );
-      console.log(addressesData);
       const metadata = await getTokensMetadata(addressesData);
       return { addresses: addressesData, metadata: metadata };
     } catch (error) {
