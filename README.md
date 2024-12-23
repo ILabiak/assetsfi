@@ -38,7 +38,7 @@ There is also integration with Binance Spot wallet which allows user to get stat
 * [![Material UI](https://img.shields.io/badge/Material--UI-0081CB?style=for-the-badge&logo=material-ui&logoColor=white)](https://mui.com/material-ui/)
 * [![Sequelize](https://img.shields.io/badge/sequelize-323330?style=for-the-badge&logo=sequelize&logoColor=blue)](https://sequelize.org/)
 * [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
-* [![Fastify](https://img.shields.io/badge/-Fastify-000000?style=flat&logo=fastify&logoColor=white)](https://fastify.dev/)
+* [![NestJS](https://img.shields.io/badge/-NestJS-000000?style=flat&logo=nestjs&logoColor=white)](https://nestjs.com/)
 
 
 <!-- GETTING STARTED -->
